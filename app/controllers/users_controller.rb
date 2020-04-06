@@ -5,14 +5,15 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if User.save
-      flash[success-flash]= "You are now registered and logged in!"
+    if user.save
+      flash[:success]= "You are now registered and logged in!"
+      redirect_to "/profile"
     end
   end
 
   private
 
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password)
+    params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
   end
 end
