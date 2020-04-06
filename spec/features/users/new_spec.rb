@@ -8,16 +8,29 @@ RSpec.describe "As a visitor" do
         click_link "Register"
       end
       expect(current_path).to eq("/users/new")
+    end
+    it "lets me complete a new registration form" do
+      visit "/users/new"
+        fill_in :name, with: "Josh Tukman"
+        fill_in :address, with: "756 Main St"
+        fill_in :city, with: "Denver"
+        fill_in :state, with: "Colorado"
+        fill_in :zip, with: "80209"
+        fill_in :email, with: "josh.t@gmail.com"
+        fill_in :password, with: "secret_password"
+        fill_in :password_confirm, with: "secret_password"
 
-
+        click_button "Register"
+        expect(current_path).to eq("/profile")
+        within ".success-flash" do
+          expect(page).to have_content("You are now registered and logged in!")
+        end
 
     end
   end
 end
 
-  # As a visitor
-  # When I click on the 'register' link in the nav bar
-  # Then I am on the user registration page ('/register')
+
   # And I see a form where I input the following data:
   #
   # my name

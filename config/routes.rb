@@ -36,4 +36,5 @@ Rails.application.routes.draw do
 
   #users
   get "/users/new", to: "users#new"
+  post "/users", to: "users#create"
 end

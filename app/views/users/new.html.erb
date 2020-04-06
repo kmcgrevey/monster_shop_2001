@@ -1,0 +1,19 @@
+<%=form_tag("/users", method: :post) do %>
+  <%= label_tag("Name") %>
+  <%= text_field_tag(:name) %>
+  <%= label_tag("Street Address") %>
+  <%= text_field_tag(:address) %>
+  <%= label_tag("City") %>
+  <%= text_field_tag(:city) %>
+  <%= label_tag("State") %>
+  <%= text_field_tag(:state) %>
+  <%= label_tag("Zipcode") %>
+  <%= text_field_tag(:zip) %>
+  <%= label_tag("Email Address") %>
+  <%= text_field_tag(:email) %>
+  <%= label_tag("Password") %>
+  <%= text_field_tag(:password) %>
+  <%= label_tag("Confirm Password") %>
+  <%= text_field_tag(:password_confirm) %>
+  <%= submit_tag "Register" %>
+<%end%>
