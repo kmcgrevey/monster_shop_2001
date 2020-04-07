@@ -1,0 +1,19 @@
+<%=form_tag("/users", method: :post) do %>
+  <%= label_tag("Name") %>
+  <%= text_field_tag(:name, "#{session[:user_params]['name'] if session[:user_params]}") %><br>
+  <%= label_tag("Street Address") %>
+  <%= text_field_tag(:address, "#{session[:user_params]['address'] if session[:user_params]}") %><br>
+  <%= label_tag("City") %>
+  <%= text_field_tag(:city, "#{session[:user_params]['city'] if session[:user_params]}") %><br>
+  <%= label_tag("State") %>
+  <%= text_field_tag(:state, "#{session[:user_params]['state'] if session[:user_params]}") %><br>
+  <%= label_tag("Zipcode") %>
+  <%= text_field_tag(:zip, "#{session[:user_params]['zip'] if session[:user_params]}") %><br>
+  <%= label_tag("Email Address") %>
+  <%= text_field_tag(:email) %><br>
+  <%= label_tag("Password") %>
+  <%= text_field_tag(:password) %><br>
+  <%= label_tag("Password Confirmation") %>
+  <%= text_field_tag(:password_confirmation) %><br>
+  <%= submit_tag "Register" %>
+<%end%>
