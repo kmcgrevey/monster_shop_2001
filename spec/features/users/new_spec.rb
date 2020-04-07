@@ -44,7 +44,7 @@ RSpec.describe "As a visitor" do
         expect(current_path).to eq("/register")
 
         within ".error-flash" do
-          expect(page).to have_content("Email can't be blank, and Address can't be blank")
+          expect(page).to have_content("Email can't be blank and Address can't be blank")
         end
       end
 
