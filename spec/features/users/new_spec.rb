@@ -25,7 +25,27 @@ RSpec.describe "As a visitor" do
         within ".success-flash" do
           expect(page).to have_content("You are now registered and logged in!")
         end
+      end
 
+      it "if I don't fill in all fields I see a flash message and returned to the registration page" do
+        visit "/register"
+
+        fill_in :name, with: "Josh Tukman"
+        fill_in :address, with: ""
+        fill_in :city, with: "Denver"
+        fill_in :state, with: "Colorado"
+        fill_in :zip, with: "80209"
+        fill_in :email, with: ""
+        fill_in :password, with: "secret_password"
+        fill_in :password_confirmation, with: "secret_password"
+
+        click_button "Register"
+
+        expect(current_path).to eq("/register")
+
+        within ".error-flash" do
+          expect(page).to have_content("ERROR!")
+        end
     end
   end
 end
