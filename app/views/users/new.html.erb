@@ -10,7 +10,7 @@
   <%= label_tag("Zipcode") %>
   <%= text_field_tag(:zip, "#{session[:user_params]['zip'] if session[:user_params]}") %><br>
   <%= label_tag("Email Address") %>
-  <%= text_field_tag(:email, "#{session[:user_params]['email'] if session[:user_params]}") %><br>
+  <%= text_field_tag(:email) %><br>
   <%= label_tag("Password") %>
   <%= text_field_tag(:password) %><br>
   <%= label_tag("Password Confirmation") %>

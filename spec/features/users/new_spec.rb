@@ -54,9 +54,9 @@ RSpec.describe "As a visitor" do
         fill_in :name, with: "Josh Tukman"
         fill_in :address, with: ""
         fill_in :city, with: "Denver"
-        fill_in :state, with: "Colorado"
+        fill_in :state, with: ""
         fill_in :zip, with: "80209"
-        fill_in :email, with: ""
+        fill_in :email, with: "josh.t@gmail.com"
         fill_in :password, with: "secret_password"
         fill_in :password_confirmation, with: "secret_password"
 
@@ -67,9 +67,11 @@ RSpec.describe "As a visitor" do
         expect(find_field(:name).value).to eq "Josh Tukman"
         expect(find_field(:address).value).to eq ""
         expect(find_field(:city).value).to eq "Denver"
-        expect(find_field(:state).value).to eq "Colorado"
+        expect(find_field(:state).value).to eq ""
         expect(find_field(:zip).value).to eq "80209"
-        expect(find_field(:email).value).to eq ""
+        expect(find_field(:email).value).to eq nil
+        expect(find_field(:password).value).to eq nil
+        expect(find_field(:password_confirmation).value).to eq nil
 
       end
 
