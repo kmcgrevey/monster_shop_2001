@@ -44,7 +44,7 @@ RSpec.describe "As a visitor" do
         expect(current_path).to eq("/register")
 
         within ".error-flash" do
-          expect(page).to have_content("ERROR!")
+          expect(page).to have_content("You are missing required fields.")
         end
     end
   end
