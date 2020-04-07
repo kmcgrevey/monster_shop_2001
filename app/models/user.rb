@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
-  validates_presence_of :name, :address, :city, :state, :zip, :email, :password, :password_confirmation
-
   has_secure_password
+  validates_presence_of :name, :address, :city, :state, :zip, :password_confirmation
 end
