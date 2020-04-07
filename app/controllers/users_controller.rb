@@ -10,7 +10,6 @@ class UsersController < ApplicationController
       redirect_to "/profile"
     else
       flash[:error] = user.errors.full_messages.to_sentence
-      # flash[:error] = "You are missing required fields."
       redirect_back(fallback_location: "/")
     end
   end
