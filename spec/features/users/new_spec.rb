@@ -48,6 +48,31 @@ RSpec.describe "As a visitor" do
         end
       end
 
+      it "if I don't fill in all fields I am redirected back but don't lose my entered data" do
+        visit "/register"
+
+        fill_in :name, with: "Josh Tukman"
+        fill_in :address, with: ""
+        fill_in :city, with: "Denver"
+        fill_in :state, with: "Colorado"
+        fill_in :zip, with: "80209"
+        fill_in :email, with: ""
+        fill_in :password, with: "secret_password"
+        fill_in :password_confirmation, with: "secret_password"
+
+        click_button "Register"
+
+        expect(current_path).to eq("/register")
+
+        expect(find_field(:name).value).to eq "Josh Tukman"
+        expect(find_field(:address).value).to eq ""
+        expect(find_field(:city).value).to eq "Denver"
+        expect(find_field(:state).value).to eq "Colorado"
+        expect(find_field(:zip).value).to eq "80209"
+        expect(find_field(:email).value).to eq ""
+
+      end
+
       it "if I fill out a registration form with an email already in the system" do
         user_1 = User.create!(name: "Josh Tukman",
                               address: "756 Main St",
@@ -58,23 +83,23 @@ RSpec.describe "As a visitor" do
                               password: "secret_password",
                               password_confirmation: "secret_password")
 
-        visit "/register"
-          fill_in :name, with: "Mike Hernandez"
-          fill_in :address, with: "25 Cowboy Way"
-          fill_in :city, with: "Denver"
-          fill_in :state, with: "Colorado"
-          fill_in :zip, with: "80121"
-          fill_in :email, with: "josh.t@gmail.com"
-          fill_in :password, with: "cowboy_password"
-          fill_in :password_confirmation, with: "cowboy_password"
+      visit "/register"
+        fill_in :name, with: "Mike Hernandez"
+        fill_in :address, with: "25 Cowboy Way"
+        fill_in :city, with: "Denver"
+        fill_in :state, with: "Colorado"
+        fill_in :zip, with: "80121"
+        fill_in :email, with: "josh.t@gmail.com"
+        fill_in :password, with: "cowboy_password"
+        fill_in :password_confirmation, with: "cowboy_password"
 
-          click_button "Register"
+        click_button "Register"
 
-          expect(current_path).to eq("/register")
+        expect(current_path).to eq("/register")
 
-          within ".error-flash" do
-            expect(page).to have_content("Email has already been taken")
-          end
+        within ".error-flash" do
+          expect(page).to have_content("Email has already been taken")
+        end
 
       end
     end
