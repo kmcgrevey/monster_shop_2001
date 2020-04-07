@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe "As a visitor" do
   describe "When I click on the 'register' link in the nav bar" do
-    xit "takes me to the user registration page" do
+    it "takes me to the user registration page" do
       visit "/merchants"
       within ".topnav" do
         click_link "Register"
       end
       expect(current_path).to eq("/register")
     end
-    xit "lets me complete a new registration form" do
+    it "lets me complete a new registration form" do
       visit "/register"
         fill_in :name, with: "Josh Tukman"
         fill_in :address, with: "756 Main St"
@@ -27,7 +27,7 @@ RSpec.describe "As a visitor" do
         end
       end
 
-      xit "if I don't fill in all fields I see a flash message and returned to the registration page" do
+      it "if I don't fill in all fields I see a flash message and returned to the registration page" do
         visit "/register"
 
         fill_in :name, with: "Josh Tukman"
@@ -44,7 +44,7 @@ RSpec.describe "As a visitor" do
         expect(current_path).to eq("/register")
 
         within ".error-flash" do
-          expect(page).to have_content("You are missing required fields.")
+          expect(page).to have_content("Email can't be blank, and Address can't be blank")
         end
       end
 
