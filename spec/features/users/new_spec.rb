@@ -7,10 +7,10 @@ RSpec.describe "As a visitor" do
       within ".topnav" do
         click_link "Register"
       end
-      expect(current_path).to eq("/users/new")
+      expect(current_path).to eq("/register")
     end
     it "lets me complete a new registration form" do
-      visit "/users/new"
+      visit "/register"
         fill_in :name, with: "Josh Tukman"
         fill_in :address, with: "756 Main St"
         fill_in :city, with: "Denver"
@@ -22,28 +22,10 @@ RSpec.describe "As a visitor" do
 
         click_button "Register"
         expect(current_path).to eq("/profile")
-        # within ".success-flash" do
+        within ".success-flash" do
           expect(page).to have_content("You are now registered and logged in!")
-        # end
+        end
 
     end
   end
 end
-
-
-  # And I see a form where I input the following data:
-  #
-  # my name
-  # my street address
-  # my city
-  # my state
-  # my zip code
-  # my email address
-  # my preferred password
-  # a confirmation field for my password
-  # When I fill in this form completely,
-  # And with a unique email address not already in the system
-  # My details are saved in the database
-  # Then I am logged in as a registered user
-  # I am taken to my profile page ("/profile")
-  # I see a flash message indicating that I am now registered and logged in
