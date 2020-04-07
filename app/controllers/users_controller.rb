@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    session[:user_params] = user_params
     user = User.new(user_params)
     if user.save
       flash[:success]= "You are now registered and logged in!"
