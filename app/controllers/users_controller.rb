@@ -8,6 +8,9 @@ class UsersController < ApplicationController
     if user.save
       flash[:success]= "You are now registered and logged in!"
       redirect_to "/profile"
+    else
+      flash[:error] = "You are missing required fields."
+      redirect_back(fallback_location: "/")
     end
   end
 
