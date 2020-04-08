@@ -24,8 +24,8 @@ RSpec.describe User do
                               password: "secret_password",
                               password_confirmation: "secret_password")
 
-        expect(josh.role).to eq("user")
-        expect(josh.user?).to be_truthy
+        expect(josh.role).to eq("default")
+        expect(josh.default?).to be_truthy
     end
 
     it "can be created as an employee" do
@@ -42,7 +42,7 @@ RSpec.describe User do
         expect(josh.role).to eq("employee")
         expect(josh.employee?).to be_truthy
     end
-    
+
     it "can be created as an admin" do
         josh = User.create!(name: "Josh Tukman",
                         address: "756 Main St",
