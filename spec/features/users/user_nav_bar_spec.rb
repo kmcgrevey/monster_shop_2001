@@ -39,7 +39,7 @@ RSpec.describe "as a user in the nav bar" do
 
   describe "as an employee in the nav bar" do
     it "I see the same links as a regular user and a link to my merchant dashboard" do
-      employee = User.create!(name: "Josh Tukman",
+      merchant = User.create!(name: "Josh Tukman",
                             address: "756 Main St",
                             city: "Denver",
                             state: "Colorado",
@@ -49,7 +49,7 @@ RSpec.describe "as a user in the nav bar" do
                             password_confirmation: "secret_password",
                             role: 1)
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(employee)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
     visit("/merchants")
 
@@ -66,6 +66,26 @@ RSpec.describe "as a user in the nav bar" do
     end
 
     expect(current_path).to eq("/merchant/dashboard")
+    end
+  end
+
+  describe "as a default user" do
+    it "does not allow me to see the merchant dashboard index" do
+      user = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 0)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit "/merchant/dashboard"
+
+    expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end
 end
