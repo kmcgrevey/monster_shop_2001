@@ -13,7 +13,7 @@ RSpec.describe "As an Admin", type: :feature do
                             password_confirmation: "secret_password",
                             role: 2)
       
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return("admin")
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
       visit "/merchants"
     end
@@ -49,7 +49,7 @@ RSpec.describe "As an Admin", type: :feature do
         click_link "Admin Dashboard" 
       end
       
-      expect(current_path).to eq("/admin")
+      expect(current_path).to eq("/admin/dashboard")
 
       within ".topnav" do
         click_link "All Users" 

@@ -15,8 +15,13 @@
       <%= link_to "Cart: #{cart.total_items}", "/cart" %>
       <%= link_to "Register", "/register" %>
       <% if current_user && current_user["role"] == "default" %>
-      <%= link_to "Profile" %>
-      <%= link_to "Logout" %>
+        <%= link_to "Profile" %>
+        <%= link_to "Logout" %>
+      <% end %>
+      <% if current_user && current_user.admin? %>
+        <%= link_to "Profile", "/profile" %>
+        <%= link_to "Logout" %>
+        <%= link_to "Admin Dashboard", "/admin/dashboard" %>
       <% end %>
     </nav>
     <% flash.each do |name, msg| %>
