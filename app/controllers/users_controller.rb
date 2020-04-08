@@ -4,10 +4,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    session[:user_params] = user_params
+    session[:user_info] = user_info
     user = User.new(user_params)
     if user.save
       flash[:success]= "You are now registered and logged in!"
+      session.clear
+      session[:user_id] = user.id
       redirect_to "/profile"
     else
       flash[:error] = user.errors.full_messages.to_sentence
@@ -20,4 +22,9 @@ class UsersController < ApplicationController
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
   end
+
+  def user_info
+    params.permit(:name, :address, :city, :state, :zip, :role)
+  end
+
 end
