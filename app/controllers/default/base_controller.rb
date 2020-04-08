@@ -1,8 +1,5 @@
-class Default::ProfilesController < Default::BaseController
+class Default::BaseController < ApplicationController
   before_action :require_default
-
-  def show
-  end
 
   private
     def require_default

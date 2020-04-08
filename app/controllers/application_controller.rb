@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
     @current_user ||= session[:user_info]
   end
 
+  def current_default?
+    current_user && current_user["role"] == "default"
+  end
+
 end
