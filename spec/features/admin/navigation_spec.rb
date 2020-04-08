@@ -56,9 +56,17 @@ RSpec.describe "As an Admin", type: :feature do
       end
       
       expect(current_path).to eq("/admin/users")
+      
+      within ".topnav" do
+        expect(page).not_to have_link("Cart: 0")
+      end
+      
+      within ".topnav" do
+        expect(page).not_to have_link("Register")
+      end
     end
-
-
+    
+  
   end
 end
 
