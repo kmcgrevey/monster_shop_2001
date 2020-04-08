@@ -17,7 +17,7 @@ RSpec.describe "As a visitor" do
         expect(current_path).to eq('/items')
       end
     end
-    #
+
     # it "has a link to Merchants page that when clicked renders 404 error" do
     #   visit '/items'
     #   within '.topnav' do
@@ -49,20 +49,15 @@ RSpec.describe "As a visitor" do
     end
   end
 
-  # describe "sees a 404 error" do
+  describe "sees a 404 error" do
   #   it "when trying to access /admin" do
   #     visit "/admin"
   #     expect(page.status_code).to eq(404)
   #   end
-  #
-  #   it "when trying to access /profile" do
-  #     visit "/profile"
-  #     expect(page.status_code).to eq(404)
-  #   end
-  # end
+
+    it "when trying to access /profile" do
+      visit "/profile"
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
 end
-#As a visitor
-# When I try to access any path that begins with the following, then I see a 404 error:
-# - '/merchant'
-# - '/admin'
-# - '/profile'

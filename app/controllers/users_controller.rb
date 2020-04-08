@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       flash[:success]= "You are now registered and logged in!"
       session.clear
       session[:user_id] = user.id
-      redirect_to "/default/profile"
+      redirect_to "/profile"
     else
       flash[:error] = user.errors.full_messages.to_sentence
       redirect_back(fallback_location: "/")

@@ -21,7 +21,7 @@ RSpec.describe "As a visitor" do
         fill_in :password_confirmation, with: "secret_password"
 
         click_button "Register"
-        expect(current_path).to eq("/default/profile")
+        expect(current_path).to eq("/profile")
         within ".success-flash" do
           expect(page).to have_content("You are now registered and logged in!")
         end
