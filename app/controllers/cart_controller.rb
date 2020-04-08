@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :no_admin
+
   def add_item
     item = Item.find(params[:item_id])
     cart.add_item(item.id.to_s)
@@ -19,6 +21,13 @@ class CartController < ApplicationController
     session[:cart].delete(params[:item_id])
     redirect_to '/cart'
   end
+
+  private
+    def no_admin
+      if current_user && current_user.admin?
+        render file: "/public/404" unless current_default?
+      end
+    end
 
   # def increment_decrement
   #   if params[:increment_decrement] == "increment"
