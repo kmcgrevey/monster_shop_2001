@@ -97,13 +97,79 @@ RSpec.describe "As a visitor" do
       within '.error-flash' do
         expect(page).to have_content("The credentials you entered are incorrect")
       end
-
     end
   end
+  describe "default user visits login page" do
+    it "will redirect default to their profile page" do
+      user = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 0)
+      visit '/login'
+      fill_in :email, with: "josh.t@gmail.com"
+      fill_in :password, with: "secret_password"
+      click_button "Submit"
+      visit '/login'
+      expect(current_path).to eq("/default/profile")
+      within ".success-flash" do
+        expect(page).to have_content("You are already logged in!")
+      end
+    end
+  end
+  describe "merchant employee visits login page" do
+    it "will redirect merchant to their dashboard page" do
+      user = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 1)
+      visit '/login'
+      fill_in :email, with: "josh.t@gmail.com"
+      fill_in :password, with: "secret_password"
+      click_button "Submit"
+      visit '/login'
+      expect(current_path).to eq("/merchant")
+      within ".success-flash" do
+        expect(page).to have_content("You are already logged in!")
+      end
+    end
+  end
+  describe "admin visits login page" do
+    it "will redirect admin to their dashboard page" do
+      user = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 2)
+      visit '/login'
+      fill_in :email, with: "josh.t@gmail.com"
+      fill_in :password, with: "secret_password"
+      click_button "Submit"
+      visit '/login'
+      expect(current_path).to eq("/admin")
+      within ".success-flash" do
+        expect(page).to have_content("You are already logged in!")
+      end
+    end
+  end
+
 end
-# As a visitor
-# When I visit the login page ("/login")
-# And I submit invalid information
-# Then I am redirected to the login page
-# And I see a flash message that tells me that my credentials were incorrect
-# I am NOT told whether it was my email or password that was incorrect
+# As a registered user, merchant, or admin
+# When I visit the login path
+# If I am a regular user, I am redirected to my profile page
+# If I am a merchant user, I am redirected to my merchant dashboard page
+# If I am an admin user, I am redirected to my admin dashboard page
+# And I see a flash message that tells me I am already logged in
