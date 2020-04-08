@@ -67,7 +67,7 @@ RSpec.describe "As an Admin", type: :feature do
     end
 
     it 'if I try to visit a merchant route I get an error' do
-      visit "/merchant/dashboard"
+      visit "/merchant"
 
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
