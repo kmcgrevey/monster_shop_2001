@@ -21,10 +21,10 @@ RSpec.describe "As an Admin", type: :feature do
     it "I see the same links as a regular user" do
 
       within ".topnav" do
-        # click_link "Profile"
+        click_link "Profile"
       end
 
-      # expect(current_path).to eq("/profile")
+      expect(current_path).to eq("/profile")
 
       within ".topnav" do
         click_link "All Merchants"
