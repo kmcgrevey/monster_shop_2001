@@ -90,24 +90,24 @@ RSpec.describe "as a user in the nav bar" do
   end
 
   describe "as a merchant employee" do
-    it "does not allow me to access any path that begins with '/admin' and displays a 404 error" do
-      merchant = User.create!(name: "Josh Tukman",
-                            address: "756 Main St",
-                            city: "Denver",
-                            state: "Colorado",
-                            zip: "80209",
-                            email: "josh.t@gmail.com",
-                            password: "secret_password",
-                            password_confirmation: "secret_password",
-                            role: 1)
-
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
-
-    visit "/admin"
-
-    expect(page).to have_content("The page you were looking for doesn't exist.")
-    end
-
+    # it "does not allow me to access any path that begins with '/admin' and displays a 404 error" do
+    #   merchant = User.create!(name: "Josh Tukman",
+    #                         address: "756 Main St",
+    #                         city: "Denver",
+    #                         state: "Colorado",
+    #                         zip: "80209",
+    #                         email: "josh.t@gmail.com",
+    #                         password: "secret_password",
+    #                         password_confirmation: "secret_password",
+    #                         role: 1)
+    #
+    # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+    #
+    # visit "/admin"
+    #
+    # expect(page).to have_content("The page you were looking for doesn't exist.")
+    # end
+  end
   it "does not allow default users to see /merchant or /admin pages" do
 
     josh = User.create!(name: "Josh Tukman",
@@ -121,11 +121,10 @@ RSpec.describe "as a user in the nav bar" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(josh)
 
-    # visit "/merchant"
-    # expect(page).to_not have_link("Merchant Dashboard")
-    # expect(page.status_code).to eq(404)
-    # expect(page).to have_content("The page you were looking for doesn't exist.")
-    #
+    visit "/merchant/dashboard"
+    expect(page).to_not have_link("Merchant Dashboard")    
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+
     # visit "/admin"
     # expect(page).to_not have_link("Admin Dashboard")
     # expect(page.status_code).to eq(404)

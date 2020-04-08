@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   root "merchants#index"
   get "/", to: "welcome#index"
-  
-  get "/login", to: "login#new"
+
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
 
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
