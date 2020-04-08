@@ -4,7 +4,11 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if user.authenticate(params[:password])
+
+    if user == nil
+      flash[:error] = "The credentials you entered are incorrect"
+      redirect_to "/login"
+    elsif user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "You are logged in!"
       if user.default?
@@ -13,7 +17,8 @@ class SessionsController < ApplicationController
         redirect_to "/merchant"
       end
     else
-      flash[:error] = "Sorry sucka"
+      flash[:error] = "The credentials you entered are incorrect"
+      redirect_to "/login"
     end
   end
 end
