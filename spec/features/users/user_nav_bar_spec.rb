@@ -88,4 +88,24 @@ RSpec.describe "as a user in the nav bar" do
     expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end
+
+  describe "as a merchant employee" do
+    it "does not allow me to access any path that begins with '/admin' and displays a 404 error" do
+      merchant = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 1)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+    visit "/admin"
+
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
 end
