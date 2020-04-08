@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root "merchants#index"
   get "/", to: "welcome#index"
-  
+
   get "/login", to: "login#new"
 
   get "/merchants", to: "merchants#index"
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   post "/users", to: "users#create"
 
   namespace :merchant do
-    get "/dashboard", to: "dashboard#index"
+    get "/", to: "dashboard#index"
   end
 
   namespace :default do

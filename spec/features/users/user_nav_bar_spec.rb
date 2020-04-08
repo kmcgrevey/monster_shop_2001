@@ -65,7 +65,7 @@ RSpec.describe "as a user in the nav bar" do
       click_link "Merchant Dashboard"
     end
 
-    expect(current_path).to eq("/merchant/dashboard")
+    expect(current_path).to eq("/merchant")
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe "as a user in the nav bar" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-    visit "/merchant/dashboard"
+    visit "/merchant"
 
     expect(page).to have_content("The page you were looking for doesn't exist.")
     end

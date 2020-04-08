@@ -24,9 +24,9 @@
       <% if current_user && current_user["role"] == "merchant" %>
         <%= link_to "Profile" %>
         <%= link_to "Logout" %>
-        <%= link_to "Merchant Dashboard", "/merchant/dashboard" %>
+        <%= link_to "Merchant Dashboard", "/merchant" %>
       <% end %>
-     
+
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
