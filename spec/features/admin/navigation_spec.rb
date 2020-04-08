@@ -81,3 +81,8 @@ RSpec.describe "As an Admin", type: :feature do
   
   end
 end
+# As an admin
+# When I try to access any path that begins with the following, then I see a 404 error:
+
+# '/merchant'
+# '/cart'
