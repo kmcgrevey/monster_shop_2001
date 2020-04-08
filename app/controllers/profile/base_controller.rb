@@ -1,4 +1,4 @@
-class Profiles::BaseController < ApplicationController
+class Profile::BaseController < ApplicationController
   before_action :require_admin
 
   private

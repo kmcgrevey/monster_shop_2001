@@ -55,8 +55,8 @@ RSpec.describe "As a visitor" do
   #     expect(page.status_code).to eq(404)
   #   end
 
-    it "when trying to access /profiles" do
-      visit "/profiles"
+    it "when trying to access /profile" do
+      visit "/profile"
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end
