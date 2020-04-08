@@ -32,10 +32,16 @@ class SessionsController < ApplicationController
         redirect_to "/merchant"
       elsif user.admin?
         redirect_to "/admin"
-      end    
+      end
     else
       flash[:error] = "The credentials you entered are incorrect"
       redirect_to "/login"
+    end
+
+    def destroy
+      session.clear
+      flash[:success] = "You are logged out!"
+      redirect_to "/"
     end
   end
 end

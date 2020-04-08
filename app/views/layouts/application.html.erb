@@ -18,12 +18,12 @@
       <%= link_to "Login", "/login" %>
       <% if current_user && current_user["role"] == "default" %>
         <%= link_to "Profile" %>
-        <%= link_to "Logout" %>
+        <%= link_to "Logout", "/logout", method: :delete%>
       <% end %>
 
       <% if current_user && current_user["role"] == "merchant" %>
         <%= link_to "Profile" %>
-        <%= link_to "Logout" %>
+        <%= link_to "Logout", "/logout", method: :delete %>
         <%= link_to "Merchant Dashboard", "/merchant" %>
       <% end %>
 
