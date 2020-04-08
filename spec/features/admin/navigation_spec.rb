@@ -65,8 +65,22 @@ RSpec.describe "As an Admin", type: :feature do
         expect(page).not_to have_link("Register")
       end
     end
+
+    it 'if I try to visit a merchant route I get an error' do
+      visit "/merchant/dashboard"
+
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+    
+    it 'if I try to visit a cart route I get an error' do
+      visit "/cart"
+
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
     
   
   end
 end
 
+# '/merchant'
+# '/cart'
