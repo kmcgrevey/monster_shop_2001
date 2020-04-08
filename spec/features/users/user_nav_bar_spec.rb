@@ -35,6 +35,29 @@ RSpec.describe "as a user in the nav bar" do
       within ".topnav" do
         expect(page).to have_link "Logout"
       end
+    end
 
+  it "does not allow default users to see /merchant or /admin pages" do
+
+    josh = User.create!(name: "Josh Tukman",
+                          address: "756 Main St",
+                          city: "Denver",
+                          state: "Colorado",
+                          zip: "80209",
+                          email: "josh.t@gmail.com",
+                          password: "secret_password",
+                          password_confirmation: "secret_password")
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(josh)
+
+    # visit "/merchant"
+    # expect(page).to_not have_link("Merchant Dashboard")
+    # expect(page.status_code).to eq(404)
+    # expect(page).to have_content("The page you were looking for doesn't exist.")
+    #
+    # visit "/admin"
+    # expect(page).to_not have_link("Admin Dashboard")
+    # expect(page.status_code).to eq(404)
+    # expect(page).to have_content("The page you were looking for doesn't exist.")
   end
 end
