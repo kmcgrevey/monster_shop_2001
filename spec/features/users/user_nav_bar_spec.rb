@@ -35,6 +35,37 @@ RSpec.describe "as a user in the nav bar" do
       within ".topnav" do
         expect(page).to have_link "Logout"
       end
+    end
 
+  describe "as an employee in the nav bar" do
+    it "I see the same links as a regular user and a link to my merchant dashboard" do
+      employee = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 1)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(employee)
+
+    visit("/merchants")
+
+    within ".topnav" do
+      expect(page).to have_link "Profile"
+    end
+
+    within ".topnav" do
+      expect(page).to have_link "Logout"
+    end
+
+    within ".topnav" do
+      click_link "Merchant Dashboard"
+    end
+
+    expect(current_path).to eq("/merchant/dashboard")
+    end
   end
 end
