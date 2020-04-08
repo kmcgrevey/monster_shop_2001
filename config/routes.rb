@@ -39,12 +39,14 @@ Rails.application.routes.draw do
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
 
-  #users
   get "/register", to: "users#new"
   post "/users", to: "users#create"
+
+  namespace :merchant do
+    get "/dashboard", to: "dashboard#index"
+  end
 
   namespace :default do
     get "/profile", to: "profiles#show"
   end
-
 end
