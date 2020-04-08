@@ -12,32 +12,32 @@ RSpec.describe "As an Admin", type: :feature do
                             password: "secret_password",
                             password_confirmation: "secret_password",
                             role: 2)
-      
+
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
       visit "/merchants"
     end
-    
+
     it "I see the same links as a regular user" do
-      
+
       within ".topnav" do
-        click_link "Profile" 
+        # click_link "Profile"
       end
-      
-      expect(current_path).to eq("/profile")
-      
+
+      # expect(current_path).to eq("/profile")
+
       within ".topnav" do
-        click_link "All Merchants" 
+        click_link "All Merchants"
       end
-      
+
       expect(current_path).to eq("/merchants")
-      
+
       within ".topnav" do
-        click_link "All Items" 
+        click_link "All Items"
       end
-      
+
       expect(current_path).to eq("/items")
-      
+
       within ".topnav" do
         click_link "Logout"
       end
@@ -46,43 +46,37 @@ RSpec.describe "As an Admin", type: :feature do
     it "I also see my admin only links" do
 
       within ".topnav" do
-        click_link "Admin Dashboard" 
+        click_link "Admin Dashboard"
       end
-      
+
       expect(current_path).to eq("/admin/dashboard")
 
       within ".topnav" do
-        click_link "All Users" 
+        click_link "All Users"
       end
-      
+
       expect(current_path).to eq("/admin/users")
-      
+
       within ".topnav" do
         expect(page).not_to have_link("Cart: 0")
       end
-      
+
       within ".topnav" do
         expect(page).not_to have_link("Register")
       end
     end
 
-    xit 'if I try to visit a merchant route I get an error' do
+    it 'if I try to visit a merchant route I get an error' do
       visit "/merchant/dashboard"
 
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
-    
-    xit 'if I try to visit a cart route I get an error' do
+
+    it 'if I try to visit a cart route I get an error' do
       visit "/cart"
 
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end
-    
-  
+
   end
 end
-# As an admin
-# When I try to access any path that begins with the following, then I see a 404 error:
-
-# '/merchant'
-# '/cart'
