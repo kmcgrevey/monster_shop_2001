@@ -93,5 +93,9 @@ describe Item, type: :model do
        expect(Item.least_popular_5).to eq([@brush, @collar, @dog_food, @bed, @carrier])
     end
     
+    it '.qty_purchased' do
+       expect(@tire.qty_purchased).to eq(11)
+    end
+    
   end
 end

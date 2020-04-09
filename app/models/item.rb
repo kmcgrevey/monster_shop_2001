@@ -37,4 +37,8 @@ class Item <ApplicationRecord
                        .limit(5)
   end
 
+  def qty_purchased
+    item_orders.sum(:quantity)
+  end
+
 end
