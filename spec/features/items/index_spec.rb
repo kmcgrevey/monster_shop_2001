@@ -11,7 +11,8 @@ RSpec.describe "Items Index Page" do
       @pump = @meg.items.create!(name: "Pump", description: "Not just hot air", price: 70, image: "https://www.rei.com/media/product/152974", inventory: 20)
       @pedals = @meg.items.create!(name: "Pedals", description: "Clipless bliss!", price: 210, image: "https://www.rei.com/media/product/130015", inventory: 20)
       @helmet = @meg.items.create!(name: "Helmet", description: "Safety Third!", price: 100, image: "https://www.rei.com/media/product/153004", inventory: 20)
-      
+      @stud = @meg.items.create(name: "Canti Studs", description: "You don't need 'em till you do.'", price: 5, image: "https://www.jensonusa.com/globalassets/product-images---all-assets/problem-solvers/br309z00.jpg", active?:false, inventory: 4)
+
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
       @carrier = @brian.items.create!(name: "Carrier", description: "Home away from home", price: 70, image: "https://s7d2.scene7.com/is/image/PetSmart/5168894?$sclp-prd-main_large$", inventory: 32)
@@ -28,7 +29,8 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@tire.merchant.name)
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      expect(page).to have_link(@dog_bone.name)
+      # removed this because it will show and break tests, need to get clarificaiton here
+      # expect(page).to have_link(@dog_bone.name)
       expect(page).to have_link(@dog_bone.merchant.name)
     end
 
@@ -56,15 +58,40 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
-        expect(page).to have_content(@dog_bone.description)
-        expect(page).to have_content("Price: $#{@dog_bone.price}")
-        expect(page).to have_content("Inactive")
-        expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-        expect(page).to have_link(@brian.name)
-        expect(page).to have_css("img[src*='#{@dog_bone.image}']")
+      # removed this because it will show and break tests, need to get clarificaiton here
+      # expect(page).to have_link(@dog_bone.name)
+
+      # within "#item-#{@dog_bone.id}" do
+      #   expect(page).to have_link(@dog_bone.name)
+      #   expect(page).to have_content(@dog_bone.description)
+      #   expect(page).to have_content("Price: $#{@dog_bone.price}")
+      #   expect(page).to have_content("Inactive")
+      #   expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
+      #   expect(page).to have_link(@brian.name)
+      #   expect(page).to have_css("img[src*='#{@dog_bone.image}']")
+      # end
+    end
+
+    it "does not show disabled items" do
+      visit '/items'
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link(@tire.name)
+        expect(page).to have_content(@tire.description)
+        expect(page).to have_content("Price: $#{@tire.price}")
+        expect(page).to have_content("Active")
+        expect(page).to have_content("Inventory: #{@tire.inventory}")
+        expect(page).to have_css("img[src*='#{@tire.image}']")
       end
+
+      expect(page).to_not have_css("#item-#{@stud.id}")
+
+      expect(page).to_not have_link(@stud.name)
+      expect(page).to_not have_content(@stud.description)
+      expect(page).to_not have_content("Price: $#{@stud.price}")
+      expect(page).to_not have_content("Inventory: #{@stud.inventory}")
+      expect(page).to_not have_css("img[src*='#{@stud.image}']")
+
     end
 
     it "I see the 5 most and 5 least popular items with their quantity purchased" do
@@ -102,5 +129,26 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_content("#{@carrier.name}: 5")
       end
     end
+
+    it "all item images are links to the items show page" do
+      visit '/items'
+
+      within "#item-#{@pull_toy.id}" do
+        find(:xpath, "//a/img[@alt='Tug toy dog pull 9010 2 800x800']/..").click
+      end
+
+      expect(current_path).to eq("/items/#{@pull_toy.id}")
+
+      visit '/items'
+
+      within "#item-#{@tire.id}" do
+        find(:xpath, "//a/img[@alt='4e1f5b05 27ef 4267 bb9a 14e35935f218?size=784x588']/..").click
+      end
+
+      expect(current_path).to eq("/items/#{@tire.id}")
+
+      expect(page).to_not have_css("#item-#{@stud.id}")
+    end
+
   end
 end
