@@ -44,16 +44,25 @@ RSpec.describe "As a registered default user" do
         expect(page).to have_content("80209")
         expect(page).to have_content("josh.t@gmail.com")
       end
+
+      it "it can let us know when the email we input is already in use" do
+        @user2 = User.create!(name: "Krista Stadler",
+                              address: "756 Main St.",
+                              city: "Denver",
+                              state: "Colorado",
+                              zip: "80209",
+                              email: "krista@gmail.com",
+                              password: "secret_password",
+                              password_confirmation: "secret_password",
+                              role: 0)
+
+      visit "/profile/#{@user.id}/edit"
+      fill_in :email, with: "krista@gmail.com"
+      click_button "Submit"
+      expect(current_path).to eq("/profile/#{@user.id}/edit")
+      within '.error-flash' do
+        expect(page).to have_content("Email has already been taken")
+      end
+    end
   end
-
 end
-
-
-# When I click on the link to edit my profile data
-# I see a form like the registration page
-# The form is prepopulated with all my current information except my password
-# When I change any or all of that information
-# And I submit the form
-# Then I am returned to my profile page
-# And I see a flash message telling me that my data is updated
-# And I see my updated information
