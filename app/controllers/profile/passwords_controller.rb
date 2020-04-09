@@ -4,7 +4,7 @@ class Profile::PasswordsController < Profile::BaseController
   end
 
   def update
-    user = User.find(session[:user_id])
+    user = current_user
     if user.update(new_password)
       flash[:succes] = "Your password has been updated!"
       redirect_to "/profile"
