@@ -76,18 +76,26 @@ RSpec.describe 'Cart show' do
       
       end
 
-      it "When I click the add button I see the quantity increase by one" do
+      xit "When I click the add button to increase quantity but cannot exceed that items inventory limit" do
         visit '/cart'
 
         within "#cart-item-#{@tire.id}" do
           expect(page).to have_content("1")
-          click_button "Add"
+          click_button "Add Qty"
           expect(page).to have_content("2")
+        end
+
+        within "#cart-item-#{@tire.id}" do
+          13.times do
+            click_button "Add Qty"
+          end
+          expect(page).to have_content("12")
         end
       end
 
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
