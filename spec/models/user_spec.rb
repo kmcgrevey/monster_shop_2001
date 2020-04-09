@@ -59,5 +59,25 @@ RSpec.describe User do
     end
   end
 
+  describe "instance methods" do
+    it "knows information about itself" do
+      josh = User.create!(name: "Josh Tukman",
+                      address: "756 Main St",
+                      city: "Denver",
+                      state: "Colorado",
+                      zip: "80209",
+                      email: "josh.t@gmail.com",
+                      password: "secret_password",
+                      password_confirmation: "secret_password",
+                      role: 2)
+
+      expect(josh.info).to eq({name: "Josh Tukman",
+                               address: "756 Main St",
+                               city: "Denver",
+                               state: "Colorado",
+                               zip: "80209",
+                               email: "josh.t@gmail.com",})
+    end
+  end
 
 end
