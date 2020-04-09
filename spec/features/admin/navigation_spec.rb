@@ -63,6 +63,7 @@ RSpec.describe "As an Admin", type: :feature do
 
       within ".topnav" do
         expect(page).not_to have_link("Register")
+        expect(page).not_to have_link("Login")
       end
     end
 
