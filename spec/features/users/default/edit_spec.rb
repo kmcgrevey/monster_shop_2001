@@ -20,7 +20,7 @@ RSpec.describe "As a registered default user" do
       click_link "Edit Profile"
       expect(current_path).to eq("/profile/#{@user.id}/edit")
       end
-      it "can allow editing a form that is prepopulated with current info except password to edit" do
+      it "can allow editing a form that is prepopulated with current info except password to edit and displays updated info" do
         visit "/profile/#{@user.id}/edit"
         expect(find_field(:name).value).to eq "Josh Tukman"
         expect(find_field(:address).value).to eq "756 Main St."
@@ -28,15 +28,24 @@ RSpec.describe "As a registered default user" do
         expect(find_field(:state).value).to eq "Colorado"
         expect(find_field(:zip).value).to eq "80209"
         expect(find_field(:email).value).to eq "josh.t@gmail.com"
-        expect(find_field(:password).value).to eq nil
-        expect(find_field(:password_confirmation).value).to eq nil
+
 
         fill_in :address, with: "2223 Bellflower Dr."
         fill_in :city, with: "Broomfield"
         click_button "Submit"
         expect(current_path).to eq("/profile")
+        within ".success-flash" do
+          expect(page).to have_content("Your information has been updated!")
+        end
+        expect(page).to have_content("Josh Tukman")
+        expect(page).to have_content("2223 Bellflower Dr.")
+        expect(page).to have_content("Broomfield")
+        expect(page).to have_content("Colorado")
+        expect(page).to have_content("80209")
+        expect(page).to have_content("josh.t@gmail.com")
       end
   end
+
 end
 
 
