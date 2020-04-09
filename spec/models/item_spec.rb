@@ -76,10 +76,21 @@ describe Item, type: :model do
       ItemOrder.create!(order_id: @order.id, item_id: @pull_toy.id, price: @pull_toy.price, quantity: 9)
       ItemOrder.create!(order_id: @order.id, item_id: @pump.id, price: @pump.price, quantity: 8)
       ItemOrder.create!(order_id: @order.id, item_id: @pedals.id, price: @pedals.price, quantity: 7)
+      
+      ItemOrder.create!(order_id: @order.id, item_id: @helmet.id, price: @helmet.price, quantity: 6)
+      ItemOrder.create!(order_id: @order.id, item_id: @carrier.id, price: @carrier.price, quantity: 5)
+      ItemOrder.create!(order_id: @order.id, item_id: @bed.id, price: @bed.price, quantity: 4)
+      ItemOrder.create!(order_id: @order.id, item_id: @dog_food.id, price: @dog_food.price, quantity: 3)
+      ItemOrder.create!(order_id: @order.id, item_id: @collar.id, price: @collar.price, quantity: 2)
+      ItemOrder.create!(order_id: @order.id, item_id: @brush.id, price: @brush.price, quantity: 1)
     end
     
     it '.most_popular_5' do
        expect(Item.most_popular_5).to eq([@tire, @seat, @pull_toy, @pump, @pedals])
+    end
+    
+    it '.least_popular_5' do
+       expect(Item.least_popular_5).to eq([@brush, @collar, @dog_food, @bed, @carrier])
     end
     
   end

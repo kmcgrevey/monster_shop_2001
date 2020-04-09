@@ -31,4 +31,10 @@ class Item <ApplicationRecord
                        .limit(5)
   end
 
+  def self.least_popular_5
+    joins(:item_orders).group(:id)
+                       .order('SUM (item_orders.quantity) ASC')
+                       .limit(5)
+  end
+
 end
