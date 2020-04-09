@@ -1,0 +1,11 @@
+<h1>Welcome <%= @user.name %>! </h1>
+<section class="user-info">
+  <ul>
+    <% @user.info.each do |category, info| %>
+      <li><%= category.capitalize %>: <%= info %></li>
+    <% end %>
+  </ul>
+  <div class="profile-edit-button">
+    <%= link_to "Edit Profile", "/profile/:id/edit" %>
+  </div>
+</section>
