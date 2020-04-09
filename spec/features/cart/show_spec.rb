@@ -56,21 +56,34 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Total: $124")
       end
 
-      it "I see a button next to each item to increment the quantity of each item" do
+      it "I see a button next to each item to add and subtract the quantity of each item" do
        visit '/cart'
 
         within "#cart-item-#{@pencil.id}" do
-          expect(page).to have_button("Add")
+          expect(page).to have_button("Add Qty")
+          expect(page).to have_button("Subtract Qty")
         end
 
         within "#cart-item-#{@paper.id}" do
-          expect(page).to have_button("Add")
+          expect(page).to have_button("Add Qty")
+          expect(page).to have_button("Subtract Qty")
         end
 
         within "#cart-item-#{@tire.id}" do
-          expect(page).to have_button("Add")
+          expect(page).to have_button("Add Qty")
+          expect(page).to have_button("Subtract Qty")
         end
       
+      end
+
+      it "When I click the add button I see the quantity increase by one" do
+        visit '/cart'
+
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("1")
+          click_button "Add"
+          expect(page).to have_content("2")
+        end
       end
 
     end
