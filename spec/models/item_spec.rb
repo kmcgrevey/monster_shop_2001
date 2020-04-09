@@ -47,6 +47,14 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+        
+    it 'qty_purchased' do
+      order = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
+      
+      expect(@chain.qty_purchased).to eq(4)
+    end
   end
 
   describe "class methods" do
@@ -67,8 +75,6 @@ describe Item, type: :model do
       @collar = @brian.items.create!(name: "Dog Collar", description: "Choker", price: 18, image: "https://s7d2.scene7.com/is/image/PetSmart/5169886", inventory: 32)
       @brush = @brian.items.create!(name: "Dog Brush", description: "Detangle those curls", price: 12, image: "https://s7d2.scene7.com/is/image/PetSmart/5280398", inventory: 32)
 
-      @user = User.create!(name: 'Kevin', address: '123 Main', city: 'Denver', state: 'CO', zip: 80222, email: 'example@example.com', password: 'password', password_confirmation: 'password', role: 0)
-      
       @order = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
    
       ItemOrder.create!(order_id: @order.id, item_id: @tire.id, price: @tire.price, quantity: 11)
@@ -91,10 +97,6 @@ describe Item, type: :model do
     
     it '.least_popular_5' do
        expect(Item.least_popular_5).to eq([@brush, @collar, @dog_food, @bed, @carrier])
-    end
-    
-    it '.qty_purchased' do
-       expect(@tire.qty_purchased).to eq(11)
     end
     
   end
