@@ -170,5 +170,4 @@ tr:nth-child(even) {
 .profile-edit-button a:hover {
   background-color: #17BEBB;
   color: black;
-  float: inherit;
 }

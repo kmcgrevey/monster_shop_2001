@@ -28,6 +28,7 @@ RSpec.describe "as a registered user when I visit my profile page", type: :featu
       expect(page).to have_content("#{user.state}")
       expect(page).to have_content("#{user.zip}")
       expect(page).to have_content("#{user.email}")
+      expect(page).to_not have_content("#{user.password}")
 
       within ".profile-edit-button" do
         expect(page).to have_content("Edit Profile")
