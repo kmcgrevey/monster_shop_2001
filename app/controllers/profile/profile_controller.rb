@@ -1,6 +1,5 @@
 class Profile::ProfileController < Profile::BaseController
   def show
-#     @user = User.find(session[:user_id])
     @user = current_user
   end
 
@@ -16,7 +15,7 @@ class Profile::ProfileController < Profile::BaseController
     else
       redirect_to ("/profile/#{user.id}/edit")
       flash[:error] = user.errors.full_messages.to_sentence
-    end 
+    end
   end
   private
 
