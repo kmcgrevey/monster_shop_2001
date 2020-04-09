@@ -1,7 +1,14 @@
-<h1><%= @user.name %></h1>
-<%= @user.address %>
-<%= @user.city %>
-<%= @user.state %>
-<%= @user.zip %>
-<%= @user.email %>
-<%= link_to "Edit Profile", "/profile/#{@user.id}/edit" %>
+
+<h1>Welcome <%= @user.name %>! </h1>
+<section class="user-info">
+  <ul>
+    <% @user.info.each do |category, info| %>
+      <li><%= category.capitalize %>: <%= info %></li>
+    <% end %>
+  </ul>
+  <div class="profile-edit-button">
+    <%= link_to "Edit Profile", "/profile/:id/edit" %>
+<!--     <%= link_to "Edit Profile", "/profile/#{@user.id}/edit" %> -->
+  </div>
+</section>
+

@@ -156,3 +156,18 @@ td, th {
 tr:nth-child(even) {
   background-color: #F0F8FF;
 }
+
+
+.profile-edit-button a {
+  background-color: #002244;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.profile-edit-button a:hover {
+  background-color: #17BEBB;
+  color: black;
+}

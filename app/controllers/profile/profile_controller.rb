@@ -1,11 +1,11 @@
 class Profile::ProfileController < Profile::BaseController
   def show
+#     @user = User.find(session[:user_id])
     @user = current_user
   end
 
   def edit
     @user = current_user
-
   end
 
   def update
