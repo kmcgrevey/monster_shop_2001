@@ -1,3 +1,4 @@
+
 <h1>Welcome <%= @user.name %>! </h1>
 <section class="user-info">
   <ul>
@@ -7,5 +8,7 @@
   </ul>
   <div class="profile-edit-button">
     <%= link_to "Edit Profile", "/profile/:id/edit" %>
+<!--     <%= link_to "Edit Profile", "/profile/#{@user.id}/edit" %> -->
   </div>
 </section>
+
