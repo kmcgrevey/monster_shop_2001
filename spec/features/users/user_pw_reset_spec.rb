@@ -45,7 +45,26 @@ RSpec.describe "when I visit my profile page" do
         click_button("Submit")
 
         expect(current_path).to eq("/profile")
+        expect(page).to have_content("Your password has been updated!")
       end
     end
+  end
+
+  it "if I don't enter a password and confirmation or if they don't match I see a flash error and am directed back" do
+    visit '/login'
+
+    fill_in :email, with: "josh.t@gmail.com"
+    fill_in :password, with: "secret_password"
+    click_button "Submit"
+
+    click_link("Change Password")
+    expect(current_path).to eq("/profile/password/edit")
+
+    fill_in :password, with: "new_password"
+
+    click_button("Submit")
+
+    expect(current_path).to eq("/profile/password/edit")
+    expect(page).to have_content("Password and password confirmation must match.")
   end
 end
