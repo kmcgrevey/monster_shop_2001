@@ -78,7 +78,8 @@ describe Item, type: :model do
       @order = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
       @order2 = Order.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
    
-      ItemOrder.create!(order_id: @order2.id, item_id: @tire.id, price: @tire.price, quantity: 11)
+      ItemOrder.create!(order_id: @order2.id, item_id: @tire.id, price: @tire.price, quantity: 9)
+      ItemOrder.create!(order_id: @order.id, item_id: @tire.id, price: @tire.price, quantity: 2)
       ItemOrder.create!(order_id: @order.id, item_id: @seat.id, price: @seat.price, quantity: 10)
       ItemOrder.create!(order_id: @order.id, item_id: @pull_toy.id, price: @pull_toy.price, quantity: 9)
       ItemOrder.create!(order_id: @order.id, item_id: @pump.id, price: @pump.price, quantity: 8)
