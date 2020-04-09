@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
   namespace :profile do
     get "/", to: "profile#show"
+    get "/:id/edit", to: "profile#edit"
+    patch "/:id", to: "profile#update"
   end
 
 end
