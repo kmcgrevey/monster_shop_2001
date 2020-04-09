@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_default?
-    current_user && current_user["role"] == "default"
+    current_user && current_user.default?
   end
 
 end
