@@ -20,6 +20,7 @@ RSpec.describe "As a registered default user" do
       click_link "Edit Profile"
       expect(current_path).to eq("/profile/#{@user.id}/edit")
       end
+      
       it "can allow editing a form that is prepopulated with current info except password to edit and displays updated info" do
         visit "/profile/#{@user.id}/edit"
         expect(find_field(:name).value).to eq "Josh Tukman"

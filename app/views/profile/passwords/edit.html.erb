@@ -1,8 +1,8 @@
 <h1>New Password</h1>
 <%= form_tag "/profile/password/edit", method: :patch do %>
-<%= label_tag "Password" %>
-<%= text_field_tag "password" %>
-<%= label_tag "Confirm Password" %>
-<%= text_field_tag "password_confirmation" %>
+<%= label_tag "New Password" %>
+<%= password_field_tag "password" %><br>
+<%= label_tag "Confirm New Password" %>
+<%= password_field_tag "password_confirmation" %><br>
 <%= submit_tag "Submit" %>
 <% end %>

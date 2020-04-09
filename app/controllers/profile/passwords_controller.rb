@@ -6,7 +6,7 @@ class Profile::PasswordsController < Profile::BaseController
   def update
     user = current_user
     if user.update(new_password)
-      flash[:succes] = "Your password has been updated!"
+      flash[:success] = "Your password has been updated!"
       redirect_to "/profile"
     else
       flash[:error] = "Password and password confirmation must match."
