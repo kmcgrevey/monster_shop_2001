@@ -83,12 +83,11 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
       end
-
+      
       expect(page).to_not have_css("#item-#{@stud.id}")
 
       expect(page).to_not have_link(@stud.name)
       expect(page).to_not have_content(@stud.description)
-      expect(page).to_not have_content("Price: $#{@stud.price}")
       expect(page).to_not have_content("Inventory: #{@stud.inventory}")
       expect(page).to_not have_css("img[src*='#{@stud.image}']")
 
