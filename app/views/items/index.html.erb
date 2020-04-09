@@ -29,3 +29,9 @@
     <p><%= item.name %>: <%= item.qty_purchased %></p>
   <% end %>
 </section>
+<h2>Worst Five Items:</h2>
+<section id="least-popular">
+  <% @items.least_popular_5.each do |item| %>
+    <p><%= item.name %>: <%= item.qty_purchased %></p>
+  <% end %>
+</section>
