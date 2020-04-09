@@ -23,3 +23,9 @@
     </section>
     <% end %>
 </section>
+<h2>Top Five Items:</h2>
+<section id="most-popular">
+  <% @items.most_popular_5.each do |item| %>
+    <p><%= item.name %>: <%= item.qty_purchased %></p>
+  <% end %>
+</section>

@@ -81,57 +81,57 @@ RSpec.describe "Items Index Page" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       11.times do
-        visit "/item/#{@tire.id}"
+        visit "/items/#{@tire.id}"
         click_on "Add To Cart"
       end
 
       10.times do
-        visit "/item/#{@seat.id}"
+        visit "/items/#{@seat.id}"
         click_on "Add To Cart"
       end
 
       9.times do
-        visit "/item/#{@pull_toy.id}"
+        visit "/items/#{@pull_toy.id}"
         click_on "Add To Cart"
       end
 
       8.times do
-        visit "/item/#{@pump.id}"
+        visit "/items/#{@pump.id}"
         click_on "Add To Cart"
       end
 
       7.times do
-        visit "/item/#{@pedals.id}"
+        visit "/items/#{@pedals.id}"
         click_on "Add To Cart"
       end
 
       6.times do
-        visit "/item/#{@helmet.id}"
+        visit "/items/#{@helmet.id}"
         click_on "Add To Cart"
       end
 
       5.times do
-        visit "/item/#{@carrier.id}"
+        visit "/items/#{@carrier.id}"
         click_on "Add To Cart"
       end
 
       4.times do
-        visit "/item/#{@bed.id}"
+        visit "/items/#{@bed.id}"
         click_on "Add To Cart"
       end
 
       3.times do
-        visit "/item/#{@dog_food.id}"
+        visit "/items/#{@dog_food.id}"
         click_on "Add To Cart"
       end
 
       2.times do
-        visit "/item/#{@collar.id}"
+        visit "/items/#{@collar.id}"
         click_on "Add To Cart"
       end
 
       1.times do
-        visit "/item/#{@brush.id}"
+        visit "/items/#{@brush.id}"
         click_on "Add To Cart"
       end
 
