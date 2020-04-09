@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  get "/", to: "welcome#index"
+  delete "/logout", to: "sessions#destroy"
+
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+
+  resources :merchants
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -30,13 +30,27 @@ Rails.application.routes.draw do
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
 
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
+  resources :orders, only: [:new, :create, :show]
 
-  #users
   get "/register", to: "users#new"
   post "/users", to: "users#create"
 
-  get "/profile", to: "profiles#show"
+  #admin
+  namespace :admin do
+    get '/dashboard', to: "dashboard#index"
+    get '/users', to: "users#index"
+  end
+
+  namespace :merchant do
+    get "/", to: "dashboard#index"
+  end
+
+  namespace :profile do
+    get "/", to: "profile#show"
+    get "/password/edit", to: "passwords#edit"
+    patch "/password/edit", to: "passwords#update"
+    get "/:id/edit", to: "profile#edit"
+    patch "/:id", to: "profile#update"
+  end
+
 end
