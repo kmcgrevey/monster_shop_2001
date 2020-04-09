@@ -28,12 +28,12 @@
       <% end %>
 
       <% if current_user && current_user.default? %>
-        <%= link_to "Profile" %>
+        <%= link_to "Profile", "/profile" %>
         <%= link_to "Logout", "/logout", method: :delete%>
       <% end %>
 
       <% if current_user && current_user.merchant? %>
-        <%= link_to "Profile" %>
+        <%= link_to "Profile", "/profile" %>
         <%= link_to "Logout", "/logout", method: :delete %>
         <%= link_to "Merchant Dashboard", "/merchant" %>
       <% end %>
