@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   namespace :profile do
     get "/", to: "profile#show"
+    get "/password/edit", to: "passwords#edit"
+
   end
 
 end
