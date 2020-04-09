@@ -68,84 +68,22 @@ RSpec.describe "Items Index Page" do
     end
 
     it "I see the 5 most and 5 least popular items with their quantity purchased" do
-      user = User.create!(name: "Josh Tukman",
-                              address: "756 Main St",
-                              city: "Denver",
-                              state: "Colorado",
-                              zip: "80209",
-                              email: "josh.t@gmail.com",
-                              password: "secret_password",
-                              password_confirmation: "secret_password",
-                              role: 0)
-
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-
-      11.times do
-        visit "/items/#{@tire.id}"
-        click_on "Add To Cart"
-      end
-
-      10.times do
-        visit "/items/#{@seat.id}"
-        click_on "Add To Cart"
-      end
-
-      9.times do
-        visit "/items/#{@pull_toy.id}"
-        click_on "Add To Cart"
-      end
-
-      8.times do
-        visit "/items/#{@pump.id}"
-        click_on "Add To Cart"
-      end
-
-      7.times do
-        visit "/items/#{@pedals.id}"
-        click_on "Add To Cart"
-      end
-
-      6.times do
-        visit "/items/#{@helmet.id}"
-        click_on "Add To Cart"
-      end
-
-      5.times do
-        visit "/items/#{@carrier.id}"
-        click_on "Add To Cart"
-      end
-
-      4.times do
-        visit "/items/#{@bed.id}"
-        click_on "Add To Cart"
-      end
-
-      3.times do
-        visit "/items/#{@dog_food.id}"
-        click_on "Add To Cart"
-      end
-
-      2.times do
-        visit "/items/#{@collar.id}"
-        click_on "Add To Cart"
-      end
-
-      1.times do
-        visit "/items/#{@brush.id}"
-        click_on "Add To Cart"
-      end
-
-      visit "/cart"
-      click_on "Checkout"
    
-      fill_in :name, with: "Bert"
-      fill_in :address, with: "123 Sesame St."
-      fill_in :city, with: "NYC"
-      fill_in :state, with: "New York"
-      fill_in :zip, with: 10001
-      
-      click_button "Create Order"
-      
+      order = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+
+      ItemOrder.create!(order_id: order.id, item_id: @tire.id, price: @tire.price, quantity: 11)
+      ItemOrder.create!(order_id: order.id, item_id: @seat.id, price: @seat.price, quantity: 10)
+      ItemOrder.create!(order_id: order.id, item_id: @pull_toy.id, price: @pull_toy.price, quantity: 9)
+      ItemOrder.create!(order_id: order.id, item_id: @pump.id, price: @pump.price, quantity: 8)
+      ItemOrder.create!(order_id: order.id, item_id: @pedals.id, price: @pedals.price, quantity: 7)
+   
+      ItemOrder.create!(order_id: order.id, item_id: @helmet.id, price: @helmet.price, quantity: 6)
+      ItemOrder.create!(order_id: order.id, item_id: @carrier.id, price: @carrier.price, quantity: 5)
+      ItemOrder.create!(order_id: order.id, item_id: @bed.id, price: @bed.price, quantity: 4)
+      ItemOrder.create!(order_id: order.id, item_id: @dog_food.id, price: @dog_food.price, quantity: 3)
+      ItemOrder.create!(order_id: order.id, item_id: @collar.id, price: @collar.price, quantity: 2)
+      ItemOrder.create!(order_id: order.id, item_id: @brush.id, price: @brush.price, quantity: 1)
+
       visit '/items'
 
       within "#most-popular" do
