@@ -76,7 +76,7 @@ RSpec.describe 'Cart show' do
       
       end
 
-      xit "When I click the add button to increase quantity but cannot exceed that items inventory limit" do
+      xit "I click the add button to increase quantity but cannot exceed that items inventory limit" do
         visit '/cart'
 
         within "#cart-item-#{@tire.id}" do
@@ -91,6 +91,18 @@ RSpec.describe 'Cart show' do
           end
           expect(page).to have_content("12")
         end
+      end
+
+      xit "I click the subtract button until zero to remove item from my cart" do
+        visit '/cart'
+
+        expect(page).to have_link(@tire.name)
+        
+        within "#cart-item-#{@tire.id}" do
+          click_button "Subtract Qty"
+        end
+      
+        expect(page).not_to have_link(@tire.name)
       end
 
     end
