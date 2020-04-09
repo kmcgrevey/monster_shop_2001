@@ -30,11 +30,11 @@ RSpec.describe "as a user in the nav bar" do
 
       within ".topnav" do
         expect(page).to have_link "Profile"
+        expect(page).to have_link "Logout"
+        expect(page).to_not have_link "Login"
+        expect(page).to_not have_link "Register"
       end
 
-      within ".topnav" do
-        expect(page).to have_link "Logout"
-      end
     end
 
   describe "as a merchant employee in the nav bar" do
@@ -55,14 +55,10 @@ RSpec.describe "as a user in the nav bar" do
 
     within ".topnav" do
       expect(page).to have_link "Profile"
-    end
-
-    within ".topnav" do
       expect(page).to have_link "Logout"
-    end
-
-    within ".topnav" do
       click_link "Merchant Dashboard"
+      expect(page).to_not have_link "Login"
+      expect(page).to_not have_link "Register"
     end
 
     expect(current_path).to eq("/merchant")
@@ -89,24 +85,25 @@ RSpec.describe "as a user in the nav bar" do
     end
   end
 
-  # describe "as a merchant employee" do
-  #   it "does not allow me to access any path that begins with '/admin' and displays a 404 error" do
-  #     merchant = User.create!(name: "Josh Tukman",
-  #                           address: "756 Main St",
-  #                           city: "Denver",
-  #                           state: "Colorado",
-  #                           zip: "80209",
-  #                           email: "josh.t@gmail.com",
-  #                           password: "secret_password",
-  #                           password_confirmation: "secret_password",
-  #                           role: 1)
-  #
-  #   allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
-  #
-  #   visit "/admin"
-  #
-  #   expect(page).to have_content("The page you were looking for doesn't exist.")
-  #   end
+  describe "as a merchant employee" do
+     it "does not allow me to access any path that begins with '/admin' and displays a 404 error" do
+       merchant = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 1)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+    visit "/admin/dashboard"
+
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
 
   it "does not allow default users to see admin pages" do
 
@@ -121,9 +118,8 @@ RSpec.describe "as a user in the nav bar" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(josh)
 
-    # visit "/admin"
-    # expect(page).to_not have_link("Admin Dashboard")
-    # expect(page.status_code).to eq(404)
-    # expect(page).to have_content("The page you were looking for doesn't exist.")
+     visit "/admin/dashboard"
+     expect(page).to_not have_link("Admin Dashboard")
+     expect(page).to have_content("The page you were looking for doesn't exist.")
   end
 end
