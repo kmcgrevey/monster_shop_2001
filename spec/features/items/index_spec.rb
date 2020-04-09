@@ -94,6 +94,14 @@ RSpec.describe "Items Index Page" do
 
       expect(current_path).to eq("/items/#{@pull_toy.id}")
 
+      visit '/items'
+
+      within "#item-#{@tire.id}" do
+        find(:xpath, "//a/img[@alt='4e1f5b05 27ef 4267 bb9a 14e35935f218?size=784x588']/..").click
+      end
+
+      expect(current_path).to eq("/items/#{@tire.id}")
+
       expect(page).to_not have_css("#item-#{@stud.id}")
     end
 
