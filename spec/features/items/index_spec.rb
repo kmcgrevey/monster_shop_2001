@@ -29,9 +29,7 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@tire.merchant.name)
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      # removed this because it will show and break tests, need to get clarificaiton here
-      # expect(page).to have_link(@dog_bone.name)
-      expect(page).to have_link(@dog_bone.merchant.name)
+
     end
 
     it "I can see a list of all of the items "do
@@ -58,18 +56,8 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      # removed this because it will show and break tests, need to get clarificaiton here
-      # expect(page).to have_link(@dog_bone.name)
+      expect(page).to_not have_css("#item-#{@dog_bone.id}")
 
-      # within "#item-#{@dog_bone.id}" do
-      #   expect(page).to have_link(@dog_bone.name)
-      #   expect(page).to have_content(@dog_bone.description)
-      #   expect(page).to have_content("Price: $#{@dog_bone.price}")
-      #   expect(page).to have_content("Inactive")
-      #   expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-      #   expect(page).to have_link(@brian.name)
-      #   expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-      # end
     end
 
     it "does not show disabled items" do
@@ -83,7 +71,7 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
       end
-      
+
       expect(page).to_not have_css("#item-#{@stud.id}")
 
       expect(page).to_not have_link(@stud.name)
@@ -94,7 +82,7 @@ RSpec.describe "Items Index Page" do
     end
 
     it "I see the 5 most and 5 least popular items with their quantity purchased" do
-   
+
       order = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
 
       ItemOrder.create!(order_id: order.id, item_id: @tire.id, price: @tire.price, quantity: 11)
@@ -102,7 +90,7 @@ RSpec.describe "Items Index Page" do
       ItemOrder.create!(order_id: order.id, item_id: @pull_toy.id, price: @pull_toy.price, quantity: 9)
       ItemOrder.create!(order_id: order.id, item_id: @pump.id, price: @pump.price, quantity: 8)
       ItemOrder.create!(order_id: order.id, item_id: @pedals.id, price: @pedals.price, quantity: 7)
-   
+
       ItemOrder.create!(order_id: order.id, item_id: @helmet.id, price: @helmet.price, quantity: 6)
       ItemOrder.create!(order_id: order.id, item_id: @carrier.id, price: @carrier.price, quantity: 5)
       ItemOrder.create!(order_id: order.id, item_id: @bed.id, price: @bed.price, quantity: 4)
@@ -131,7 +119,7 @@ RSpec.describe "Items Index Page" do
 
     it "all item images are links to the items show page" do
       visit '/items'
-      
+
       expect(page).to_not have_css("#item-#{@stud.id}")
 
       within "#item-#{@pull_toy.id}" do

@@ -1,8 +1,8 @@
 class Profile::BaseController < ApplicationController
-  before_action :require_default
+  before_action :require_user
 
   private
-    def require_default
-      render file: "/public/404" unless current_default?
+    def require_user
+      render file: "/public/404" unless current_user
     end
 end
