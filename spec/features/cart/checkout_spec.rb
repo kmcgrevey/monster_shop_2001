@@ -54,9 +54,9 @@ RSpec.describe 'Cart show' do
 
       order = Order.last
 
-      expect(order.name).to eq("Josh Tuckman")
+      expect(order.name).to eq("Josh Tukman")
       expect(order.status).to eq("Pending")
-      
+
       within ".success-flash" do
         expect(page).to have_content("Your order was created!")
       end

@@ -12,6 +12,11 @@ RSpec.describe User do
 
     it {should validate_uniqueness_of(:email)}
   end
+
+  describe "relationships" do
+    it {should have_many :orders}
+  end
+  
   describe "roles" do
     it "can be created as a default user" do
         josh = User.create!(name: "Josh Tukman",
