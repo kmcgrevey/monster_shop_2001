@@ -9,16 +9,17 @@
 RSpec.describe("Order Creation") do
   describe "When I check out from my cart" do
     before(:each) do
-      @user = User.create!(name: "Josh Tukman",
-                            address: "756 Main St.",
+
+      @josh = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
                             city: "Denver",
                             state: "Colorado",
                             zip: "80209",
                             email: "josh.t@gmail.com",
                             password: "secret_password",
-                            password_confirmation: "secret_password",
-                            role: 0)
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+                            password_confirmation: "secret_password")
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@josh)
 
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
