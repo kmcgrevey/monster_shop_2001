@@ -93,8 +93,24 @@ RSpec.describe 'Cart show' do
         end
       end
 
-      xit "I click the subtract button until zero to remove item from my cart" do
+      it "I click the subtract button until zero to remove item from my cart" do
         visit '/cart'
+
+        within "#cart-item-#{@tire.id}" do
+          click_button "Add Qty"
+        end
+        
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("2")
+        end
+        
+        within "#cart-item-#{@tire.id}" do
+          click_button "Subtract Qty"
+        end
+        
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("1")
+        end
 
         expect(page).to have_link(@tire.name)
         

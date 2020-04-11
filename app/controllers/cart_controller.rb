@@ -23,7 +23,6 @@ class CartController < ApplicationController
   end
   
   def increment_decrement
-    # binding.pry
     if params[:increment_decrement] == "increment"
       cart.add_quantity(params[:item_id]) unless cart.limit_reached?(params[:item_id])
     elsif params[:increment_decrement] == "decrement"

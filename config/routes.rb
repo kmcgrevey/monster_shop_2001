@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get "/", to: "welcome#index"
+  
   delete "/logout", to: "sessions#destroy"
-
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
 
@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   delete "/cart/:item_id", to: "cart#remove_item"
   patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
+  #orders
   resources :orders, only: [:new, :create, :show]
 
   get "/register", to: "users#new"
