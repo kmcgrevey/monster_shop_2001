@@ -1,6 +1,6 @@
 class Profile::OrdersController < Profile::BaseController
 
-  def show
+  def index
     @user = current_user
   end
 
