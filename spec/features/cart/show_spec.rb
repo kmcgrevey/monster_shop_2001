@@ -55,8 +55,75 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+      it "I see a button next to each item to add and subtract the quantity of each item" do
+       visit '/cart'
+
+        within "#cart-item-#{@pencil.id}" do
+          expect(page).to have_button("Add Qty")
+          expect(page).to have_button("Subtract Qty")
+        end
+
+        within "#cart-item-#{@paper.id}" do
+          expect(page).to have_button("Add Qty")
+          expect(page).to have_button("Subtract Qty")
+        end
+
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_button("Add Qty")
+          expect(page).to have_button("Subtract Qty")
+        end
+      
+      end
+
+      it "I click the add button to increase quantity but cannot exceed that items inventory limit" do
+        visit '/cart'
+
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("1")
+          click_button "Add Qty"
+          expect(page).to have_content("2")
+        end
+
+        within "#cart-item-#{@tire.id}" do
+          13.times do
+            click_button "Add Qty"
+          end
+          expect(page).to have_content("12")
+        end
+      end
+
+      it "I click the subtract button until zero to remove item from my cart" do
+        visit '/cart'
+
+        within "#cart-item-#{@tire.id}" do
+          click_button "Add Qty"
+        end
+        
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("2")
+        end
+        
+        within "#cart-item-#{@tire.id}" do
+          click_button "Subtract Qty"
+        end
+        
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content("1")
+        end
+
+        expect(page).to have_link(@tire.name)
+        
+        within "#cart-item-#{@tire.id}" do
+          click_button "Subtract Qty"
+        end
+      
+        expect(page).not_to have_link(@tire.name)
+      end
+
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
