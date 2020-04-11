@@ -10,5 +10,11 @@ class Order <ApplicationRecord
 
   def total_count
     item_orders.sum('quantity')
-  end 
+  end
+
+  def cancel_order
+    update(status: :Cancelled)
+    item_orders.update(status: :Unfulfilled)
+  #Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
+  end
 end

@@ -42,9 +42,9 @@ class Item <ApplicationRecord
   end
 
   def order_qty_purchased(order)
-  quantity = item_orders.where(order_id: order)
+  item_orders.where(order_id: order)
                .sum(:quantity)
-  quantity
+
   end
 
   def subtotal(order)

@@ -15,3 +15,5 @@ Current Status: <%= @order.status %></br>
 
 Total Count of Items: <%= @order.total_count %></br>
 Grandtotal: $<%= @order.grandtotal %>0
+
+<%= link_to "Cancel This Order", "/orders/#{@order.id}", method: :delete %>
