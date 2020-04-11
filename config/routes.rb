@@ -25,10 +25,12 @@ Rails.application.routes.draw do
   patch "/reviews/:id", to: "reviews#update"
   delete "/reviews/:id", to: "reviews#destroy"
 
+  #cart
   post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
+  patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
   resources :orders, only: [:new, :create, :show]
 

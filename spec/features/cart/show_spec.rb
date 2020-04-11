@@ -76,7 +76,7 @@ RSpec.describe 'Cart show' do
       
       end
 
-      xit "I click the add button to increase quantity but cannot exceed that items inventory limit" do
+      it "I click the add button to increase quantity but cannot exceed that items inventory limit" do
         visit '/cart'
 
         within "#cart-item-#{@tire.id}" do

@@ -34,7 +34,7 @@
         <center>
           <p><%=quantity%></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
-          <%= button_to "Add Qty" %>
+          <%= button_to "Add Qty", "/cart/#{item.id}/increment", method: :patch %>
           <%= button_to "Subtract Qty" %>
         </center>
         </td>

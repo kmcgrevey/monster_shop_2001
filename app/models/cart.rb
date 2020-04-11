@@ -32,4 +32,12 @@ class Cart
     end
   end
 
+  def add_quantity(item_id)
+    add_item(item_id)
+  end
+
+  def limit_reached?(item_id)
+    @contents[item_id] == Item.find(item_id).inventory
+  end
+
 end
