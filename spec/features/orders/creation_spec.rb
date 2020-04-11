@@ -39,66 +39,67 @@ RSpec.describe("Order Creation") do
       visit "/cart"
       click_on "Checkout"
     end
+#BROWN FIELD CURRENT PROJECT HAS NEW ROUTING STORY
+#NEW ROUTING IS TESTED IN FEATURES/CART/CHECKOUT_SPEC
+    # it 'I can create a new order' do
+    #   name = "Bert"
+    #   address = "123 Sesame St."
+    #   city = "NYC"
+    #   state = "New York"
+    #   zip = 10001
 
-    it 'I can create a new order' do
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
+    #   fill_in :name, with: name
+    #   fill_in :address, with: address
+    #   fill_in :city, with: city
+    #   fill_in :state, with: state
+    #   fill_in :zip, with: zip
 
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
+    #   click_button "Create Order"
 
-      click_button "Create Order"
+    #   new_order = Order.last
 
-      new_order = Order.last
+    #   expect(current_path).to eq("/orders/#{new_order.id}")
 
-      expect(current_path).to eq("/orders/#{new_order.id}")
+    #   within '.shipping-address' do
+    #     expect(page).to have_content(name)
+    #     expect(page).to have_content(address)
+    #     expect(page).to have_content(city)
+    #     expect(page).to have_content(state)
+    #     expect(page).to have_content(zip)
+    #   end
 
-      within '.shipping-address' do
-        expect(page).to have_content(name)
-        expect(page).to have_content(address)
-        expect(page).to have_content(city)
-        expect(page).to have_content(state)
-        expect(page).to have_content(zip)
-      end
+    #   within "#item-#{@paper.id}" do
+    #     expect(page).to have_link(@paper.name)
+    #     expect(page).to have_link("#{@paper.merchant.name}")
+    #     expect(page).to have_content("$#{@paper.price}")
+    #     expect(page).to have_content("2")
+    #     expect(page).to have_content("$40")
+    #   end
 
-      within "#item-#{@paper.id}" do
-        expect(page).to have_link(@paper.name)
-        expect(page).to have_link("#{@paper.merchant.name}")
-        expect(page).to have_content("$#{@paper.price}")
-        expect(page).to have_content("2")
-        expect(page).to have_content("$40")
-      end
+    #   within "#item-#{@tire.id}" do
+    #     expect(page).to have_link(@tire.name)
+    #     expect(page).to have_link("#{@tire.merchant.name}")
+    #     expect(page).to have_content("$#{@tire.price}")
+    #     expect(page).to have_content("1")
+    #     expect(page).to have_content("$100")
+    #   end
 
-      within "#item-#{@tire.id}" do
-        expect(page).to have_link(@tire.name)
-        expect(page).to have_link("#{@tire.merchant.name}")
-        expect(page).to have_content("$#{@tire.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$100")
-      end
+    #   within "#item-#{@pencil.id}" do
+    #     expect(page).to have_link(@pencil.name)
+    #     expect(page).to have_link("#{@pencil.merchant.name}")
+    #     expect(page).to have_content("$#{@pencil.price}")
+    #     expect(page).to have_content("1")
+    #     expect(page).to have_content("$2")
+    #   end
 
-      within "#item-#{@pencil.id}" do
-        expect(page).to have_link(@pencil.name)
-        expect(page).to have_link("#{@pencil.merchant.name}")
-        expect(page).to have_content("$#{@pencil.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$2")
-      end
+    #   within "#grandtotal" do
+    #     expect(page).to have_content("Total: $142")
+    #   end
 
-      within "#grandtotal" do
-        expect(page).to have_content("Total: $142")
-      end
-
-      within "#datecreated" do
-        expect(page).to have_content(new_order.created_at)
-      end
-    end
+    #   within "#datecreated" do
+    #     expect(page).to have_content(new_order.created_at)
+    #   end
+    # end
 
     it 'i cant create order if info not filled out' do
       name = ""
