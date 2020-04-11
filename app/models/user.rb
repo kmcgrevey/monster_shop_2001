@@ -12,8 +12,8 @@ class User < ApplicationRecord
 
   def all_orders
     if admin?
-      Order.all
+      Order.order(:status)
     end
   end
-  
+
 end

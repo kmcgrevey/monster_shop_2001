@@ -83,7 +83,7 @@ RSpec.describe User do
                                email: "josh.t@gmail.com",})
     end
 
-    it "users that are admins can see all orders" do
+    it "users that are admins can see all orders organized by status" do
 
     mike = User.create!(name: "Mike Hernandez",
                     address: "756 Mike St",
@@ -131,7 +131,7 @@ RSpec.describe User do
     paper = cory.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
     pencil = cory.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
-    order_1 = mike.orders.create(name: mike.name, address: mike.address, city: mike.city, state: mike.state, zip: mike.zip)
+    order_1 = mike.orders.create(name: mike.name, address: mike.address, city: mike.city, state: mike.state, zip: mike.zip, status: 3)
 
     ItemOrder.create!(order_id: order_1.id, item_id: tire.id, price: tire.price, quantity: 2)
 
@@ -140,8 +140,12 @@ RSpec.describe User do
     ItemOrder.create!(order_id: order_2.id, item_id: paper.id, price: paper.price, quantity: 1)
     ItemOrder.create!(order_id: order_2.id, item_id: pencil.id, price: pencil.price, quantity: 5)
 
+    order_3 = mike.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+
+    ItemOrder.create!(order_id: order_3.id, item_id: pencil.id, price: pencil.price, quantity: 1)
+
     expect(josh.admin?).to eq(true)
-    expect(josh.all_orders).to eq([order_1, order_2])
+    expect(josh.all_orders).to eq([order_2, order_3, order_1])
 
     expect(mike.admin?).to eq(false)
     expect(mike.all_orders).to eq(nil)
