@@ -5,7 +5,8 @@ class Merchant::DashboardController < Merchant::BaseController
   end
 
   def show
-    @merchant = Merchant.find(params[:id])
+    @user = current_user
+    @merchant = Merchant.find(@user.merchant_id)
   end
 
 end

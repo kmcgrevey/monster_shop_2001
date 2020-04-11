@@ -9,6 +9,7 @@
 Merchant.destroy_all
 Item.destroy_all
 
+
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
@@ -29,21 +30,47 @@ bed = dog_shop.items.create(name: "Doggie Bed", description: "Soo plush and comf
 dog_food = dog_shop.items.create(name: "Bag o Food", description: "Nutrition in bulk", price: 54, image: "https://s7d2.scene7.com/is/image/PetSmart/5149892", inventory: 32)
 collar = dog_shop.items.create(name: "Dog Collar", description: "Choker", price: 18, image: "https://s7d2.scene7.com/is/image/PetSmart/5169886", inventory: 32)
 brush = dog_shop.items.create(name: "Dog Brush", description: "Detangle those curls", price: 12, image: "https://s7d2.scene7.com/is/image/PetSmart/5280398", inventory: 32)
-
+admin = User.create(name: 'Admin',
+                    address: '123 Street Road',
+                    city: 'Smallville',
+                    state: 'IA',
+                    zip: "12345",
+                    email: 'admin@example.com',
+                    password: 'admin',
+                    password_confirmation: 'admin',
+                    role: 2)
+merchant1 = User.create(name: 'Merchant1',
+                        address: '456 Main St',
+                        city: 'Townsburg',
+                        state: 'CA',
+                        zip: "98765",
+                        email: 'merchant1@example.com',
+                        password: 'merchant1',
+                        password_confirmation: 'merchant1',
+                        role: 1)
+user = User.create(name: 'User',
+                   address: '78 Broadway Ave',
+                   city: 'Denver',
+                   state: 'CO',
+                   zip: "80210",
+                   email: 'user@example.com',
+                   password: 'user',
+                   password_confirmation: 'user',
+                   role: 0)
 #orders
-order1 = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
-order2 = Order.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
+order1 = user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+order2 = user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
 
 #add items to order #FOREIGN KEY VIOLATION ERROR???
 ItemOrder.create!(order_id: order2.id, item_id: tire.id, price: tire.price, quantity: 9)
 ItemOrder.create!(order_id: order2.id, item_id: carrier.id, price: carrier.price, quantity: 2)
-   
+
 ItemOrder.create!(order_id: order1.id, item_id: tire.id, price: tire.price, quantity: 2)
 ItemOrder.create!(order_id: order1.id, item_id: seat.id, price: seat.price, quantity: 10)
 ItemOrder.create!(order_id: order1.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 9)
 ItemOrder.create!(order_id: order1.id, item_id: pump.id, price: pump.price, quantity: 8)
 ItemOrder.create!(order_id: order1.id, item_id: pedals.id, price: pedals.price, quantity: 7)
-      
+
 ItemOrder.create!(order_id: order1.id, item_id: helmet.id, price: helmet.price, quantity: 6)
 ItemOrder.create!(order_id: order1.id, item_id: carrier.id, price: carrier.price, quantity: 3)
 ItemOrder.create!(order_id: order1.id, item_id: bed.id, price: bed.price, quantity: 4)
@@ -52,30 +79,3 @@ ItemOrder.create!(order_id: order1.id, item_id: collar.id, price: collar.price, 
 ItemOrder.create!(order_id: order1.id, item_id: brush.id, price: brush.price, quantity: 1)
 
 #users
-admin = User.create(name: 'Admin', 
-                    address: '123 Street Road', 
-                    city: 'Smallville', 
-                    state: 'IA', 
-                    zip: "12345", 
-                    email: 'admin@example.com', 
-                    password: 'admin', 
-                    password_confirmation: 'admin', 
-                    role: 2)
-merchant1 = User.create(name: 'Merchant1', 
-                        address: '456 Main St', 
-                        city: 'Townsburg', 
-                        state: 'CA', 
-                        zip: "98765", 
-                        email: 'merchant1@example.com', 
-                        password: 'merchant1', 
-                        password_confirmation: 'merchant1', 
-                        role: 1)
-user = User.create(name: 'User', 
-                   address: '78 Broadway Ave', 
-                   city: 'Denver', 
-                   state: 'CO', 
-                   zip: "80210", 
-                   email: 'user@example.com', 
-                   password: 'user', 
-                   password_confirmation: 'user', 
-                   role: 0)

@@ -20,7 +20,7 @@ RSpec.describe "As a merchant employee", type: :feature do
 
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(josh)
-    visit "/merchant/#{bike_shop.id}"
+    visit "/merchant" 
 
     expect(page).to have_content("Brian's Bike Shop")
     expect(page).to_not have_content("Meg's Dog Shop")
