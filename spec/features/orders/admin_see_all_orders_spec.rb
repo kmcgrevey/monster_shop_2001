@@ -52,11 +52,25 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     ItemOrder.create!(order_id: @order_2.id, item_id: @paper.id, price: @paper.price, quantity: 1)
     ItemOrder.create!(order_id: @order_2.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
 
+    visit "/admin/dashboard"
+
   end
 
   it "I see all orders in the system" do
-    require "pry"; binding.pry
     # Then I see all orders in the system.
+    expect(page).to have_content("Welcome to the Dashboard #{@josh.name}")
+
+    within(".all-orders") do
+      expect(page).to have_content("All Orders:")
+    end
+
+    within(".order-#{@order_1.id}") do
+      expect(page).to have_content(@order_1.id)
+    end
+
+    within(".order-#{@order_2.id}") do
+      expect(page).to have_content(@order_2.id)
+    end
   end
 
   it "for each order I see the users name(name links to admin view  of user show page), order id, date created" do

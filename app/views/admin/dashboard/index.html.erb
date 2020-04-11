@@ -1,0 +1,10 @@
+ <h1>Welcome to the Dashboard <%= @user.name %> </h1>
+
+ <section class="all-orders">
+   <h3>All Orders:</h3>
+   <%= @user.all_orders.each do |order| %>
+   <div class="order-<%= order.id %>">
+     <%= order.id %>
+   </div>
+   <% end %>
+ </section>
