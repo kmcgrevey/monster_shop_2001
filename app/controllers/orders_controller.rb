@@ -12,7 +12,6 @@ class OrdersController <ApplicationController
     user = current_user
     order = user.orders.create(order_params)
     if order.save
-      order.update(status: "Pending")
       cart.items.each do |item,quantity|
         order.item_orders.create({
           item: item,
