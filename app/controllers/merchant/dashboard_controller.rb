@@ -5,4 +5,8 @@ class Merchant::DashboardController < Merchant::BaseController
     # @merchant = 
   end
 
+  def show
+    @merchant = Merchant.find(params[:id])
+  end
+
 end
