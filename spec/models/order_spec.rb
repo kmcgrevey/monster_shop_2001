@@ -32,7 +32,7 @@ describe Order, type: :model do
                             password: "secret_password",
                             password_confirmation: "secret_password",
                             role: 0)
-                            
+
       @order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
@@ -40,6 +40,11 @@ describe Order, type: :model do
 
 
     end
+
+    it 'total_count' do
+      expect(@order_1.total_count).to eq(5)
+    end
+    
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end

@@ -1,5 +1,12 @@
 <h1><%= @user.name %>'s Orders</h1>
 
 <% @user.orders.each do |order| %>
-  Order Number: <%= order.id %>
+  <section id="order-<%=order.id%>">
+    <%= link_to "Order Number: #{order.id}", "/orders/#{order.id}" %>
+    Created On: <%= order.created_at.to_date %>
+    Last Updated: <%= order.updated_at.to_date %>
+    Current Status: <%= order.status %>
+    Total Count: <%= order.total_count %>
+    Grandtotal: $<%= order.grandtotal %>
+  </section>
 <% end %>
