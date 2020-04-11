@@ -82,8 +82,18 @@ RSpec.describe "Items Index Page" do
     end
 
     it "I see the 5 most and 5 least popular items with their quantity purchased" do
+      @user = User.create!(name: "Josh Tukman",
+                            address: "756 Main St.",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 0)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
-      order = Order.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
 
       ItemOrder.create!(order_id: order.id, item_id: @tire.id, price: @tire.price, quantity: 11)
       ItemOrder.create!(order_id: order.id, item_id: @seat.id, price: @seat.price, quantity: 10)
