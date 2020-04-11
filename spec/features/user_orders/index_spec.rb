@@ -51,7 +51,7 @@ RSpec.describe "As a registered user", type: :feature do
       visit "/profile/orders"
 
       within "#order-#{@order1.id}" do
-      expect(page).to have_link "Order Number: #{@order1.id}", href: "/orders/#{@order1.id}"
+      expect(page).to have_link "Order Number: #{@order1.id}", href: "/profile/orders/#{@order1.id}"
       expect(page).to have_content(@order1.created_at.to_date)
       expect(page).to have_content(@order1.updated_at.to_date)
       expect(page).to have_content(@order1.status)
@@ -60,7 +60,7 @@ RSpec.describe "As a registered user", type: :feature do
       end
 
       within "#order-#{@order2.id}" do
-      expect(page).to have_link "Order Number: #{@order2.id}", href: "/orders/#{@order2.id}"
+      expect(page).to have_link "Order Number: #{@order2.id}", href: "/profile/orders/#{@order2.id}"
       expect(page).to have_content(@order2.created_at.to_date)
       expect(page).to have_content(@order2.updated_at.to_date)
       expect(page).to have_content(@order2.status)

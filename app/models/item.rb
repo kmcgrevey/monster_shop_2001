@@ -41,4 +41,14 @@ class Item <ApplicationRecord
     item_orders.sum(:quantity)
   end
 
+  def order_qty_purchased(order)
+  quantity = item_orders.where(order_id: order)
+               .sum(:quantity)
+  quantity
+  end
+
+  def subtotal(order)
+    price * order_qty_purchased(order)
+  end
+
 end

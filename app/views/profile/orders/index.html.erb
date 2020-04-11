@@ -2,11 +2,11 @@
 
 <% @user.orders.each do |order| %>
   <section id="order-<%=order.id%>">
-    <%= link_to "Order Number: #{order.id}", "/profile/orders/#{order.id}" %>
-    Created On: <%= order.created_at.to_date %>
-    Last Updated: <%= order.updated_at.to_date %>
-    Current Status: <%= order.status %>
-    Total Count: <%= order.total_count %>
-    Grandtotal: $<%= order.grandtotal %>
+    <%= link_to "Order Number: #{order.id}", "/profile/orders/#{order.id}" %></br>
+    Created On: <%= order.created_at.to_date %></br>
+    Last Updated: <%= order.updated_at.to_date %></br>
+    Current Status: <%= order.status %></br>
+    Total Count: <%= order.total_count %></br>
+    Grandtotal: $<%= order.grandtotal %></br>
   </section>
 <% end %>
