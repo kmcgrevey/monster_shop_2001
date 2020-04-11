@@ -3,15 +3,6 @@ require 'rails_helper'
 RSpec.describe 'Cart show' do
   describe 'When I have added items to my cart' do
     before(:each) do
-
-      @josh = User.create!(name: "Josh Tukman",
-                            address: "756 Main St",
-                            city: "Denver",
-                            state: "Colorado",
-                            zip: "80209",
-                            email: "josh.t@gmail.com",
-                            password: "secret_password",
-                            password_confirmation: "secret_password")
                             
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@josh)
 
@@ -29,11 +20,19 @@ RSpec.describe 'Cart show' do
       click_on "Add To Cart"
       @items_in_cart = [@paper,@tire,@pencil]
 
-
-    end
-
-
-
+      @user = User.create!(name: "Josh Tukman",
+                           address: "756 Main St.",
+                           city: "Denver",
+                           state: "Colorado",
+                           zip: "80209",
+                           email: "josh.t@gmail.com",
+                           password: "secret_password",
+                           password_confirmation: "secret_password",
+                           role: 0)
+      
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+   end
+    
     it 'Theres a link to checkout if you are a user and logged in' do
       visit "/cart"
 
@@ -43,8 +42,34 @@ RSpec.describe 'Cart show' do
 
       expect(current_path).to eq("/orders/new")
     end
-  end
 
+    it "I can complete an order form and place my order" do
+      visit "/orders/new"
+
+      fill_in :name, with: @user.name
+      fill_in :address, with: @user.address
+      fill_in :city, with: @user.city
+      fill_in :state, with: @user.state
+      fill_in :zip, with: @user.zip
+      click_button "Create Order"
+
+      expect(current_path).to eq("/profile/orders")
+
+      order = Order.last
+
+      expect(order.name).to eq("Josh Tukman")
+      expect(order.status).to eq("Pending")
+
+      within ".success-flash" do
+        expect(page).to have_content("Your order was created!")
+      end
+      expect(page).to have_content(order.id)
+
+      visit '/cart'
+      expect(page).to have_content("Cart is currently empty")
+    end
+  end
+  
   describe 'When I havent added items to my cart' do
     it 'There is not a link to checkout' do
       visit "/cart"

@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     patch "/password/edit", to: "passwords#update"
     get "/:id/edit", to: "profile#edit"
     patch "/:id", to: "profile#update"
+    get "/orders", to: "orders#show"
   end
 
 end
