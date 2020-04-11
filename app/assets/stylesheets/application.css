@@ -25,6 +25,13 @@
  	font-family: "Marker Felt", fantasy;
  }
 
+ h2 {
+  text-align: center;
+   font-size: 25px;
+   color: #002244;
+   font-family: "Marker Felt", fantasy;
+ }
+
 ul{
   padding: 0px;
   text-align: center;
