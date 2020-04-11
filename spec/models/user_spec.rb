@@ -15,8 +15,9 @@ RSpec.describe User do
 
   describe "relationships" do
     it {should have_many :orders}
+    #it {should belong_to :merchant}
   end
-  
+
   describe "roles" do
     it "can be created as a default user" do
         josh = User.create!(name: "Josh Tukman",
