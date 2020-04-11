@@ -9,6 +9,18 @@
 RSpec.describe("Order Creation") do
   describe "When I check out from my cart" do
     before(:each) do
+
+      @josh = User.create!(name: "Josh Tukman",
+                            address: "756 Main St",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password")
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@josh)
+      
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -27,66 +39,67 @@ RSpec.describe("Order Creation") do
       visit "/cart"
       click_on "Checkout"
     end
+#BROWN FIELD CURRENT PROJECT HAS NEW ROUTING STORY
+#NEW ROUTING IS TESTED IN FEATURES/CART/CHECKOUT_SPEC
+    # it 'I can create a new order' do
+    #   name = "Bert"
+    #   address = "123 Sesame St."
+    #   city = "NYC"
+    #   state = "New York"
+    #   zip = 10001
 
-    it 'I can create a new order' do
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
+    #   fill_in :name, with: name
+    #   fill_in :address, with: address
+    #   fill_in :city, with: city
+    #   fill_in :state, with: state
+    #   fill_in :zip, with: zip
 
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
+    #   click_button "Create Order"
 
-      click_button "Create Order"
+    #   new_order = Order.last
 
-      new_order = Order.last
+    #   expect(current_path).to eq("/orders/#{new_order.id}")
 
-      expect(current_path).to eq("/orders/#{new_order.id}")
+    #   within '.shipping-address' do
+    #     expect(page).to have_content(name)
+    #     expect(page).to have_content(address)
+    #     expect(page).to have_content(city)
+    #     expect(page).to have_content(state)
+    #     expect(page).to have_content(zip)
+    #   end
 
-      within '.shipping-address' do
-        expect(page).to have_content(name)
-        expect(page).to have_content(address)
-        expect(page).to have_content(city)
-        expect(page).to have_content(state)
-        expect(page).to have_content(zip)
-      end
+    #   within "#item-#{@paper.id}" do
+    #     expect(page).to have_link(@paper.name)
+    #     expect(page).to have_link("#{@paper.merchant.name}")
+    #     expect(page).to have_content("$#{@paper.price}")
+    #     expect(page).to have_content("2")
+    #     expect(page).to have_content("$40")
+    #   end
 
-      within "#item-#{@paper.id}" do
-        expect(page).to have_link(@paper.name)
-        expect(page).to have_link("#{@paper.merchant.name}")
-        expect(page).to have_content("$#{@paper.price}")
-        expect(page).to have_content("2")
-        expect(page).to have_content("$40")
-      end
+    #   within "#item-#{@tire.id}" do
+    #     expect(page).to have_link(@tire.name)
+    #     expect(page).to have_link("#{@tire.merchant.name}")
+    #     expect(page).to have_content("$#{@tire.price}")
+    #     expect(page).to have_content("1")
+    #     expect(page).to have_content("$100")
+    #   end
 
-      within "#item-#{@tire.id}" do
-        expect(page).to have_link(@tire.name)
-        expect(page).to have_link("#{@tire.merchant.name}")
-        expect(page).to have_content("$#{@tire.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$100")
-      end
+    #   within "#item-#{@pencil.id}" do
+    #     expect(page).to have_link(@pencil.name)
+    #     expect(page).to have_link("#{@pencil.merchant.name}")
+    #     expect(page).to have_content("$#{@pencil.price}")
+    #     expect(page).to have_content("1")
+    #     expect(page).to have_content("$2")
+    #   end
 
-      within "#item-#{@pencil.id}" do
-        expect(page).to have_link(@pencil.name)
-        expect(page).to have_link("#{@pencil.merchant.name}")
-        expect(page).to have_content("$#{@pencil.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$2")
-      end
+    #   within "#grandtotal" do
+    #     expect(page).to have_content("Total: $142")
+    #   end
 
-      within "#grandtotal" do
-        expect(page).to have_content("Total: $142")
-      end
-
-      within "#datecreated" do
-        expect(page).to have_content(new_order.created_at)
-      end
-    end
+    #   within "#datecreated" do
+    #     expect(page).to have_content(new_order.created_at)
+    #   end
+    # end
 
     it 'i cant create order if info not filled out' do
       name = ""
