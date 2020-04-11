@@ -2,9 +2,11 @@
 
  <section class="all-orders">
    <h3>All Orders:</h3>
-   <%= @user.all_orders.each do |order| %>
+   <% @user.all_orders.each do |order| %>
    <div class="order-<%= order.id %>">
-     <%= order.id %>
+     <p>Order Number: <%= order.id %></p>
+     Placed By: <%= link_to "#{order.name}" %><br>
+     Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
    </div>
    <% end %>
  </section>
