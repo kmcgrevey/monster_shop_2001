@@ -29,25 +29,25 @@ describe Order, type: :model do
 
     end
 
-    it "can have a status of pending" do
+    it "can have a status of packaged" do
       order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-
-      expect(order_1.pending?).to eq(true)
-    end
-
-    it "can have a status of pending" do
-      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
 
       expect(order_1.packaged?).to eq(true)
     end
 
     it "can have a status of pending" do
+      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+
+      expect(order_1.pending?).to eq(true)
+    end
+
+    it "can have a status of shipped" do
       order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
 
       expect(order_1.shipped?).to eq(true)
     end
 
-    it "can have a status of pending" do
+    it "can have a status of cancelled" do
       order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 3)
 
       expect(order_1.cancelled?).to eq(true)
