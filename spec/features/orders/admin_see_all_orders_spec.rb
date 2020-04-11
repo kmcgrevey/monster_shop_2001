@@ -45,9 +45,13 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
 
     @order_1 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip)
 
+    allow(@order_1).to receive(:created_at).and_return("04/11/2020")
+
     ItemOrder.create!(order_id: @order_1.id, item_id: @tire.id, price: @tire.price, quantity: 2)
 
     @order_2 = @mary.orders.create(name: @mary.name, address: @mary.address, city: @mary.city, state: @mary.state, zip: @adam.zip)
+
+    allow(@order_2).to receive(:created_at).and_return("04/11/2020")
 
     ItemOrder.create!(order_id: @order_2.id, item_id: @paper.id, price: @paper.price, quantity: 1)
     ItemOrder.create!(order_id: @order_2.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
@@ -57,7 +61,6 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
   end
 
   it "I see all orders in the system" do
-    # Then I see all orders in the system.
     expect(page).to have_content("Welcome to the Dashboard #{@josh.name}")
 
     within(".all-orders") do
@@ -74,11 +77,25 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
   end
 
   it "for each order I see the users name(name links to admin view  of user show page), order id, date created" do
+
+    # order id
     # For each order I see the following information:
     #
     # user who placed the order, which links to admin view of user profile
-    # order id
     # date the order was created
+
+    within(".order-#{@order_1.id}") do
+      expect(page).to have_content(@order_1.id)
+      expect(page).to have_link(@order_1.name)
+      expect(page).to have_content("04/11/2020")
+    end
+
+    within(".order-#{@order_1.id}") do
+      expect(page).to have_content(@order_1.id)
+      expect(page).to have_link(@order_1.name)
+      expect(page).to have_content("04/11/2020")
+    end
+
   end
 
   it "orders are sorted by status in order: packaged pending shipped cancelled" do
