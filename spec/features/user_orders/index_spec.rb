@@ -33,8 +33,8 @@ RSpec.describe "As a registered user", type: :feature do
       @order2 = @user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222, status: "Pending")
       @order3 = @user2.orders.create!(name: 'Jane', address: '123 Jane Drive', city: 'Boulder', state: 'CO', zip: 80301)
 
-      @order1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @order1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
+      @order1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
 
       @order2.item_orders.create!(item: @tire, price: @tire.price, quantity: 3)
       @order2.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
@@ -69,5 +69,38 @@ RSpec.describe "As a registered user", type: :feature do
       end
 
       expect(page).to_not have_content(@order3.id)
+    end
+
+    it "when an order has all of its items fulfilled, its status changes to Packaged" do
+      visit "/profile/orders"
+
+      within "#order-#{@order1.id}" do
+        expect(page).to have_content("Status: Pending")
+      end
+
+      within "#order-#{@order2.id}" do
+        expect(page).to have_content("Status: Pending")
+      end
+
+      @order1.fulfill_item(@tire)
+
+      visit "/profile/orders"
+
+      within "#order-#{@order1.id}" do
+        expect(page).to have_content("Status: Pending")
+      end
+      within "#order-#{@order2.id}" do
+        expect(page).to have_content("Status: Pending")
+      end
+
+      @order1.fulfill_item(@pull_toy)
+      visit "/profile/orders"
+
+      within "#order-#{@order1.id}" do
+        expect(page).to have_content("Status: Packaged")
+      end
+      within "#order-#{@order2.id}" do
+        expect(page).to have_content("Status: Pending")
+      end
     end
   end
