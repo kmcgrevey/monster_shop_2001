@@ -40,34 +40,41 @@ RSpec.describe "As a registered user", type: :feature do
       @order2.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
     end
 
-    it "they can visit their profile page and click a link to their orders index page" do
-      visit "/profile"
-        click_link "My Orders"
-        expect(current_path).to eq("/profile/orders")
+    it "I can visit the order show page from my order index page and see an individual orders details" do
+        visit "/profile/orders"
+        click_link "Order Number: #{@order1.id}"
+        expect(current_path).to  eq("/profile/orders/#{@order1.id}")
+
+        expect(page).to have_content("Order Number: #{@order1.id}")
+        expect(page).to have_content(@order1.created_at.to_date)
+        expect(page).to have_content(@order1.updated_at.to_date)
+        expect(page).to have_content(@order1.status)
+
+        within "#item-#{@tire.name}" do
+          expect(page).to have_content("Item Name: Gatorskins")
+          expect(page).to have_content("Description: They'll never pop!")
+          expect(page).to have_content("Thumbnail:")
+          expect(page).to have_css("https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588")
+          expect(page).to have_content("Quantity Ordered: 2")
+          expect(page).to have_content("Price (each): $100")
+          expect(page).to have_content("Subtotal: $200")
+        end
+
+        within "#item-#{@pull_toy.name}" do
+          expect(page).to have_content("Item Name: Pull Toy")
+          expect(page).to have_content("Description: Great pull toy!")
+          expect(page).to have_content("Thumbnail:")
+          expect(page).to have_css("http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg")
+          expect(page).to have_content("Quantity Ordered: 3")
+          expect(page).to have_content("Price (each): $10")
+          expect(page).to have_content("Subtotal: $30")
+        end
+
+        expect(page).to have_content("Total Count: 5")
+        expect(page).to have_content("Grandtotal: $230")
+
+        expect(page).to_not have_content(@order2.id)
     end
 
-    it "they can visit the order index page and see every order and all of each orders details" do
 
-      visit "/profile/orders"
-
-      within "#order-#{@order1.id}" do
-      expect(page).to have_link "Order Number: #{@order1.id}", href: "/orders/#{@order1.id}"
-      expect(page).to have_content(@order1.created_at.to_date)
-      expect(page).to have_content(@order1.updated_at.to_date)
-      expect(page).to have_content(@order1.status)
-      expect(page).to have_content("Total Count: 5")
-      expect(page).to have_content("Grandtotal: $230")
-      end
-
-      within "#order-#{@order2.id}" do
-      expect(page).to have_link "Order Number: #{@order2.id}", href: "/orders/#{@order2.id}"
-      expect(page).to have_content(@order2.created_at.to_date)
-      expect(page).to have_content(@order2.updated_at.to_date)
-      expect(page).to have_content(@order2.status)
-      expect(page).to have_content("Total Count: 4")
-      expect(page).to have_content("Grandtotal: $310")
-      end
-
-      expect(page).to_not have_content(@order3.id)
-    end
   end
