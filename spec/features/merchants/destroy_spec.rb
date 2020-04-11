@@ -32,7 +32,7 @@ RSpec.describe "As a visitor" do
                             city: "Denver",
                             state: "Colorado",
                             zip: "80209",
-                            email: "josh.t@gmail.com",
+                            email: "newemail.t@gmail.com",
                             password: "secret_password",
                             password_confirmation: "secret_password")
 

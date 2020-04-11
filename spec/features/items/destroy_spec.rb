@@ -35,7 +35,7 @@ RSpec.describe 'item delete', type: :feature do
                            city: "Denver",
                            state: "Colorado",
                            zip: "80209",
-                           email: "josh.t@gmail.com",
+                           email: "new.email@gmail.com",
                            password: "secret_password",
                            password_confirmation: "secret_password",
                            role: 0)
