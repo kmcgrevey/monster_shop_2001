@@ -124,6 +124,12 @@ RSpec.describe User do
 
       ItemOrder.create!(order_id: @order_3.id, item_id: @pencil.id, price: @pencil.price, quantity: 1)
 
+      @order_4 = @mike.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
+
+      ItemOrder.create!(order_id: @order_4.id, item_id: @pencil.id, price: @pencil.price, quantity: 1)
+      ItemOrder.create!(order_id: @order_4.id, item_id: @tire.id, price: @tire.price, quantity: 1)
+
+
     end
 
     it "knows information about itself" do
@@ -139,11 +145,22 @@ RSpec.describe User do
     it "users that are admins can see all orders" do
 
       expect(@josh.admin?).to eq(true)
-      expect(@josh.all_orders).to eq([@order_1, @order_2, @order_3])
+      expect(@josh.all_orders).to eq([@order_1, @order_2, @order_3, @order_4])
+
+      expect(@mike.admin?).to eq(false)
+      expect(@mike.all_orders).to eq(nil)
+    end
+
+    it "users that ar admins can see orders of each status" do
+
+      expect(@josh.admin?).to eq(true)
+      expect(@josh.pending_orders.first).to eq(@order_2)
+      expect(@josh.packaged_orders.first).to eq(@order_3)
+      expect(@josh.shipped_orders.first).to eq(@order_4)
+      expect(@josh.cancelled_orders.first).to eq(@order_1)
 
       expect(@mike.admin?).to eq(false)
       expect(@mike.all_orders).to eq(nil)
     end
   end
-
 end
