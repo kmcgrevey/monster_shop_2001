@@ -16,4 +16,28 @@ class User < ApplicationRecord
     end
   end
 
+  def pending_orders
+    if admin?
+      Order.where(status: 0)
+    end
+  end
+
+  def packaged_orders
+    if admin?
+      Order.where(status: 1)
+    end
+  end
+
+  def shipped_orders
+    if admin?
+      Order.where(status: 2)
+    end
+  end
+
+  def cancelled_orders
+    if admin?
+      Order.where(status: 3)
+    end
+  end
+
 end

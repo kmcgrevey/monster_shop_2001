@@ -13,20 +13,4 @@ class Order <ApplicationRecord
   def total_count
     item_orders.sum('quantity')
   end
-
-  def self.pending
-    where(status: 0)
-  end
-
-  def self.packaged
-    where(status: 1)
-  end
-
-  def self.shipped
-    where(status: 2)
-  end
-
-  def self.cancelled
-    where(status: 3)
-  end
 end

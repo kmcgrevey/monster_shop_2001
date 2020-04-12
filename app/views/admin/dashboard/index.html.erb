@@ -1,16 +1,56 @@
  <h1>Welcome to the Dashboard <%= @user.name %> </h1>
 
- <section class="all-orders">
-   <h3>All Orders:</h3>
-   <% @user.all_orders.each do |order| %>
-
-   <div class="order-<%= order.id %>">
-     <ul>
-       <p>Order Number: <%= order.id %></p>
-       Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
-       Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
-       Status: <%= order.status %>
-   </ul>
-   </div>
-   <% end %>
- </section>
+<section class="all-orders">
+  <div class="packaged-orders">
+    <h2>Packaged Orders:</h2>
+      <% @user.packaged_orders.each do |order| %>
+      <div class="order-<%= order.id %>">
+        <ul>
+          <p>Order Number: <%= order.id %></p>
+          Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
+          Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
+          Status: <%= order.status %>
+      </ul>
+      </div>
+      <% end %>
+  </div>
+  <div class="pending-orders">
+    <h2>Pending Orders:</h2>
+      <% @user.pending_orders.each do |order| %>
+      <div class="order-<%= order.id %>">
+        <ul>
+          <p>Order Number: <%= order.id %></p>
+          Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
+          Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
+          Status: <%= order.status %>
+      </ul>
+      </div>
+      <% end %>
+  </div>
+  <div class="shipped-orders">
+    <h2>Shipped Orders:</h2>
+    <% @user.shipped_orders.each do |order| %>
+    <div class="order-<%= order.id %>">
+      <ul>
+        <p>Order Number: <%= order.id %></p>
+        Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
+        Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
+        Status: <%= order.status %>
+    </ul>
+    </div>
+    <% end %>
+  </div>
+  <div class="cancelled-orders">
+    <h2>Cancelled Orders:</h2>
+    <% @user.cancelled_orders.each do |order| %>
+    <div class="order-<%= order.id %>">
+      <ul>
+        <p>Order Number: <%= order.id %></p>
+        Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
+        Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
+        Status: <%= order.status %>
+    </ul>
+    </div>
+    <% end %>
+  </div>
+</section>

@@ -67,10 +67,6 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
   it "I see all orders in the system" do
     expect(page).to have_content("Welcome to the Dashboard #{@josh.name}")
 
-    within(".all-orders") do
-      expect(page).to have_content("All Orders:")
-    end
-
     within(".order-#{@order_1.id}") do
       expect(page).to have_content(@order_1.id)
     end
@@ -111,8 +107,36 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
   end
 
   it "orders are sorted by status in order: packaged pending shipped cancelled" do
-    # expect("#{@order_1.id}").to appear_before("#{@order_4.id}")
-    # expect("#{@order_4.id}").to appear_before("#{@order_5.id}")
-    # expect("#{@order_5.id}").to appear_before("#{@order_3.id}")
+    expect("Packaged Orders:").to appear_before("Pending Orders:")
+    expect("Pending Orders:").to appear_before("Shipped Orders:")
+    expect("Shipped Orders:").to appear_before("Cancelled Orders:")
+
+    within ".packaged-orders" do
+      expect(page).to have_content("#{@order_4.id}")
+      expect(page).to_not have_content("#{@order_3.id}")
+      expect(page).to_not have_content("#{@order_1.id}")
+      expect(page).to_not have_content("#{@order_5.id}")
+    end
+
+    within ".pending-orders" do
+      expect(page).to have_content("#{@order_1.id}")
+      expect(page).to_not have_content("#{@order_3.id}")
+      expect(page).to_not have_content("#{@order_4.id}")
+      expect(page).to_not have_content("#{@order_5.id}")
+    end
+
+    within ".shipped-orders" do
+      expect(page).to have_content("#{@order_5.id}")
+      expect(page).to_not have_content("#{@order_3.id}")
+      expect(page).to_not have_content("#{@order_4.id}")
+      expect(page).to_not have_content("#{@order_1.id}")
+    end
+
+    within ".cancelled-orders" do
+      expect(page).to have_content("#{@order_3.id}")
+      expect(page).to_not have_content("#{@order_5.id}")
+      expect(page).to_not have_content("#{@order_4.id}")
+      expect(page).to_not have_content("#{@order_1.id}")
+    end
   end
 end
