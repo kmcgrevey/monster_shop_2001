@@ -15,6 +15,7 @@ describe Merchant, type: :model do
 
   describe 'instance methods' do
     before(:each) do
+      @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210, status: 0)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @user = User.create!(name: "Josh Tukman",
@@ -60,5 +61,18 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to eq(["Denver","Hershey"])
     end
 
+  end
+
+  describe "status" do
+    it "can have a status of enabled" do
+      expect(@meg.status).to eq("enabled")
+      expect(@meg.enabled).to eq(true)
+    end
+
+    it "can have a status of disabled" do
+      expect(@brian.status).to eq("disabled")
+      expect(@brian.enabled).to eq(false)
+      expect(@brian.disabled).to eq(true)
+    end
   end
 end
