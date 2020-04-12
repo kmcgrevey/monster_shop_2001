@@ -83,6 +83,7 @@ RSpec.describe User do
                                zip: "80209",
                                email: "josh.t@gmail.com",})
     end
+        
   end
 
 end

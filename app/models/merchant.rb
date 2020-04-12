@@ -26,4 +26,8 @@ class Merchant <ApplicationRecord
     item_orders.distinct.joins(:order).pluck(:city)
   end
 
+  def pending_items
+    require "pry"; binding.pry
+  end
+
 end
