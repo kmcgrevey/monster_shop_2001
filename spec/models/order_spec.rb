@@ -91,8 +91,8 @@ describe Order, type: :model do
 #       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
 #       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
+      @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
+      @order_4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
 
     end
 
@@ -105,19 +105,19 @@ describe Order, type: :model do
     end
 
     it 'cancel_order' do
-    @order_1.cancel_order
+    @order_4.cancel_order
 
-    expect(@order_1.item_orders.first.status).to eq("Unfulfilled")
-    expect(@order_1.item_orders.last.status).to eq("Unfulfilled")
-    expect(@order_1.status).to eq("Cancelled")
+    expect(@order_4.item_orders.first.status).to eq("Unfulfilled")
+    expect(@order_4.item_orders.last.status).to eq("Unfulfilled")
+    expect(@order_4.status).to eq("cancelled")
     end
 
     it 'fulfill_item' do
       @order_1.fulfill_item(@tire)
-      expect(@order_1.status).to eq("Pending")
+      expect(@order_1.status).to eq("pending")
 
       @order_1.fulfill_item(@pull_toy)
-      expect(@order_1.status).to eq("Packaged")
+      expect(@order_1.status).to eq("packaged")
     end
   end
 

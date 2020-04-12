@@ -20,7 +20,7 @@ class Order <ApplicationRecord
   end
 
   def cancel_order
-    update(status: :Cancelled)
+    update(status: 3)
     item_orders.update(status: :Unfulfilled)
   #Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
   end
@@ -30,9 +30,9 @@ class Order <ApplicationRecord
              .update(status: :Fulfilled)
 
     if item_orders.count == item_orders.where(status: :Fulfilled).count
-      self.status = "Packaged"
+      self.status = 1
     else
-      self.status = "Pending"
+      self.status = 0
     end
   end
 end

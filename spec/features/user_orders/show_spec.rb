@@ -83,8 +83,8 @@ RSpec.describe "As a registered user", type: :feature do
 
       visit "/profile/orders"
         within "#order-#{@order1.id}" do
-          expect(page).to have_content("Status: Cancelled")
-          expect(page).to_not have_content("Status: Pending")
+          expect(page).to have_content("Status: cancelled")
+          expect(page).to_not have_content("Status: pending")
         end
 
     end

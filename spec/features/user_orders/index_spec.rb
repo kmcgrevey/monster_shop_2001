@@ -29,8 +29,8 @@ RSpec.describe "As a registered user", type: :feature do
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-      @order1 = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: "Pending")
-      @order2 = @user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222, status: "Pending")
+      @order1 = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      @order2 = @user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
       @order3 = @user2.orders.create!(name: 'Jane', address: '123 Jane Drive', city: 'Boulder', state: 'CO', zip: 80301)
 
       @order1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
@@ -75,11 +75,11 @@ RSpec.describe "As a registered user", type: :feature do
       visit "/profile/orders"
 
       within "#order-#{@order1.id}" do
-        expect(page).to have_content("Status: Pending")
+        expect(page).to have_content("Status: pending")
       end
 
       within "#order-#{@order2.id}" do
-        expect(page).to have_content("Status: Pending")
+        expect(page).to have_content("Status: pending")
       end
 
       @order1.fulfill_item(@tire)
@@ -87,20 +87,20 @@ RSpec.describe "As a registered user", type: :feature do
       visit "/profile/orders"
 
       within "#order-#{@order1.id}" do
-        expect(page).to have_content("Status: Pending")
+        expect(page).to have_content("Status: pending")
       end
       within "#order-#{@order2.id}" do
-        expect(page).to have_content("Status: Pending")
+        expect(page).to have_content("Status: pending")
       end
 
       @order1.fulfill_item(@pull_toy)
       visit "/profile/orders"
 
       within "#order-#{@order1.id}" do
-        expect(page).to have_content("Status: Packaged")
+        expect(page).to have_content("Status: packaged")
       end
       within "#order-#{@order2.id}" do
-        expect(page).to have_content("Status: Pending")
+        expect(page).to have_content("Status: pending")
       end
     end
   end
