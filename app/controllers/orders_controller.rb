@@ -12,7 +12,6 @@ class OrdersController <ApplicationController
     user = current_user
     order = user.orders.create(order_params)
     if order.save
-      order.update(status: "Pending")
       cart.items.each do |item,quantity|
         order.item_orders.create({
           item: item,
@@ -27,6 +26,13 @@ class OrdersController <ApplicationController
       flash[:notice] = "Please complete address form to create an order."
       render :new
     end
+  end
+
+  def destroy
+    order = Order.find(params[:id])
+    order.cancel_order
+    redirect_to "/profile"
+    flash[:success] = "Your order has been cancelled!"
   end
 
 

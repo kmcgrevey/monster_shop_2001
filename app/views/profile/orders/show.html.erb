@@ -1,12 +1,19 @@
-<h1><%= @user.name %>'s Orders</h1>
+<h1>Order Number: <%= @order.id %></h1>
 
-<% @user.orders.each do |order| %>
-  <section id="order-<%=order.id%>">
-    <%= link_to "Order Number: #{order.id}", "/orders/#{order.id}" %>
-    Created On: <%= order.created_at.to_date %>
-    Last Updated: <%= order.updated_at.to_date %>
-    Current Status: <%= order.status %>
-    Total Count: <%= order.total_count %>
-    Grandtotal: $<%= order.grandtotal %>
-  </section>
-<% end %>
+Created On: <%= @order.created_at.to_date %></br>
+Last Updated: <%= @order.updated_at.to_date %></br>
+Current Status: <%= @order.status %></br>
+<b>Items in Order: </b></br>
+<% @order.items.each do |item| %>
+    <b><%= item.name %></b></br>
+    <%= image_tag(item.image, size: '50') %></br>
+    Description: <%= item.description %></br>
+    Quantity Ordered: <%= item.order_qty_purchased(@order.id)%></br>
+    Price (each): $<%= item.price %></br>
+    Subtotal: $<%= item.subtotal(@order.id) %></br>
+<% end %></br>
+
+Total Count of Items: <%= @order.total_count %></br>
+Grandtotal: $<%= @order.grandtotal %>0
+
+<%= link_to "Cancel This Order", "/orders/#{@order.id}", method: :delete %>
