@@ -9,7 +9,7 @@
           <p>Order Number: <%= order.id %></p>
           Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
           Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
-          Status: <%= order.status %>
+          <%= button_to "Ship" %>
       </ul>
       </div>
       <% end %>
@@ -22,7 +22,6 @@
           <p>Order Number: <%= order.id %></p>
           Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
           Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
-          Status: <%= order.status %>
       </ul>
       </div>
       <% end %>
@@ -35,7 +34,6 @@
         <p>Order Number: <%= order.id %></p>
         Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
         Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
-        Status: <%= order.status %>
     </ul>
     </div>
     <% end %>
@@ -48,7 +46,6 @@
         <p>Order Number: <%= order.id %></p>
         Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
         Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
-        Status: <%= order.status %>
     </ul>
     </div>
     <% end %>

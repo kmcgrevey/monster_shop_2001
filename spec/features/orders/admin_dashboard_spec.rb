@@ -82,14 +82,12 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
       expect(page).to have_content(@order_1.id)
       expect(page).to have_link(@order_1.name)
       expect(page).to have_content("04/11/2020")
-      expect(page).to have_content("#{@order_1.status}")
     end
 
     within(".order-#{@order_2.id}") do
       expect(page).to have_content(@order_2.id)
       expect(page).to have_link(@order_2.name)
       expect(page).to have_content("04/11/2020")
-      expect(page).to have_content("#{@order_2.status}")
       click_link(@order_2.name)
     end
 
@@ -138,5 +136,30 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
       expect(page).to_not have_content("#{@order_4.id}")
       expect(page).to_not have_content("#{@order_1.id}")
     end
+  end
+
+  it "packaged orders have a ship button and when I click the 'ship' button the order status is updated to shipped" do
+
+    visit("/admin/dashboard")
+
+    within ".pending-orders" do
+      expect(page).to_not have_button("Ship")
+    end
+
+    within ".shipped-orders" do
+      expect(page).to_not have_button("Ship")
+    end
+
+    within ".cancelled-orders" do
+      expect(page).to_not have_button("Ship")
+    end
+
+    within(".order-#{@order_4.id}") do
+      # click_button("Ship")
+    end
+    expect(current_path).to eq("/admin/dashboard")
+  end
+
+  it "when the status of the package is shipped it can no loger be cancelled" do
   end
 end
