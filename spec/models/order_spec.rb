@@ -75,24 +75,18 @@ describe Order, type: :model do
       @order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+        @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
 
       @order_2 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
-      @order_2.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+        @order_2.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
 
       @order_3 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
-      @order_3.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
+        @order_3.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
 
       @order_4 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 3)
-      @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 4)
-
-#       this will probably cause problems since status is now an int.  Likely will need to create a new status in enums
-#       Mike's code is below, Kristas is not commented out
-#       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-#       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
-
-      @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
-      @order_4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
+        @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 4)
+        @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
+        @order_4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
 
     end
 
