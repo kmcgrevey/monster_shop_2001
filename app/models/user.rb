@@ -10,4 +10,35 @@ class User < ApplicationRecord
   def info
     {name: name, address: address, city: city, state: state, zip: zip, email: email}
   end
+
+  def all_orders
+    if admin?
+      Order.all
+    end
+  end
+
+  def pending_orders
+    if admin?
+      Order.where(status: 0)
+    end
+  end
+
+  def packaged_orders
+    if admin?
+      Order.where(status: 1)
+    end
+  end
+
+  def shipped_orders
+    if admin?
+      Order.where(status: 2)
+    end
+  end
+
+  def cancelled_orders
+    if admin?
+      Order.where(status: 3)
+    end
+  end
+
 end
