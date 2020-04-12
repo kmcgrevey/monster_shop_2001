@@ -1,0 +1,16 @@
+ <h1>Welcome to the Dashboard <%= @user.name %> </h1>
+
+ <section class="all-orders">
+   <h3>All Orders:</h3>
+   <% @user.all_orders.each do |order| %>
+
+   <div class="order-<%= order.id %>">
+     <ul>
+       <p>Order Number: <%= order.id %></p>
+       Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
+       Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
+       Status: <%= order.status %>
+   </ul>
+   </div>
+   <% end %>
+ </section>

@@ -1,7 +1,6 @@
 class OrdersController <ApplicationController
 
   def new
-
   end
 
   def show
@@ -12,6 +11,7 @@ class OrdersController <ApplicationController
     user = current_user
     order = user.orders.create(order_params)
     if order.save
+      order.update(status: 1)
       cart.items.each do |item,quantity|
         order.item_orders.create({
           item: item,
@@ -34,7 +34,6 @@ class OrdersController <ApplicationController
     redirect_to "/profile"
     flash[:success] = "Your order has been cancelled!"
   end
-
 
   private
 

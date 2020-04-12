@@ -9,4 +9,11 @@ class User < ApplicationRecord
   def info
     {name: name, address: address, city: city, state: state, zip: zip, email: email}
   end
+
+  def all_orders
+    if admin?
+      Order.order(:status)
+    end
+  end
+
 end

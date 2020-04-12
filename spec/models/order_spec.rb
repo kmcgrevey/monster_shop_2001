@@ -15,6 +15,45 @@ describe Order, type: :model do
     it {should have_many(:items).through(:item_orders)}
   end
 
+  describe "status" do
+    before(:each) do
+      @user = User.create!(name: "Josh Tukman",
+                            address: "756 Main St.",
+                            city: "Denver",
+                            state: "Colorado",
+                            zip: "80209",
+                            email: "josh.t@gmail.com",
+                            password: "secret_password",
+                            password_confirmation: "secret_password",
+                            role: 0)
+
+    end
+
+    it "can have a status of packaged" do
+      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+
+      expect(order_1.packaged?).to eq(true)
+    end
+
+    it "can have a status of pending" do
+      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+
+      expect(order_1.pending?).to eq(true)
+    end
+
+    it "can have a status of shipped" do
+      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
+
+      expect(order_1.shipped?).to eq(true)
+    end
+
+    it "can have a status of cancelled" do
+      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 3)
+
+      expect(order_1.cancelled?).to eq(true)
+    end
+  end
+
   describe 'instance methods' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -34,10 +73,13 @@ describe Order, type: :model do
                             role: 0)
 
       @order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+#       this will probably cause problems since status is now an int.  Likely will need to create a new status in enums
+#       Mike's code is below, Kristas is not commented out
+#       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+#       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
 
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
-
 
     end
 
