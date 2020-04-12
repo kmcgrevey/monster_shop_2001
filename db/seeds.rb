@@ -57,6 +57,15 @@ user = User.create(name: 'User',
                    password: 'user',
                    password_confirmation: 'user',
                    role: 0)
+josh = bike_shop.users.create!(name: "Josh Tukman",
+                               address: "756 Main St",
+                               city: "Denver",
+                               state: "Colorado",
+                               zip: "80210",
+                               email: "josh.t@gmail.com",
+                               password: "secret_password",
+                               password_confirmation: "secret_password",
+                               role: 1)
 #orders
 order1 = user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
 order2 = user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)

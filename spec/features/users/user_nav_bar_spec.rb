@@ -39,7 +39,8 @@ RSpec.describe "as a user in the nav bar" do
 
   describe "as a merchant employee in the nav bar" do
     it "I see the same links as a regular user and a link to my merchant dashboard" do
-      merchant = User.create!(name: "Josh Tukman",
+      bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+      merchant = bike_shop.users.create!(name: "Josh Tukman",
                             address: "756 Main St",
                             city: "Denver",
                             state: "Colorado",
