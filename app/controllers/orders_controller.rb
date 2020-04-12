@@ -1,7 +1,6 @@
 class OrdersController <ApplicationController
 
   def new
-
   end
 
   def show
@@ -29,6 +28,12 @@ class OrdersController <ApplicationController
     end
   end
 
+  def destroy
+    order = Order.find(params[:id])
+    order.cancel_order
+    redirect_to "/profile"
+    flash[:success] = "Your order has been cancelled!"
+  end
 
   private
 

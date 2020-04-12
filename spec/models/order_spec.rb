@@ -73,9 +73,14 @@ describe Order, type: :model do
                             role: 0)
 
       @order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+#       this will probably cause problems since status is now an int.  Likely will need to create a new status in enums
+#       Mike's code is below, Kristas is not commented out
+#       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+#       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
+      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
+
     end
 
     it 'total_count' do
@@ -84,6 +89,22 @@ describe Order, type: :model do
 
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
+    end
+
+    it 'cancel_order' do
+    @order_1.cancel_order
+
+    expect(@order_1.item_orders.first.status).to eq("Unfulfilled")
+    expect(@order_1.item_orders.last.status).to eq("Unfulfilled")
+    expect(@order_1.status).to eq("Cancelled")
+    end
+
+    it 'fulfill_item' do
+      @order_1.fulfill_item(@tire)
+      expect(@order_1.status).to eq("Pending")
+
+      @order_1.fulfill_item(@pull_toy)
+      expect(@order_1.status).to eq("Packaged")
     end
   end
 

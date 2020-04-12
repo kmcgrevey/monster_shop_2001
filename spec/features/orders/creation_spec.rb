@@ -6,6 +6,9 @@
 # - Details of the order:
 
 # - the date when the order was created
+
+require 'rails_helper'
+
 RSpec.describe("Order Creation") do
   describe "When I check out from my cart" do
     before(:each) do

@@ -59,10 +59,26 @@ describe Item, type: :model do
 
 
     it 'qty_purchased' do
-      order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
-      ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
+    order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+    ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
 
-      expect(@chain.qty_purchased).to eq(4)
+    expect(@chain.qty_purchased).to eq(4)
+  end
+
+    it 'order_qty_purchased' do
+      @order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      order2 = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+
+      ItemOrder.create!(order_id: @order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
+      ItemOrder.create!(order_id: order2.id, item_id: @chain.id, price: @chain.price, quantity: 3)
+      expect(@chain.order_qty_purchased(@order.id)).to eq(4)
+    end
+
+    it 'subtotal' do
+      @order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      ItemOrder.create!(order_id: @order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
+
+      expect(@chain.subtotal(@order.id)).to eq(200)
     end
   end
 
