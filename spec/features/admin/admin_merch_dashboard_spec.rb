@@ -39,7 +39,7 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
                          password_confirmation: "haunted_password",
                          role: 0)
 
-    @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+    @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203, status: 0)
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
@@ -67,24 +67,30 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     expect(page).to have_content("All Merchants")
 
     expect(@mike.status).to eq("disabled")
-    expect(@mike.status).to eq("enabled")
+    expect(@meg.status).to eq("enabled")
 
     within ".merchant-#{@mike.id}" do
       expect(page).to have_content("Merchant Name: #{@mike.name}")
-      expect(page).to have_content("Status: #{@mike.status}")
-      expect(page).to_not have_button("Disable")
+      expect(page).to have_content("Status: disabled")
+      # expect(page).to_not have_button("Disable")
     end
 
     within ".merchant-#{@meg.id}" do
       expect(page).to have_content("Merchant Name: #{@meg.name}")
-      expect(page).to have_content("Status: #{@meg.status}")
+      expect(page).to have_content("Status: enabled")
       click_button("Disable")
     end
 
-    expect(current_user).to eq("/admin/merchants")
-    expect(page).to have(content)("Merchant account has been disabled.")
+    expect(current_path).to eq("/admin/merchants")
+    expect(page).to have_content("Merchant account has been disabled.")
 
-    expect(@meg.status).to eq("disabled")
+    within ".merchant-#{@meg.id}" do
+      expect(page).to have_content("Merchant Name: #{@meg.name}")
+      expect(page).to have_content("Status: disabled")
+      expect(page).to_not have_button("Disable")
+    end
+
+    # expect(@meg.status).to eq("disabled")
   end
 
 end
