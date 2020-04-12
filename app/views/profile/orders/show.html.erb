@@ -16,4 +16,8 @@ Current Status: <%= @order.status %></br>
 Total Count of Items: <%= @order.total_count %></br>
 Grandtotal: $<%= @order.grandtotal %>0
 
-<%= link_to "Cancel This Order", "/orders/#{@order.id}", method: :delete %>
+<% if @order.status == "shipped" %>
+  <p>Your order has been shipped!</p>
+<% else %>
+  <%= link_to "Cancel This Order", "/orders/#{@order.id}", method: :delete %>
+<% end %>

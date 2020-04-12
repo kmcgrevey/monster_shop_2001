@@ -168,7 +168,4 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     end
 
   end
-
-  it "when the status of the package is shipped it can no loger be cancelled" do
-  end
 end

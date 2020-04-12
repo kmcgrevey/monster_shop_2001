@@ -31,13 +31,16 @@ RSpec.describe "As a registered user", type: :feature do
 
       @order1 = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 1)
       @order2 = @user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222, status: 1)
-      @order3 = @user2.orders.create!(name: 'Jane', address: '123 Jane Drive', city: 'Boulder', state: 'CO', zip: 80301)
+      @order3 = @user2.orders.create!(name: 'Jane', address: '123 Jane Drive', city: 'Boulder', state: 'CO', zip: 80301, status: 1)
+      @order4 = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 2)
 
       @order1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
 
       @order2.item_orders.create!(item: @tire, price: @tire.price, quantity: 3)
       @order2.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
+
+      @order4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 6)
     end
 
     it "I can visit the order show page from my order index page and see an individual orders details" do
@@ -86,7 +89,16 @@ RSpec.describe "As a registered user", type: :feature do
           expect(page).to have_content("Status: cancelled")
           expect(page).to_not have_content("Status: pending")
         end
+    end
 
+    it "shipped orders can not be cancelled" do
+      visit "/profile/orders/#{@order4.id}"
+      expect(page).to_not have_link("Cancel This Order")
+      expect(page).to have_content("Your order has been shipped!")
+
+      visit "/profile/orders/#{@order1.id}"
+      expect(page).to have_link("Cancel This Order")
+      expect(page).to_not have_content("Your order has been shipped!")
     end
 
 
