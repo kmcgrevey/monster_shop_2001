@@ -50,14 +50,12 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     @order_4 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip, status: 1)
     @order_5 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip, status: 2)
 
-
     ItemOrder.create!(order_id: @order_1.id, item_id: @tire.id, price: @tire.price, quantity: 2)
     ItemOrder.create!(order_id: @order_3.id, item_id: @tire.id, price: @tire.price, quantity: 3)
     ItemOrder.create!(order_id: @order_4.id, item_id: @pencil.id, price: @pencil.price, quantity: 20)
     ItemOrder.create!(order_id: @order_5.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
 
     @order_2 = @mary.orders.create(name: @mary.name, address: @mary.address, city: @mary.city, state: @mary.state, zip: @adam.zip)
-
 
     ItemOrder.create!(order_id: @order_2.id, item_id: @paper.id, price: @paper.price, quantity: 1)
     ItemOrder.create!(order_id: @order_2.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
@@ -94,14 +92,25 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
       expect(page).to have_content(@order_1.id)
       expect(page).to have_link(@order_1.name)
       expect(page).to have_content("04/11/2020")
-      expect(page).to_not have_content(@order_2.id)
     end
 
-    within(".order-#{@order_1.id}") do
-      expect(page).to have_content(@order_1.id)
-      expect(page).to have_link(@order_1.name)
+    within(".order-#{@order_2.id}") do
+      expect(page).to have_content(@order_2.id)
+      expect(page).to have_link(@order_2.name)
       expect(page).to have_content("04/11/2020")
+      click_link(@order_2.name)
     end
+
+    expect(current_path).to eq("/admin/users/#{@order_2.user.id}")
+
+    expect(page).to have_content("#{@order_2.user.id}")
+    expect(page).to have_content("#{@order_2.user.name}")
+    expect(page).to have_content("#{@order_2.user.address}")
+    expect(page).to have_content("#{@order_2.user.city}")
+    expect(page).to have_content("#{@order_2.user.state}")
+    expect(page).to have_content("#{@order_2.user.zip}")
+    expect(page).to have_content("#{@order_2.user.email}")
+    expect(page).to have_content("#{@order_2.user.role}")
 
   end
 
