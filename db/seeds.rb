@@ -30,6 +30,7 @@ bed = dog_shop.items.create(name: "Doggie Bed", description: "Soo plush and comf
 dog_food = dog_shop.items.create(name: "Bag o Food", description: "Nutrition in bulk", price: 54, image: "https://s7d2.scene7.com/is/image/PetSmart/5149892", inventory: 32)
 collar = dog_shop.items.create(name: "Dog Collar", description: "Choker", price: 18, image: "https://s7d2.scene7.com/is/image/PetSmart/5169886", inventory: 32)
 brush = dog_shop.items.create(name: "Dog Brush", description: "Detangle those curls", price: 12, image: "https://s7d2.scene7.com/is/image/PetSmart/5280398", inventory: 32)
+#users
 admin = User.create(name: 'Admin',
                     address: '123 Street Road',
                     city: 'Smallville',
@@ -39,7 +40,7 @@ admin = User.create(name: 'Admin',
                     password: 'admin',
                     password_confirmation: 'admin',
                     role: 2)
-merchant1 = User.create(name: 'Merchant1',
+merchant1 = bike_shop.users.create(name: 'Merchant1',
                         address: '456 Main St',
                         city: 'Townsburg',
                         state: 'CA',
@@ -47,6 +48,15 @@ merchant1 = User.create(name: 'Merchant1',
                         email: 'merchant1@example.com',
                         password: 'merchant1',
                         password_confirmation: 'merchant1',
+                        role: 1)
+merchant2 = dog_shop.users.create(name: 'Merchant2',
+                        address: '789 Main St',
+                        city: 'Cityville',
+                        state: 'OH',
+                        zip: "44004",
+                        email: 'merchant2@example.com',
+                        password: 'merchant2',
+                        password_confirmation: 'merchant2',
                         role: 1)
 user = User.create(name: 'User',
                    address: '78 Broadway Ave',
