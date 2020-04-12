@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
   #orders
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new, :create, :show, :update]
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"

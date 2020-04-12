@@ -9,7 +9,7 @@
           <p>Order Number: <%= order.id %></p>
           Placed By: <%= link_to "#{order.name}", "/admin/users/#{order.user.id}"%><br>
           Date Created: <%= order.created_at.strftime("%m/%d/%Y") %><br>
-          <%= button_to "Ship" %>
+          <%= button_to "Ship", "/orders/#{order.id}", method: :patch %>
       </ul>
       </div>
       <% end %>

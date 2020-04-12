@@ -155,9 +155,18 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     end
 
     within(".order-#{@order_4.id}") do
-      # click_button("Ship")
+      click_button("Ship")
     end
     expect(current_path).to eq("/admin/dashboard")
+
+    within ".packaged-orders" do
+      expect(page).to_not have_content("#{@order_4.id}")
+    end
+
+    within ".shipped-orders" do
+      expect(page).to have_content("#{@order_4.id}")
+    end
+
   end
 
   it "when the status of the package is shipped it can no loger be cancelled" do
