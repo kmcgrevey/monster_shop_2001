@@ -48,19 +48,28 @@ merchant = User.create(name: 'Merchant1',
                        password: 'merchant',
                        password_confirmation: 'merchant1',
                        role: 1)
-user = User.create(name: 'User',
+josh = User.create(name: 'Josh Tukman',
                    address: '78 Broadway Ave',
                    city: 'Denver',
                    state: 'CO',
                    zip: "80210",
-                   email: 'user@example.com',
-                   password: 'user',
-                   password_confirmation: 'user',
+                   email: 'josh@example.com',
+                   password: 'josh',
+                   password_confirmation: 'josh',
+                   role: 0)
+kevin = User.create(name: 'Kevin McGrevey',
+                   address: '79 Broadway Ave',
+                   city: 'Denver',
+                   state: 'CO',
+                   zip: "80210",
+                   email: 'kevin@example.com',
+                   password: 'kevin',
+                   password_confirmation: 'kevin',
                    role: 0)
 
 #orders
-order1 = user.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
-order2 = user.orders.create!(name: 'Kevin McGrevey', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
+order1 = josh.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 1)
+order2 = kevin.orders.create!(name: 'Kevin McGrevey', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
 
 #add items to order #FOREIGN KEY VIOLATION ERROR???
 ItemOrder.create!(order_id: order2.id, item_id: tire.id, price: tire.price, quantity: 9)
