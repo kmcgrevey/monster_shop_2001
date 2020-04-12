@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "When I visit the admin dashboard", type: :feature do
-  # As an admin user
-  # When I visit my admin dashboard ("/admin")
 
   before(:each) do
+
+    @today = Time.new(2020,04,11)
+    allow(Time).to receive(:now).and_return(@today)
+
     @josh = User.create!(name: "Josh Tukman",
                          address: "756 Main St",
                          city: "Denver",
@@ -44,14 +46,18 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
     @order_1 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip)
+    @order_3 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip, status: 3)
+    @order_4 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip, status: 1)
+    @order_5 = @adam.orders.create(name: @adam.name, address: @adam.address, city: @adam.city, state: @adam.state, zip: @adam.zip, status: 2)
 
-    allow(@order_1).to receive(:created_at).and_return("04/11/2020")
 
     ItemOrder.create!(order_id: @order_1.id, item_id: @tire.id, price: @tire.price, quantity: 2)
+    ItemOrder.create!(order_id: @order_3.id, item_id: @tire.id, price: @tire.price, quantity: 3)
+    ItemOrder.create!(order_id: @order_4.id, item_id: @pencil.id, price: @pencil.price, quantity: 20)
+    ItemOrder.create!(order_id: @order_5.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
 
     @order_2 = @mary.orders.create(name: @mary.name, address: @mary.address, city: @mary.city, state: @mary.state, zip: @adam.zip)
 
-    allow(@order_2).to receive(:created_at).and_return("04/11/2020")
 
     ItemOrder.create!(order_id: @order_2.id, item_id: @paper.id, price: @paper.price, quantity: 1)
     ItemOrder.create!(order_id: @order_2.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
@@ -88,6 +94,7 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
       expect(page).to have_content(@order_1.id)
       expect(page).to have_link(@order_1.name)
       expect(page).to have_content("04/11/2020")
+      expect(page).to_not have_content(@order_2.id)
     end
 
     within(".order-#{@order_1.id}") do
@@ -99,11 +106,8 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
   end
 
   it "orders are sorted by status in order: packaged pending shipped cancelled" do
-    # Orders are sorted by "status" in this order:
-    #
-    # packaged
-    # pending
-    # shipped
-    # cancelled
+    expect("#{@order_1.id}").to appear_before("#{@order_4.id}")
+    expect("#{@order_4.id}").to appear_before("#{@order_5.id}")
+    expect("#{@order_5.id}").to appear_before("#{@order_3.id}")
   end
 end
