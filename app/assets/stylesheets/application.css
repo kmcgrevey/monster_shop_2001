@@ -208,6 +208,9 @@ tr:nth-child(even) {
 }
 
 .all-orders {
+  display: inline-block;
   background-color: #f2f2f2;
-  width: 75%
+  width: 30%;
+  margin: 20px'
+  padding: 20px'
 }

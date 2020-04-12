@@ -59,8 +59,8 @@ user = User.create(name: 'User',
                    role: 0)
 
 #orders
-order1 = user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
-order2 = user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
+order1 = user.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+order2 = user.orders.create!(name: 'Kevin McGrevey', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
 
 #add items to order #FOREIGN KEY VIOLATION ERROR???
 ItemOrder.create!(order_id: order2.id, item_id: tire.id, price: tire.price, quantity: 9)

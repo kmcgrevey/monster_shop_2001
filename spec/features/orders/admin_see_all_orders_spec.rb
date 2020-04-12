@@ -82,22 +82,18 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
 
   it "for each order I see the users name(name links to admin view  of user show page), order id, date created" do
 
-    # order id
-    # For each order I see the following information:
-    #
-    # user who placed the order, which links to admin view of user profile
-    # date the order was created
-
     within(".order-#{@order_1.id}") do
       expect(page).to have_content(@order_1.id)
       expect(page).to have_link(@order_1.name)
       expect(page).to have_content("04/11/2020")
+      expect(page).to have_content("#{@order_1.status}")
     end
 
     within(".order-#{@order_2.id}") do
       expect(page).to have_content(@order_2.id)
       expect(page).to have_link(@order_2.name)
       expect(page).to have_content("04/11/2020")
+      expect(page).to have_content("#{@order_2.status}")
       click_link(@order_2.name)
     end
 
