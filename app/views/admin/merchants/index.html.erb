@@ -1,0 +1,16 @@
+<h1>All Merchants</h1>
+<section>
+  <% @merchants.each do |merchant| %>
+    <div class="merchant-<%= merchant.id %>">
+      <ul>
+        <li>Merchant Name: <%= merchant.name %></li>
+        <li>Status: <%= merchant.status %></li>
+        <% if merchant.status == "enabled" %>
+          <%= button_to "Disable", "/admin/merchants/#{merchant.id}", method: :patch %>
+        <% else %>
+          <%= button_to "Enable", "/admin/merchants/#{merchant.id}", method: :patch %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</section>
