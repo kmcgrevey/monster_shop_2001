@@ -1,7 +1,6 @@
 <h1>All Merchants</h1>
 <section>
   <% @merchants.map do |merchant| %>
-  <%# <% require "pry"; binding.pry %> %>
   <div class="merchant-<%= merchant.id %>">
     <ul>
       <li>Merchant Name: <%= merchant.name %></li>
