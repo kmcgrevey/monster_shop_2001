@@ -9,6 +9,7 @@
 Merchant.destroy_all
 Item.destroy_all
 
+
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
@@ -24,14 +25,14 @@ admin = User.create(name: 'Admin',
                     password_confirmation: 'admin',
                     role: 2)
 
-merchant = User.create(name: 'Merchant1',
+merchant = bike_shop.users.create(name: 'Merchant1',
                        address: '456 Main St',
                        city: 'Townsburg',
                        state: 'CA',
                        zip: "98765",
                        email: 'merchant@example.com',
                        password: 'merchant',
-                       password_confirmation: 'merchant1',
+                       password_confirmation: 'merchant',
                        role: 1)
 
 merchant1 = User.create(name: 'Merchant1',
@@ -53,7 +54,7 @@ josh = User.create(name: 'Josh Tukman',
                    password: 'josh',
                    password_confirmation: 'josh',
                    role: 0)
-                   
+
 kevin = User.create(name: 'Kevin McGrevey',
                    address: '79 Broadway Ave',
                    city: 'Denver',
@@ -80,7 +81,42 @@ bed = dog_shop.items.create(name: "Doggie Bed", description: "Soo plush and comf
 dog_food = dog_shop.items.create(name: "Bag o Food", description: "Nutrition in bulk", price: 54, image: "https://s7d2.scene7.com/is/image/PetSmart/5149892", inventory: 32)
 collar = dog_shop.items.create(name: "Dog Collar", description: "Choker", price: 18, image: "https://s7d2.scene7.com/is/image/PetSmart/5169886", inventory: 32)
 brush = dog_shop.items.create(name: "Dog Brush", description: "Detangle those curls", price: 12, image: "https://s7d2.scene7.com/is/image/PetSmart/5280398", inventory: 32)
-
+admin = User.create(name: 'Admin',
+                    address: '123 Street Road',
+                    city: 'Smallville',
+                    state: 'IA',
+                    zip: "12345",
+                    email: 'admin@example.com',
+                    password: 'admin',
+                    password_confirmation: 'admin',
+                    role: 2)
+merchant1 = User.create(name: 'Merchant1',
+                        address: '456 Main St',
+                        city: 'Townsburg',
+                        state: 'CA',
+                        zip: "98765",
+                        email: 'merchant1@example.com',
+                        password: 'merchant1',
+                        password_confirmation: 'merchant1',
+                        role: 1)
+user = User.create(name: 'User',
+                   address: '78 Broadway Ave',
+                   city: 'Denver',
+                   state: 'CO',
+                   zip: "80210",
+                   email: 'user@example.com',
+                   password: 'user',
+                   password_confirmation: 'user',
+                   role: 0)
+josh = bike_shop.users.create!(name: "Josh Tukman",
+                               address: "756 Main St",
+                               city: "Denver",
+                               state: "Colorado",
+                               zip: "80210",
+                               email: "josh.t@gmail.com",
+                               password: "secret_password",
+                               password_confirmation: "secret_password",
+                               role: 1)
 #orders
 order1 = josh.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 1)
 order2 = kevin.orders.create!(name: 'Kevin McGrevey', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)

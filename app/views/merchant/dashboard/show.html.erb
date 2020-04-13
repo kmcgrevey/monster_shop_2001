@@ -1,0 +1,14 @@
+
+<h2><%= @merchant.name%></h2>
+<h3>Address: <%=@merchant.address%></h3>
+
+<h2>Orders for <%=@merchant.name %>:</h2>
+
+<%@merchant.pending_orders.each do |order| %>
+   <section id="Order-<%=order.id%>">
+     <%=link_to "Order Number: #{order.id}", "/merchant/orders/#{order.id}" %><br>
+     <h3><%= order.created_at.to_date %></h3>
+     <h3>Total Quantity: <%= order.merchant_item_quantity(@merchant.id) %></h3>
+     <h3>Total Value: $<%= order.merchant_item_subtotal(@merchant.id) %></h3>
+  </section>
+<%end %>
