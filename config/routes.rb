@@ -2,35 +2,44 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get "/", to: "welcome#index"
-  delete "/logout", to: "sessions#destroy"
-
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
 
   resources :merchants
 
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
-  get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
-  post "/merchants/:merchant_id/items", to: "items#create"
-  delete "/items/:id", to: "items#destroy"
+  resources :merchants do
+    resources :items, only: [:index, :new, :create, :destroy]
+  end
 
-  get "/items/:item_id/reviews/new", to: "reviews#new"
-  post "/items/:item_id/reviews", to: "reviews#create"
+  resources :items, only: [:index, :show, :edit, :update]
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  resources :items do
+    resources :reviews, only: [:new, :create]
+  end
 
+  resources :reviews, only: [:edit, :update, :destroy]
+
+  resources :orders, only: [:new, :create, :index]
+
+
+  get "/", to: "welcome#index"
+  delete "/logout", to: "sessions#destroy"
+
+  delete "/logout", to: "sessions#destroy"
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+
+  #cart
   post "/cart/:item_id", to: "cart#add_item"
+  patch "/cart/:item_id", to: "cart#plus_minus"
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
+  patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
-  resources :orders, only: [:new, :create, :show]
+  #orders
+
+  resources :orders
+
+  resources :orders, only: [:new, :create, :show, :destroy]
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
@@ -39,10 +48,16 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/dashboard', to: "dashboard#index"
     get '/users', to: "users#index"
+    get '/users/:id', to: "users#show"
+    get '/merchants', to: "merchants#index"
+    patch '/merchants/:id', to: "merchants#update"
+    get "/merchants/:id", to: "merchants#show"
   end
 
-  namespace :merchant do
-    get "/", to: "dashboard#index"
+  namespace :merchant do  
+    get "/", to: "dashboard#show"
+    get "/items", to: "items#index"
+    get "/orders/:order_id", to: "orders#show"
   end
 
   namespace :profile do
@@ -51,6 +66,8 @@ Rails.application.routes.draw do
     patch "/password/edit", to: "passwords#update"
     get "/:id/edit", to: "profile#edit"
     patch "/:id", to: "profile#update"
+    get "/orders", to: "orders#index"
+    get "/orders/:order_id", to: "orders#show"
   end
 
 end

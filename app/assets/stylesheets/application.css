@@ -25,6 +25,13 @@
  	font-family: "Marker Felt", fantasy;
  }
 
+ h2 {
+  text-align: center;
+   font-size: 25px;
+   color: #002244;
+   font-family: "Marker Felt", fantasy;
+ }
+
 ul{
   padding: 0px;
   text-align: center;
@@ -109,6 +116,16 @@ section[id*='review'] {
   box-sizing: border-box;
 }
 
+input[type=password], select {
+ width: 100%;
+ padding: 12px 20px;
+ margin: 8px 0;
+ display: inline-block;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ box-sizing: border-box;
+}
+
 input[type=submit] {
   width: 100%;
   background-color: #17BEBB;
@@ -188,4 +205,12 @@ tr:nth-child(even) {
   background-color: #17BEBB;
   color: black;
   display: inline-block;
+}
+
+.all-orders {
+  display: inline-block;
+  background-color: #f2f2f2;
+  width: 30%;
+  margin: 20px'
+  padding: 20px'
 }
