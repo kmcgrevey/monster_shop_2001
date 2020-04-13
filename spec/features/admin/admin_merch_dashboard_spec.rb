@@ -43,7 +43,9 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     
     @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-    
+    @seat = @meg.items.create(name: "Seat", description: "Cushy for your tushy.", price: 199, image: "https://www.rei.com/media/product/153242", inventory: 20)
+    @pump = @meg.items.create(name: "Pump", description: "Not just hot air", price: 70, image: "https://www.rei.com/media/product/152974", inventory: 20)
+
     @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
     @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
     @studs = @mike.items.create(name: "Studs", description: "Inactive status for our test.'", price: 5, image: "https://www.jensonusa.com/globalassets/product-images---all-assets/problem-solvers/br309z00.jpg", active?:false, inventory: 4)
@@ -85,16 +87,19 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
       expect(page).to have_content("Status: enabled")
       click_button("Disable")
     end
+
+    @meg.reload
+
     expect(current_path).to eq("/admin/merchants")
     expect(page).to have_content("Merchant account has been disabled.")
-    
+
+    expect(@meg.status).to eq("disabled")
+
     within ".merchant-#{@meg.id}" do
       expect(page).to have_content("Merchant Name: #{@meg.name}")
       expect(page).to have_content("Status: disabled")
       expect(page).to_not have_button("Disable")
     end
-
-    # expect(@meg.status).to eq("disabled")
   end
 
   it "I click 'enable' button next to any merchants with disabled accounts to enable them" do
@@ -183,8 +188,28 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     #   end
 
     # end
+
+  it "when a merchant is disabled all of their items are also disabled" do
+    expect(@meg.status).to eq ("enabled")
+    expect(@meg.items).to eq ([@tire, @seat, @pump])
+    expect(@tire.active?).to eq(true)
+    expect(@seat.active?).to eq(true)
+    expect(@pump.active?).to eq(true)
+
+    visit "/admin/merchants"
+
+    within ".merchant-#{@meg.id}" do
+      click_button("Disable")
+    end
+    @meg.reload
+    @tire.reload
+    @seat.reload
+    @pump.reload
+    expect(@meg.status).to eq ("disabled")
+    expect(@meg.items).to eq ([@tire, @seat, @pump])
+    expect(@tire.active?).to eq(false)
+    expect(@seat.active?).to eq(false)
+    expect(@pump.active?).to eq(false)
+  end
+
 end
-# As an admin
-# When I visit the merchant index page
-# And I click on the "enable" button for a disabled merchant
-# Then all of that merchant's items should be activated

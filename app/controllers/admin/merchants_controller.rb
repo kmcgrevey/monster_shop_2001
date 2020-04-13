@@ -7,6 +7,7 @@ class Admin::MerchantsController < Admin::BaseController
     merchant = Merchant.find(params[:id])
     if merchant.enabled?
       merchant.update(status: 0)
+      merchant.items.update(active?: false)
       flash[:success] = "Merchant account has been disabled."
     else
       merchant.update(status: 1)
