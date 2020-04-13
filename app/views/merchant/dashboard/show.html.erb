@@ -1,9 +1,9 @@
 
 <h2><%= @merchant.name%></h2>
 <h3>Address: <%=@merchant.address%></h3>
-<h3>Address: <%=@merchant.city%></h3>
-<h3>Address: <%=@merchant.state%></h3>
-<h3>Address: <%=@merchant.zip%></h3>
+<h3>City: <%=@merchant.city%></h3>
+<h3>State: <%=@merchant.state%></h3>
+<h3>Zip: <%=@merchant.zip%></h3>
 
 <p><%= link_to "My Items", "/merchant/items", method: :get %></p>
 
@@ -17,4 +17,3 @@
      <h3>Total Value: $<%= order.merchant_item_subtotal(@merchant.id) %></h3>
   </section>
 <%end %>
-
