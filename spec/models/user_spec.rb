@@ -147,7 +147,6 @@ RSpec.describe User do
 
       expect(@josh.admin?).to eq(true)
       expect(@josh.all_orders).to eq([@order_1, @order_2, @order_3, @order_4])
-
       expect(@mike.admin?).to eq(false)
       expect(@mike.all_orders).to eq(nil)
     end

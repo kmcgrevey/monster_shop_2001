@@ -27,7 +27,7 @@ class Merchant <ApplicationRecord
   end
 
   def pending_items
-    require "pry"; binding.pry
+    @items = Item.where(merchant_id: id).joins(:orders).where(:orders => {:status => 'pending'}) 
   end
 
 end

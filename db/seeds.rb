@@ -25,14 +25,14 @@ admin = User.create(name: 'Admin',
                     password_confirmation: 'admin',
                     role: 2)
 
-merchant = User.create(name: 'Merchant1',
+merchant = bike_shop.users.create(name: 'Merchant1',
                        address: '456 Main St',
                        city: 'Townsburg',
                        state: 'CA',
                        zip: "98765",
                        email: 'merchant@example.com',
                        password: 'merchant',
-                       password_confirmation: 'merchant1',
+                       password_confirmation: 'merchant',
                        role: 1)
 
 merchant1 = User.create(name: 'Merchant1',

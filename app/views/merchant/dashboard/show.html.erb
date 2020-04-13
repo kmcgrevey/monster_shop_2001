@@ -1,4 +1,12 @@
 
 <h2><%= @merchant.name%></h2>
 <h3>Address: <%=@merchant.address%></h3>
-<%= %>
+
+<h2>Orders for <%=@merchant.name %>:</h2>
+<%@merchant.pending_items.each do |item| %>
+   <section id="order-<%=item.order_ids%>">
+     <%=link_to "Order: #{item.order_ids}", "/orders/#{item.order_ids}" %><br>
+     <h3>Items:</h3><br>
+     <b><h4><%=item.name%></h4></b>
+  </section>
+<%end %>
