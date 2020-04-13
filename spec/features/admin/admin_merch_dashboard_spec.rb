@@ -100,7 +100,6 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     within ".merchant-#{@mike.id}" do
       expect(page).to have_content("Merchant Name: #{@mike.name}")
       expect(page).to have_content("Status: disabled")
-      save_and_open_page
       # expect(page).to_not have_button("Disable")
       
       click_button "Enable"

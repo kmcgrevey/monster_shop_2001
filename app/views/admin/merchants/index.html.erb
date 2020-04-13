@@ -7,6 +7,8 @@
       <li>Status: <%= merchant.status %></li>
       <% if merchant.status == "enabled" %>
         <%= button_to "Disable", "/admin/merchants/#{merchant.id}", method: :patch %>
+      <% else %>
+        <%= button_to "Enable", "/admin/merchants/#{merchant.id}", method: :patch %>
       <% end %>
   </ul>
   <% end %>
