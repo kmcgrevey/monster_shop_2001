@@ -38,7 +38,7 @@ RSpec.describe "As a merchant employee", type: :feature do
     end
 
 
-    xit "can show a list of orders that are pending with items that I sell" do
+    it "can show a list of orders that are pending with items that I sell" do
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
       dog_shop = Merchant.create(name: "Meg's Dog Shop", address: '123 Dog Rd.', city: 'Hershey', state: 'PA', zip: 80203)
 
@@ -60,12 +60,14 @@ RSpec.describe "As a merchant employee", type: :feature do
       pedals = bike_shop.items.create(name: "Pedals", description: "Clipless bliss!", price: 210, image: "https://www.rei.com/media/product/130015", inventory: 20)
 
       order1 = user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      order2 = user.orders.create!(name: 'Krista', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      order3 = user.orders.create!(name: 'Mike', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
 
       ItemOrder.create!(order_id: order1.id, item_id: tire.id, price: tire.price, quantity: 2)
-      ItemOrder.create!(order_id: order1.id, item_id: seat.id, price: seat.price, quantity: 10)
-      ItemOrder.create!(order_id: order1.id, item_id: pump.id, price: pump.price, quantity: 8)
-      ItemOrder.create!(order_id: order1.id, item_id: pedals.id, price: pedals.price, quantity: 7)
-      ItemOrder.create!(order_id: order1.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 9)
+      ItemOrder.create!(order_id: order1.id, item_id: seat.id, price: seat.price, quantity: 1)
+      ItemOrder.create!(order_id: order2.id, item_id: pump.id, price: pump.price, quantity: 1)
+      ItemOrder.create!(order_id: order3.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 3)
+      ItemOrder.create!(order_id: order2.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 2)
 
       josh = bike_shop.users.create!(name: "Josh Tukman",
                             address: "756 Main St",
@@ -79,9 +81,19 @@ RSpec.describe "As a merchant employee", type: :feature do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(josh)
       visit "/merchant"
-
-      #expect(page).to have_content("Orders for Brian's Bike Shop")
-
+      expect(page).to have_content("Orders for #{bike_shop.name}:")
+      within "#Order-#{order1.id}" do
+        expect(page).to have_link "Order Number: #{order1.id}", href: "/merchant/orders/#{order1.id}"
+        expect(page).to have_content(order1.created_at.to_date)
+        expect(page).to have_content("Total Quantity: 3")
+        expect(page).to have_content("Total Value: $399")
+      end
+      within "#Order-#{order2.id}" do
+        expect(page).to have_link "Order Number: #{order2.id}", href: "/merchant/orders/#{order2.id}"
+        expect(page).to have_content(order2.created_at.to_date)
+        expect(page).to have_content("Total Quantity: 1")
+        expect(page).to have_content("Total Value: $70")
+      end
 
     end
 

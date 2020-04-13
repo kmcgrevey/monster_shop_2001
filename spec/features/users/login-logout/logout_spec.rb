@@ -25,7 +25,8 @@ RSpec.describe "As any registered user" do
     it "can log out of the system" do
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
 
-      user = bike_shop.users.create!(name: "Josh Tukman",
+      josh = bike_shop.users.create!(name: "Josh Tukman",
+
                             address: "756 Main St",
                             city: "Denver",
                             state: "Colorado",

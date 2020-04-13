@@ -14,6 +14,57 @@ Item.destroy_all
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
+#users
+admin = User.create(name: 'Admin',
+                    address: '123 Street Road',
+                    city: 'Smallville',
+                    state: 'IA',
+                    zip: "12345",
+                    email: 'admin@example.com',
+                    password: 'admin',
+                    password_confirmation: 'admin',
+                    role: 2)
+
+merchant = bike_shop.users.create(name: 'Merchant1',
+                       address: '456 Main St',
+                       city: 'Townsburg',
+                       state: 'CA',
+                       zip: "98765",
+                       email: 'merchant@example.com',
+                       password: 'merchant',
+                       password_confirmation: 'merchant',
+                       role: 1)
+
+merchant1 = User.create(name: 'Merchant1',
+                        address: '456 Main St',
+                        city: 'Townsburg',
+                        state: 'CA',
+                        zip: "98765",
+                        email: 'merchant1@example.com',
+                        password: 'merchant1',
+                        password_confirmation: 'merchant1',
+                        role: 1)
+
+josh = User.create(name: 'Josh Tukman',
+                   address: '78 Broadway Ave',
+                   city: 'Denver',
+                   state: 'CO',
+                   zip: "80210",
+                   email: 'josh@example.com',
+                   password: 'josh',
+                   password_confirmation: 'josh',
+                   role: 0)
+
+kevin = User.create(name: 'Kevin McGrevey',
+                   address: '79 Broadway Ave',
+                   city: 'Denver',
+                   state: 'CO',
+                   zip: "80210",
+                   email: 'kevin@example.com',
+                   password: 'kevin',
+                   password_confirmation: 'kevin',
+                   role: 0)
+
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
 seat = bike_shop.items.create(name: "Seat", description: "Cushy for your tushy.", price: 199, image: "https://www.rei.com/media/product/153242", inventory: 20)
@@ -77,8 +128,8 @@ josh = bike_shop.users.create!(name: "Josh Tukman",
                                password_confirmation: "secret_password",
                                role: 1)
 #orders
-order1 = user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
-order2 = user.orders.create!(name: 'Kevin', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
+order1 = josh.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 1)
+order2 = kevin.orders.create!(name: 'Kevin McGrevey', address: '123 Kevin Ave', city: 'Denver', state: 'CO', zip: 80222)
 
 #add items to order #FOREIGN KEY VIOLATION ERROR???
 ItemOrder.create!(order_id: order2.id, item_id: tire.id, price: tire.price, quantity: 9)
@@ -96,5 +147,3 @@ ItemOrder.create!(order_id: order1.id, item_id: bed.id, price: bed.price, quanti
 ItemOrder.create!(order_id: order1.id, item_id: dog_food.id, price: dog_food.price, quantity: 3)
 ItemOrder.create!(order_id: order1.id, item_id: collar.id, price: collar.price, quantity: 2)
 ItemOrder.create!(order_id: order1.id, item_id: brush.id, price: brush.price, quantity: 1)
-
-#users

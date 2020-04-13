@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :reviews, only: [:edit, :update, :destroy]
 
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new, :create, :index]
 
 
   get "/", to: "welcome#index"
@@ -36,22 +36,26 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
   #orders
-  resources :orders, only: [:new, :create, :show]
+
+  resources :orders
+
+  resources :orders, only: [:new, :create, :show, :destroy]
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
 
   #admin
   namespace :admin do
-    get '/dashboard', to: "dashboard#index"
-    get '/users', to: "users#index"
+    get "/dashboard", to: "dashboard#index"
+    get "/users", to: "users#index"
     get "/merchants/:id", to: "merchants#show"
+    get "/users/:id", to: "users#show"
   end
 
-  namespace :merchant do
-    #get "/", to: "dashboard#index"
+  namespace :merchant do  
     get "/", to: "dashboard#show"
     get "/items", to: "items#index"
+    get "/orders/:order_id", to: "orders#show"
   end
 
   namespace :profile do
@@ -60,7 +64,8 @@ Rails.application.routes.draw do
     patch "/password/edit", to: "passwords#update"
     get "/:id/edit", to: "profile#edit"
     patch "/:id", to: "profile#update"
-    get "/orders", to: "orders#show"
+    get "/orders", to: "orders#index"
+    get "/orders/:order_id", to: "orders#show"
   end
 
 end
