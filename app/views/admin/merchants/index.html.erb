@@ -1,6 +1,6 @@
 <h1>All Merchants</h1>
 <section>
-  <% @merchants.map do |merchant| %>
+  <% @merchants.each do |merchant| %>
   <div class="merchant-<%= merchant.id %>">
     <ul>
       <li>Merchant Name: <%= merchant.name %></li>
