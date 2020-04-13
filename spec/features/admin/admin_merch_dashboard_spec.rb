@@ -151,7 +151,10 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     inact_pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", active?:false, inventory: 100)
 
     expect(@mike.status).to eq ("disabled")
-    expect(@mike.items).to eq ([@paper, @pencil, @studs, inact_pencil])
+    expect(@mike.items).to include(@paper)
+    expect(@mike.items).to include(@pencil)
+    expect(@mike.items).to include(@studs)
+    expect(@mike.items).to include(inact_pencil)
     expect(@paper.active?).to eq(true)
     expect(@pencil.active?).to eq(true)
     expect(@studs.active?).to eq(false)
@@ -170,7 +173,10 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     inact_pencil.reload
 
     expect(@mike.status).to eq ("enabled")
-    expect(@mike.items).to eq ([@paper, @pencil, @studs, inact_pencil])
+    expect(@mike.items).to include(@paper)
+    expect(@mike.items).to include(@pencil)
+    expect(@mike.items).to include(@studs)
+    expect(@mike.items).to include(inact_pencil)
     expect(@paper.active?).to eq(true)
     expect(@pencil.active?).to eq(true)
     expect(@studs.active?).to eq(true)
