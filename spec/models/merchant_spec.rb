@@ -92,7 +92,7 @@ describe Merchant, type: :model do
       ItemOrder.create!(order_id: order1.id, item_id: tire.id, price: tire.price, quantity: 2)
       ItemOrder.create!(order_id: order1.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 9)
       ItemOrder.create!(order_id: order2.id, item_id: pump.id, price: pump.price, quantity: 9)
-      expect(dog_shop.pending_items).to eq([pull_toy])
+      expect(dog_shop.pending_orders).to eq([order1])
     end
   end
 end
