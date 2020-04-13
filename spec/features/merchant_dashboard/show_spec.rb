@@ -71,7 +71,7 @@ RSpec.describe "As a merchant employee", type: :feature do
       expect(page).to have_content("Orders for #{bike_shop.name}:")
       within "#Order-#{order1.id}" do
         expect(page).to have_link "Order Number: #{order1.id}", href: "/merchant/orders/#{order1.id}"
-        expect(page).to have_content(@order1.created_at.to_date)
+        expect(page).to have_content(order1.created_at.to_date)
         expect(page).to have_content("Total Quantity: 3")
         expect(page).to have_content("Total Value: $399")
       end

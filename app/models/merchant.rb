@@ -31,9 +31,8 @@ class Merchant <ApplicationRecord
   end
 
   def pending_orders
-require "pry"; binding.pry
     orders = Order.joins(:items).where(:items => {:merchant_id => id})
-
+    orders.distinct(:id)
   end
 
 end
