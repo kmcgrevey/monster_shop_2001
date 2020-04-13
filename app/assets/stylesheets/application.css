@@ -206,3 +206,11 @@ tr:nth-child(even) {
   color: black;
   display: inline-block;
 }
+
+.all-orders {
+  display: inline-block;
+  background-color: #f2f2f2;
+  width: 30%;
+  margin: 20px'
+  padding: 20px'
+}
