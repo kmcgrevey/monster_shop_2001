@@ -1,6 +1,7 @@
 <h1>All Merchants</h1>
 <section>
-  <% @merchants.each do |merchant| %>
+  <% @merchants.map do |merchant| %>
+  <%# <% require "pry"; binding.pry %> %>
   <div class="merchant-<%= merchant.id %>">
     <ul>
       <li>Merchant Name: <%= merchant.name %></li>
@@ -8,7 +9,7 @@
       <% if merchant.status == "enabled" %>
         <%= button_to "Disable", "/admin/merchants/#{merchant.id}", method: :patch %>
       <% end %>
-  </ul>
-  <% end %>
+    </ul>
   </div>
+  <% end %>
 </section>
