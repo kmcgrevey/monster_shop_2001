@@ -6,8 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
 Merchant.destroy_all
 Item.destroy_all
+Order.destroy_all
+ItemOrder.destroy_all
+
 
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -25,14 +29,14 @@ admin = User.create(name: 'Admin',
                     password_confirmation: 'admin',
                     role: 2)
 
-merchant = User.create(name: 'Merchant1',
+merchant = bike_shop.users.create(name: 'Merchant1',
                        address: '456 Main St',
                        city: 'Townsburg',
                        state: 'CA',
                        zip: "98765",
                        email: 'merchant@example.com',
                        password: 'merchant',
-                       password_confirmation: 'merchant1',
+                       password_confirmation: 'merchant',
                        role: 1)
 
 merchant1 = User.create(name: 'Merchant1',
@@ -102,11 +106,60 @@ dog_food = dog_shop.items.create(name: "Bag o Food", description: "Nutrition in 
 collar = dog_shop.items.create(name: "Dog Collar", description: "Choker", price: 18, image: "https://s7d2.scene7.com/is/image/PetSmart/5169886", inventory: 32)
 brush = dog_shop.items.create(name: "Dog Brush", description: "Detangle those curls", price: 12, image: "https://s7d2.scene7.com/is/image/PetSmart/5280398", inventory: 32)
 
+
 #kitchen_shop items
 knife = kitchen_shop.items.create(name: "Knife", description: "You call that a knife? This is a knife!", price: 75, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dwc69b71c7/images/large/13603_s2.jpg")
 pot = kitchen_shop.items.create(name: "Cooking Pot", description: "Legality varies by state", price: 120, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw3ea530cd/images/large/5113030_01i_0219_s.jpg")
 espresso = kitchen_shop.items.create(name: "Breville Bambino Plus", description: "Impress your friends!", price: 500, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw92544ea3/images/large/4910287_1118_vs.jpg")
 corn_holder = kitchen_shop.items.create(name: "OXO Corn Holders", description: "Good for corny jokes", price: 500, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw66439aea/images/large/1473222_01i_0414_s.jpg")
+
+
+#users
+admin = User.create(name: 'Admin',
+                    address: '123 Street Road',
+                    city: 'Smallville',
+                    state: 'IA',
+                    zip: "12345",
+                    email: 'admin@example.com',
+                    password: 'admin',
+                    password_confirmation: 'admin',
+                    role: 2)
+merchant1 = bike_shop.users.create(name: 'Merchant1',
+                        address: '456 Main St',
+                        city: 'Townsburg',
+                        state: 'CA',
+                        zip: "98765",
+                        email: 'merchant1@example.com',
+                        password: 'merchant1',
+                        password_confirmation: 'merchant1',
+                        role: 1)
+merchant2 = dog_shop.users.create(name: 'Merchant2',
+                        address: '789 Main St',
+                        city: 'Cityville',
+                        state: 'OH',
+                        zip: "44004",
+                        email: 'merchant2@example.com',
+                        password: 'merchant2',
+                        password_confirmation: 'merchant2',
+                        role: 1)
+user = User.create(name: 'User',
+                   address: '78 Broadway Ave',
+                   city: 'Denver',
+                   state: 'CO',
+                   zip: "80210",
+                   email: 'user@example.com',
+                   password: 'user',
+                   password_confirmation: 'user',
+                   role: 0)
+josh = bike_shop.users.create!(name: "Josh Tukman",
+                               address: "756 Main St",
+                               city: "Denver",
+                               state: "Colorado",
+                               zip: "80210",
+                               email: "josh.t@gmail.com",
+                               password: "secret_password",
+                               password_confirmation: "secret_password",
+                               role: 1)
 
 #orders
 order1 = josh.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 1)
