@@ -63,7 +63,9 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
   end
 
   it "I see a 'disable' button next to any merchants who are not yet disabled" do
+    
     visit "/admin/merchants"
+    
     expect(page).to have_content("All Merchants")
 
     expect(@mike.status).to eq("disabled")
@@ -80,10 +82,9 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
       expect(page).to have_content("Status: enabled")
       click_button("Disable")
     end
-
     expect(current_path).to eq("/admin/merchants")
     expect(page).to have_content("Merchant account has been disabled.")
-
+    
     within ".merchant-#{@meg.id}" do
       expect(page).to have_content("Merchant Name: #{@meg.name}")
       expect(page).to have_content("Status: disabled")
@@ -91,6 +92,30 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     end
 
     # expect(@meg.status).to eq("disabled")
+  end
+
+  it "I click 'enable' button next to any merchants with disabled accounts to enable them" do
+    visit "/admin/merchants"
+
+    within ".merchant-#{@mike.id}" do
+      expect(page).to have_content("Merchant Name: #{@mike.name}")
+      expect(page).to have_content("Status: disabled")
+      save_and_open_page
+      # expect(page).to_not have_button("Disable")
+      
+      click_button "Enable"
+    end
+
+    expect(current_path).to eq("/admin/merchants")
+    
+    expect(page).to have_content("Merchant account has been enabled.")
+
+    within ".merchant-#{@mike.id}" do
+      expect(page).to have_content("Merchant Name: #{@mike.name}")
+      expect(page).to have_content("Status: enabled")
+      expect(page).to_not have_button("Enable")
+    end
+
   end
 
 end
