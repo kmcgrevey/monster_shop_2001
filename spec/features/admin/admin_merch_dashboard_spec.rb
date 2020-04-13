@@ -119,38 +119,70 @@ RSpec.describe "When I visit the admin's merchant index page ('/admin/merchants'
     end
   end
 
-    it "clicking 'enable' on a disabled merchant activates all its items" do
-      inact_pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", active?:false, inventory: 100)
-      
-      visit "merchants/#{@mike.id}/items"
+  it "clicking 'enable' on a disabled merchant activates all its items" do
+    inact_pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", active?:false, inventory: 100)
+    
+    expect(@mike.status).to eq ("disabled")
+    expect(@mike.items).to eq ([@paper, @pencil, @studs, inact_pencil])
+    expect(@paper.active?).to eq(true)
+    expect(@pencil.active?).to eq(true)
+    expect(@studs.active?).to eq(false)
+    expect(inact_pencil.active?).to eq(false)
 
-      within "#item-#{@studs.id}" do
-        expect(page).to have_content(@studs.name)
-        expect(page).to have_content("Inactive")
-      end
-      within "#item-#{inact_pencil.id}" do
-        expect(page).to have_content(inact_pencil.name)
-        expect(page).to have_content("Inactive")
-      end
+    visit "/admin/merchants"
 
-      visit "/admin/merchants"
-
-      within ".merchant-#{@mike.id}" do
-        click_button "Enable"
-      end
-      
-      visit "merchants/#{@mike.id}/items"
-
-      within "#item-#{@studs.id}" do
-        expect(page).to have_content(@studs.name)
-        expect(page).to have_content("Active")
-      end
-      within "#item-#{inact_pencil.id}" do
-        expect(page).to have_content(inact_pencil.name)
-        expect(page).to have_content("Active")
-      end
-
+    within ".merchant-#{@mike.id}" do
+      click_button("Enable")
     end
+    
+    @mike.reload
+    @paper.reload
+    @pencil.reload
+    @studs.reload
+    inact_pencil.reload
+
+    expect(@mike.status).to eq ("enabled")
+    expect(@mike.items).to eq ([@paper, @pencil, @studs, inact_pencil])
+    expect(@paper.active?).to eq(true)
+    expect(@pencil.active?).to eq(true)
+    expect(@studs.active?).to eq(true)
+    expect(inact_pencil.active?).to eq(true)
+  end
+  
+  # MY ORIGINAL TEST THAT LOOKS AT THE MERCHANT ITEMS PAGE 
+  # - NOT AVAILABLE ON THE CURRENT BRANCH I AM ON
+  # it "clicking 'enable' on a disabled merchant activates all its items" do 
+    #   inact_pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", active?:false, inventory: 100)
+      
+    #   visit "merchants/#{@mike.id}/items"
+
+    #   within "#item-#{@studs.id}" do
+    #     expect(page).to have_content(@studs.name)
+    #     expect(page).to have_content("Inactive")
+    #   end
+    #   within "#item-#{inact_pencil.id}" do
+    #     expect(page).to have_content(inact_pencil.name)
+    #     expect(page).to have_content("Inactive")
+    #   end
+
+    #   visit "/admin/merchants"
+
+    #   within ".merchant-#{@mike.id}" do
+    #     click_button "Enable"
+    #   end
+      
+    #   visit "merchants/#{@mike.id}/items"
+
+    #   within "#item-#{@studs.id}" do
+    #     expect(page).to have_content(@studs.name)
+    #     expect(page).to have_content("Active")
+    #   end
+    #   within "#item-#{inact_pencil.id}" do
+    #     expect(page).to have_content(inact_pencil.name)
+    #     expect(page).to have_content("Active")
+    #   end
+
+    # end
 end
 # As an admin
 # When I visit the merchant index page

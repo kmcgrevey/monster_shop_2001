@@ -10,6 +10,7 @@ class Admin::MerchantsController < Admin::BaseController
       flash[:success] = "Merchant account has been disabled."
     else
       merchant.update(status: 1)
+      merchant.items.update_all(active?: true)
       flash[:success] = "Merchant account has been enabled."
     end
     redirect_to "/admin/merchants"
