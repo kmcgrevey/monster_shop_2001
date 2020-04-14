@@ -45,17 +45,17 @@ RSpec.describe "As a merchant employee when I visit my items page", type: :featu
     visit "merchant/items"
     
     within "#item-#{@pump.id}" do
-      expect(@pump.has_orders?).to eq(false)
+      expect(@pump.no_orders?).to eq(true)
       expect(page).to have_button("Delete Item")
     end
     
     within "#item-#{@tire.id}" do
-      expect(@tire.has_orders?).to eq(true)
+      expect(@tire.no_orders?).to eq(false)
       expect(page).not_to have_button("Delete Item")
     end
 
     within "#item-#{@seat.id}" do
-      expect(@seat.has_orders?).to eq(true)
+      expect(@seat.no_orders?).to eq(false)
       expect(page).not_to have_button("Delete Item")
     end
   end
