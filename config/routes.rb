@@ -5,9 +5,8 @@ Rails.application.routes.draw do
 
   resources :merchants
 
-  # delete '/merchants/:merchant_id/items/:id', to: "items#destroy"
   resources :merchants do
-    resources :items, only: [:index, :new, :create, :destroy]
+    resources :items, only: [:index, :new, :create]
   end
   
   resources :items, only: [:index, :show, :edit, :update]
@@ -18,12 +17,7 @@ Rails.application.routes.draw do
 
   resources :reviews, only: [:edit, :update, :destroy]
 
-  resources :orders, only: [:new, :create, :index]
-
-
-  get "/", to: "welcome#index"
-  delete "/logout", to: "sessions#destroy"
-
+  #login/logout
   delete "/logout", to: "sessions#destroy"
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
@@ -37,10 +31,7 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
   #orders
-
-  resources :orders
-
-  resources :orders, only: [:new, :create, :show, :destroy]
+  resources :orders, only: [:new, :create, :show, :destroy, :update]
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
