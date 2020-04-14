@@ -28,7 +28,8 @@ class Order <ApplicationRecord
   def fulfill_item(item)
     item_orders.where(item_id: item.id)
              .update(status: :Fulfilled)
-
+    item.inventory = item.inventory - item_orders.where(item_id: item.id)
+                                                 .sum('quantity')
     if item_orders.count == item_orders.where(status: :Fulfilled).count
       self.status = 1
     else
@@ -43,5 +44,9 @@ class Order <ApplicationRecord
   def merchant_item_subtotal(merchant_id)
     subtotal = items.where(merchant_id: merchant_id).group(:id).sum('items.price * quantity')
     subtotal.values.sum
+  end
+
+  def merchant_items(merchant_id)
+    items.where(merchant_id: merchant_id)
   end
 end

@@ -51,4 +51,8 @@ class Item <ApplicationRecord
     price * order_qty_purchased(order)
   end
 
+  def order_status(order)  
+  item_orders.where(order_id: order).first.status
+  end
+
 end
