@@ -16,7 +16,7 @@ ItemOrder.destroy_all
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
-kitchen_shop = Merchant.create(name: "The Bake Place", address '117 Cake St.', city: 'Richmond', state: 'VA', zip: 23221)
+kitchen_shop = Merchant.create(name: "The Bake Place", address: '117 Cake St.', city: 'Richmond', state: 'VA', zip: 23221)
 
 #users
 admin = User.create(name: 'Admin',
@@ -73,8 +73,8 @@ krista = User.create(name: 'Krista Stadler',
                      address: '29 Krista St',
                      city: 'Panama City Beach',
                      state: 'FL',
-                     zip: '32407'
-                     email: 'krista.example.com',
+                     zip: '32407',
+                     email: 'krista@example.com',
                      password: 'krista',
                      password_confirmation: 'krista',
                      role: 0)
@@ -83,8 +83,8 @@ mike = User.create(name: 'Mike Hernandez',
                     address: '111 Mike St',
                     city: 'Richmond',
                     state: 'VA',
-                    zip: '23221'
-                    email: 'mike.example.com',
+                    zip: '23221',
+                    email: 'mike@example.com',
                     password: 'mike',
                     password_confirmation: 'mike',
                     role: 0)
@@ -93,7 +93,7 @@ user = User.create(name: 'Mike Hernandez',
                   address: '111 Mike St',
                   city: 'Richmond',
                   state: 'VA',
-                  zip: '23221'
+                  zip: '23221',
                   email: 'user@example.com',
                   password: 'password_regular',
                   password_confirmation: 'password_regular',
