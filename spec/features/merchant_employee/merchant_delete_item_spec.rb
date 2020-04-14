@@ -82,13 +82,19 @@ RSpec.describe "As a merchant employee when I visit my items page", type: :featu
     end
   end
 
+    it 'I can delete items and it deletes reviews' do
+      # bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      # chain = bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
+      review_1 = @pump.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
+
+      visit "/merchant/items"
+
+      # click_on "Delete Item"
+      within "#item-#{@pump.id}" do
+        click_button "Delete Item"
+      end
+      
+      expect(Review.where(id:review_1.id)).to be_empty
+    end
+
 end
-# As a merchant employee
-# When I visit my items page
-
-# I see a button or link to delete the item next to each item that has never been ordered
-
-# When I click on the "delete" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is now deleted
-# I no longer see this item on the page
