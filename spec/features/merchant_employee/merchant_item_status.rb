@@ -17,32 +17,42 @@ RSpec.describe "As a merchant employee when I visit my items page" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@josh)
 
     @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-    @seat = @bike_shop.items.create(name: "Seat", description: "Cushy for your tushy.", price: 199, image: "https://www.rei.com/media/product/153242", inventory: 20)
-    @pump = @bike_shop.items.create(name: "Pump", description: "Not just hot air", price: 70, image: "https://www.rei.com/media/product/152974", inventory: 20)
-    @pedals = @bike_shop.items.create(name: "Pedals", description: "Clipless bliss!", price: 210, image: "https://www.rei.com/media/product/130015", inventory: 20)
-    @helmet = @bike_shop.items.create(name: "Helmet", description: "Safety Third!", price: 100, image: "https://www.rei.com/media/product/153004", inventory: 20)
     @stud = @bike_shop.items.create(name: "Canti Studs", description: "You don't need 'em till you do.'", price: 5, image: "https://www.jensonusa.com/globalassets/product-images---all-assets/problem-solvers/br309z00.jpg", active?:false, inventory: 4)
+    # @seat = @bike_shop.items.create(name: "Seat", description: "Cushy for your tushy.", price: 199, image: "https://www.rei.com/media/product/153242", inventory: 20)
+    # @pump = @bike_shop.items.create(name: "Pump", description: "Not just hot air", price: 70, image: "https://www.rei.com/media/product/152974", inventory: 20)
+    # @pedals = @bike_shop.items.create(name: "Pedals", description: "Clipless bliss!", price: 210, image: "https://www.rei.com/media/product/130015", inventory: 20)
+    # @helmet = @bike_shop.items.create(name: "Helmet", description: "Safety Third!", price: 100, image: "https://www.rei.com/media/product/153004", inventory: 20)
 
   end
 
-  # describe "I see all of my items with the following info" do
-  #   it "name, description, price, image, status, inventory" do
-  #
-  #
-  #
-  #     # As a merchant employee
-  #     # When I visit my items page
-  #     # I see all of my items with the following info:
-  #     #
-  #     # name
-  #     # description
-  #     # price
-  #     # image
-  #     # active/inactive status
-  #     # inventory
-  #
-  #   end
-  # end
+  describe "I see all of my items with the following info" do
+    it "name, description, price, image, status, inventory" do
+
+      visit "merchant/items"
+
+      within "#item-#{@tire.id}" do
+
+        expect(page).to have_content("#{@tire.name}")
+        expect(page).to have_content("#{@tire.description}")
+        expect(page).to have_content("#{@tire.price}")
+        expect(page).to have_css("img[src*='#{@tire.image}']")
+        expect(page).to have_content("Status: #{@tire.status}")
+        expect(page).to have_content("Inventory: #{@tire.inventory}")
+      end
+
+      # As a merchant employee
+      # When I visit my items page
+      # I see all of my items with the following info:
+      #
+      # name
+      # description
+      # price
+      # image
+      # active/inactive status
+      # inventory
+
+    end
+  end
   #
   #   it "I also see a link to deactivate the item next to all active items" do
   #     # I see a link or button to deactivate the item next to each item that is active
