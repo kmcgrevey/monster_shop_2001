@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "As a Merchant Employee" do
   describe "When I visit my items index page" do
     before(:each) do
-      @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
-      employee = @brian.users.create(name: 'Merchant Employee',
+      @brian = Merchant.create!(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      employee = @brian.users.create!(name: 'Merchant Employee',
                        address: '456 Main St',
                        city: 'Townsburg',
                        state: 'CA',
@@ -13,12 +13,14 @@ RSpec.describe "As a Merchant Employee" do
                        password: 'password_merchant',
                        password_confirmation: 'password_merchant',
                        role: 1)
+      
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(employee)
     end
 
     it 'I see a link to add a new item' do
       # visit "/merchants/#{@brian.id}/items"
       visit "/merchant/items"
-
+      save_and_open_page
       expect(page).to have_link "Add New Item"
     end
 
