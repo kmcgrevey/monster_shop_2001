@@ -84,10 +84,8 @@ describe Order, type: :model do
         @order_3.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
 
       @order_4 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 3)
-        @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 4)
         @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
         @order_4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
-
     end
 
     it 'total_count' do
@@ -99,11 +97,17 @@ describe Order, type: :model do
     end
 
     it 'cancel_order' do
+    expect(@tire.inventory).to eq(12)
+    @order_4.fulfill_item(@tire)
+    expect(@tire.inventory).to eq(10)
     @order_4.cancel_order
+    @tire.reload  
+    expect(@tire.inventory).to eq(12)
 
     expect(@order_4.item_orders.first.status).to eq("Unfulfilled")
     expect(@order_4.item_orders.last.status).to eq("Unfulfilled")
     expect(@order_4.status).to eq("cancelled")
+
     end
 
     it 'fulfill_item' do
