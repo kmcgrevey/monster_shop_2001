@@ -43,14 +43,15 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
         click_link("Edit Item")
       end
 
-      expect(current_path).to eq("/merchant/items/#{stud.id}/edit")
+      expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
 
-      expect(page).to have_content("#{@stud.name}")
-      expect(page).to have_content("#{@stud.description}")
-      expect(page).to have_content("#{@stud.price}")
-      expect(page).to have_content("#{@stud.image}")
-      expect(page).to have_content("#{@stud.status}")
-      expect(page).to have_content("#{@stud.inventory}")
+      expect(find_field("Name").value).to eq("#{@stud.name}")
+      expect(find_field("Description").value).to eq("#{@stud.description}")
+      expect(find_field("Price").value).to eq("#{@stud.price}")
+      expect(find_field("Image").value).to eq("#{@stud.image}")
+      expect(find_field("Status").value).to eq("#{@stud.status}")
+      expect(find_field("Inventory").value).to eq("#{@stud.inventory}")
+      expect(page).to have_button("Update Item")
     end
 
     it "I can change the information but all the rules for new items still apply" do
