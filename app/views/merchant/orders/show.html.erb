@@ -12,5 +12,11 @@
      <%= image_tag(item.image, size: '50') %></br>
      Price: $<%= item.price %>
      Quantity: <%= item.order_qty_purchased(@order.id) %>
+     Status: <%=item.order_status(@order.id) %>
+     <% if item.order_status(@order.id) == "Fulfilled" %>
+      <p>This item has been fulfilled already</p>
+     <%elsif item.inventory >= item.order_qty_purchased(@order.id) %>
+      <%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}/#{item.id}", method: :patch %>     
+     <%end %>
     </section>
 <% end %>

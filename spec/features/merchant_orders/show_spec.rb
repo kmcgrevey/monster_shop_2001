@@ -34,7 +34,7 @@ RSpec.describe "As a merchant employee", type: :feature do
       ItemOrder.create!(order_id: @order3.id, item_id: @pull_toy.id, price: @pull_toy.price, quantity: 3)
       ItemOrder.create!(order_id: @order2.id, item_id: @pull_toy.id, price: @pull_toy.price, quantity: 2)
       ItemOrder.create!(order_id: @order2.id, item_id: @tire.id, price: @tire.price, quantity: 5)
-
+      ItemOrder.create!(order_id: @order2.id, item_id: @pedals.id, price: @pedals.price, quantity: 22)
       @josh = @bike_shop.users.create!(name: "Josh Tukman",
                             address: "756 Main St",
                             city: "Denver",
@@ -76,20 +76,55 @@ RSpec.describe "As a merchant employee", type: :feature do
 
       expect(page).to_not have_content(@pull_toy.id)
     end
+
+
+    it 'has a fulfill item button for each unfulfilled item' do
+
+      visit "/merchants/#{@bike_shop.id}/items"
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Inventory: 12")
+      end
+
+      visit "/merchant/orders/#{@order2.id}"
+      within "#item-#{@pump.id}" do
+        expect(page).to have_link "Fulfill Item", href: "/merchant/orders/#{@order2.id}/#{@pump.id}"
+      end
+
+      within "#item-#{@pedals.id}" do
+        expect(page).to_not have_link "Fulfill Item", href: "/merchant/orders/#{@order2.id}/#{@pedals.id}"
+      end
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Unfulfilled")
+        click_link "Fulfill Item", href: "/merchant/orders/#{@order2.id}/#{@tire.id}"
+      end
+
+      expect(current_path).to eq("/merchant/orders/#{@order2.id}")
+      within ".success-flash" do
+        expect(page).to have_content("This item has been fulfilled")
+      end
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Status: Fulfilled")
+        expect(page).to have_content("This item has been fulfilled already")
+      end
+
+      within "#item-#{@pedals.id}" do
+        expect(page).to have_content("Unfulfilled")
+      end
+
+      visit "/merchants/#{@bike_shop.id}/items"
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Inventory: 7")
+      end
+
+    end
   end
-
-  it 'has a fulfill item button for each unfulfilled item' do
-    visit "/merchant/orders/#{@order2.id}"
-
 end
 
 
-# For each item of mine in the order
-# If the user's desired quantity is equal to or less than my current inventory quantity for that item
-# And I have not already "fulfilled" that item:
-#
-# Then I see a button or link to "fulfill" that item
-# When I click on that link or button I am returned to the order show page
+
+
 # I see the item is now fulfilled
 # I also see a flash message indicating that I have fulfilled that item
 # the item's inventory quantity is permanently reduced by the user's desired quantity

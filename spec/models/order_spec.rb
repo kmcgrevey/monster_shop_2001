@@ -107,11 +107,13 @@ describe Order, type: :model do
     end
 
     it 'fulfill_item' do
+      expect(@tire.inventory).to eq(12)
       @order_1.fulfill_item(@tire)
       expect(@order_1.status).to eq("pending")
-
+      expect(@tire.inventory).to eq(10)
       @order_1.fulfill_item(@pull_toy)
       expect(@order_1.status).to eq("packaged")
+
     end
     it 'merchant_item_quantity' do
       expect(@order_1.merchant_item_quantity(@meg.id)).to eq(2)

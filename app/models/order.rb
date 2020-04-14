@@ -28,7 +28,8 @@ class Order <ApplicationRecord
   def fulfill_item(item)
     item_orders.where(item_id: item.id)
              .update(status: :Fulfilled)
-
+    item.inventory = item.inventory - item_orders.where(item_id: item.id)
+                                                 .sum('quantity')
     if item_orders.count == item_orders.where(status: :Fulfilled).count
       self.status = 1
     else
