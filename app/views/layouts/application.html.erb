@@ -11,23 +11,23 @@
   <body>
     <nav class = "topnav">
       <%= link_to "Home Page", "/" %>
-      <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
+      
+      <% if current_user == nil || !current_user.admin? %>
+        <%= link_to "All Merchants", "/merchants"%>
+      <% end %>
 
       <% if current_user == nil %>
         <%= link_to "Login", "/login" %>
         <%= link_to "Register", "/register" %>
       <% end %>
 
-      <% if current_user == nil || !current_user.admin? %>
-        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
-      <% end %>
-
       <% if current_user && current_user.admin? %>
         <%= link_to "Profile", "/profile" %>
         <%= link_to "Logout", "/logout", method: :delete %>
-        <%= link_to "Admin Dashboard", "/admin/dashboard" %>
+        <%= link_to "All Merchants", "/admin/merchants"%>
         <%= link_to "All Users", "/admin/users" %>
+        <%= link_to "Admin Dashboard", "/admin/dashboard" %>
       <% end %>
 
       <% if current_user && current_user.default? %>
@@ -39,6 +39,10 @@
         <%= link_to "Profile", "/profile" %>
         <%= link_to "Logout", "/logout", method: :delete %>
         <%= link_to "Merchant Dashboard", "/merchant" %>
+      <% end %>
+
+      <% if current_user == nil || !current_user.admin? %>
+        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
       <% end %>
 
     </nav>
