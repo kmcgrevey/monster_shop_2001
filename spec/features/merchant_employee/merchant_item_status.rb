@@ -31,7 +31,6 @@ RSpec.describe "As a merchant employee when I visit my items page" do
       visit "merchant/items"
 
       within "#item-#{@tire.id}" do
-
         expect(page).to have_content("#{@tire.name}")
         expect(page).to have_content("#{@tire.description}")
         expect(page).to have_content("#{@tire.price}")
@@ -40,35 +39,51 @@ RSpec.describe "As a merchant employee when I visit my items page" do
         expect(page).to have_content("Inventory: #{@tire.inventory}")
       end
 
-      # As a merchant employee
-      # When I visit my items page
-      # I see all of my items with the following info:
-      #
-      # name
-      # description
-      # price
-      # image
-      # active/inactive status
-      # inventory
-
+      within "#item-#{@stud.id}" do
+        expect(page).to have_content("#{@stud.name}")
+        expect(page).to have_content("#{@stud.description}")
+        expect(page).to have_content("#{@stud.price}")
+        expect(page).to have_css("img[src*='#{@stud.image}']")
+        expect(page).to have_content("Status: #{@stud.status}")
+        expect(page).to have_content("Inventory: #{@stud.inventory}")
+      end
     end
   end
-  #
-  #   it "I also see a link to deactivate the item next to all active items" do
-  #     # I see a link or button to deactivate the item next to each item that is active
-  #
-  #   end
-  #
-  #   it "when I click the deactivate button I am redirected back to my items page" do
-  #     # And I click on the "deactivate" button or link for an item
-  #     # I am returned to my items page
-  #   end
-  #
-  #   it "I also see a flash message saying the item is no longer for sale" do
-  #     # I see a flash message indicating this item is no longer for sale
-  #   end
-  #
-  #   it "I see that the item is inactive" do
-  #     # I see the item is now inactive
-  #   end
+
+    it "I also see a link to deactivate the item next to all active items" do
+
+      visit "merchant/items"
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link("Deactivate Item")
+      end
+
+      within "#item-#{@stud.id}" do
+        expect(page).to_not have_link("Deactivate Item")
+      end
+    end
+
+    describe "when I click the deactivate button I am redirected back to my items page" do
+      it "I also see a flash message saying the item is not for sale and it see its status is inactive" do
+
+        visit "/merchant/items"
+
+        within "#item-#{@tire.id}" do
+          click_link("Deactivate Item")
+        end
+        @tire.reload
+
+        expect(current_path).to eq("/merchant/items")
+        expect(page).to have_content("'Gatorskins' has been marked inactive and is no longer for sale")
+
+        within "#item-#{@tire.id}" do
+          expect(page).to have_content("Status: inactive")
+          expect(page).to_not have_link("Deactivate Item")
+        end
+
+        within "#item-#{@stud.id}" do
+          expect(page).to have_content("Status: #{@stud.status}")
+        end
+    end
+  end
 end
