@@ -20,13 +20,13 @@ RSpec.describe "As a Merchant Employee" do
     it 'I see a link to add a new item' do
       # visit "/merchants/#{@brian.id}/items"
       visit "/merchant/items"
-      save_and_open_page
       expect(page).to have_link "Add New Item"
     end
 
-    xit 'I can add a new item by filling out a form' do
-      visit "/merchants/#{@brian.id}/items"
-
+    it 'I can add a new item by filling out a form' do
+      # visit "/merchants/#{@brian.id}/items"
+      visit "/merchant/items"
+      
       name = "Chamois Buttr"
       price = 18
       description = "No more chaffin'!"
@@ -36,7 +36,8 @@ RSpec.describe "As a Merchant Employee" do
       click_on "Add New Item"
 
       expect(page).to have_link(@brian.name)
-      expect(current_path).to eq("/merchants/#{@brian.id}/items/new")
+      # expect(current_path).to eq("/merchants/#{@brian.id}/items/new")
+      expect(current_path).to eq("/merchant/items/new")
       fill_in :name, with: name
       fill_in :price, with: price
       fill_in :description, with: description
@@ -46,8 +47,8 @@ RSpec.describe "As a Merchant Employee" do
       click_button "Create Item"
 
       new_item = Item.last
-
-      expect(current_path).to eq("/merchants/#{@brian.id}/items")
+      # expect(current_path).to eq("/merchants/#{@brian.id}/items")
+      expect(current_path).to eq("/merchant/items")
       expect(new_item.name).to eq(name)
       expect(new_item.price).to eq(price)
       expect(new_item.description).to eq(description)
@@ -59,7 +60,8 @@ RSpec.describe "As a Merchant Employee" do
       expect(page).to have_content("Price: $#{new_item.price}")
       expect(page).to have_css("img[src*='#{new_item.image}']")
       expect(page).to have_content("Active")
-      expect(page).to_not have_content(new_item.description)
+      # expect(page).to_not have_content(new_item.description)
+      expect(page).to have_content(new_item.description)
       expect(page).to have_content("Inventory: #{new_item.inventory}")
     end
 

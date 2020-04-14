@@ -1,7 +1,22 @@
 class Merchant::ItemsController < Merchant::BaseController
 
+  def new
+    @merchant = Merchant.find(current_user.merchant_id)
+  end
+    
+  def create
+    merchant = Merchant.find(params[:merchant_id])
+    item = merchant.items.create(item_params)
+    if item.save
+      # redirect_to "/merchants/#{@merchant.id}/items"
+      redirect_to "/merchant/items"
+    else
+      flash[:error] = item.errors.full_messages.to_sentence
+      render :new
+    end
+  end
+  
   def index
-    # binding.pry
     @merchant = Merchant.find(current_user.merchant_id)
   end
 
@@ -23,6 +38,12 @@ class Merchant::ItemsController < Merchant::BaseController
     flash[:success] = "Item has been deleted!"
 
     redirect_to "/merchant/items"
+  end
+
+  private
+
+  def item_params
+    params.permit(:name,:description,:price,:inventory,:image)
   end
 
 end
