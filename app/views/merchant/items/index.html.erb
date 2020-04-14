@@ -10,6 +10,7 @@
       <p>Status: <%= item.status %></p>
       <p>Inventory: <%= item.inventory %> </p>
       <%= link_to "Deactivate Item", "/merchant/items/#{item.id}", method: :patch if item.active? %>
+      <%= link_to "Activate Item", "/merchant/items/#{item.id}", method: :patch if !item.active? %>
     </section>
     <% end %>
 </section>

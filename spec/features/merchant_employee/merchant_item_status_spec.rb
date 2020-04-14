@@ -63,27 +63,68 @@ RSpec.describe "As a merchant employee when I visit my items page" do
       end
     end
 
-    describe "when I click the deactivate button I am redirected back to my items page" do
-      it "I also see a flash message saying the item is not for sale and it see its status is inactive" do
+  describe "when I click the deactivate button I am redirected back to my items page" do
+    it "I also see a flash message saying the item is not for sale and it see its status is inactive" do
+
+      visit "/merchant/items"
+
+      within "#item-#{@tire.id}" do
+        click_link("Deactivate Item")
+      end
+      @tire.reload
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("'Gatorskins' has been marked inactive and is no longer for sale")
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Status: inactive")
+        expect(page).to_not have_link("Deactivate Item")
+      end
+
+      within "#item-#{@stud.id}" do
+        expect(page).to have_content("Status: #{@stud.status}")
+      end
+    end
+
+  describe "If an item is already inactive" do
+    it "I see a link to activate the item next to all inactive items" do
+
+      visit "merchant/items"
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link("Deactivate Item")
+        expect(page).to_not have_link("Activate Item")
+      end
+
+      within "#item-#{@stud.id}" do
+        expect(page).to_not have_link("Deactivate Item")
+        expect(page).to have_link("Activate Item")
+      end
+    end
+  end
+
+    describe "when I click the activate button I am redirected back to my items page" do
+      it "I also see a flash message saying the item is for sale and it see its status is now active" do
 
         visit "/merchant/items"
 
-        within "#item-#{@tire.id}" do
-          click_link("Deactivate Item")
+        within "#item-#{@stud.id}" do
+          click_link("Activate Item")
         end
-        @tire.reload
+        @stud.reload
 
         expect(current_path).to eq("/merchant/items")
-        expect(page).to have_content("'Gatorskins' has been marked inactive and is no longer for sale")
-
-        within "#item-#{@tire.id}" do
-          expect(page).to have_content("Status: inactive")
-          expect(page).to_not have_link("Deactivate Item")
-        end
+        expect(page).to have_content("'Canti Studs' has been marked active and is now for sale")
 
         within "#item-#{@stud.id}" do
-          expect(page).to have_content("Status: #{@stud.status}")
+          expect(page).to have_content("Status: active")
+          expect(page).to_not have_link("Activate Item")
         end
+
+        within "#item-#{@tire.id}" do
+          expect(page).to have_content("Status: #{@tire.status}")
+        end
+      end
     end
   end
 end
