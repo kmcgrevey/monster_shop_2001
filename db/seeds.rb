@@ -25,8 +25,8 @@ admin = User.create(name: 'Admin',
                     state: 'IA',
                     zip: "12345",
                     email: 'admin@example.com',
-                    password: 'admin',
-                    password_confirmation: 'admin',
+                    password: 'password_admin',
+                    password_confirmation: 'password_admin',
                     role: 2)
 
 merchant = bike_shop.users.create(name: 'Merchant1',
@@ -35,8 +35,8 @@ merchant = bike_shop.users.create(name: 'Merchant1',
                        state: 'CA',
                        zip: "98765",
                        email: 'merchant@example.com',
-                       password: 'merchant',
-                       password_confirmation: 'merchant',
+                       password: 'password_merchant',
+                       password_confirmation: 'password_merchant',
                        role: 1)
 
 merchant1 = User.create(name: 'Merchant1',
@@ -79,7 +79,7 @@ krista = User.create(name: 'Krista Stadler',
                      password_confirmation: 'krista',
                      role: 0)
 
-krista = User.create(name: 'Mike Hernandez',
+mike = User.create(name: 'Mike Hernandez',
                     address: '111 Mike St',
                     city: 'Richmond',
                     state: 'VA',
@@ -88,6 +88,16 @@ krista = User.create(name: 'Mike Hernandez',
                     password: 'mike',
                     password_confirmation: 'mike',
                     role: 0)
+
+user = User.create(name: 'Mike Hernandez',
+                  address: '111 Mike St',
+                  city: 'Richmond',
+                  state: 'VA',
+                  zip: '23221'
+                  email: 'user@example.com',
+                  password: 'password_regular',
+                  password_confirmation: 'password_regular',
+                  role: 0)
 
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
