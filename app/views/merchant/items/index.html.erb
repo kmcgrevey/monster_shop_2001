@@ -3,12 +3,13 @@
   <% @merchant.items.each do |item| %>
 
     <section class = "grid-item" id= 'item-<%=item.id%>'>
-      <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
+      <h2> <%= item.name %> </h2>
       <p><%= item.description %></p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <%= image_tag("#{item.image}") %>
       <p>Status: <%= item.status %></p>
       <p>Inventory: <%= item.inventory %> </p>
+      <%= link_to "Deactivate Item", "/merchant/items/#{item.id}", method: :patch if item.active? %>
     </section>
     <% end %>
 </section>
