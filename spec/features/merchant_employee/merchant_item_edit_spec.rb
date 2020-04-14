@@ -54,27 +54,8 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
     end
 
     describe "I can change the information but all the rules for new items still apply" do
-      # I can change any information, but all of the rules for adding a new item still apply:
-      # name and description cannot be blank
-      # price cannot be less than $0.00
-      # inventory must be 0 or greater
-      it "can successfully update an item" do
-        visit "/merchant/items/#{@stud.id}/edit"
 
-        fill_in "Name", with: "Canti Boss"
-
-        click_button("Update Item")
-
-        expect(current_path).to eq("/merchant/items")
-        expect(page).to have_content("Item information has been updated!")
-
-        within "#item-#{@stud.id}" do
-          expect(page).to have_content("Canti Boss")
-          expect(page).to_not have_content("Canti Studs")
-        end
-      end
-
-        it "has to have a name" do
+      it "has to have a name" do
         visit "/merchant/items/#{@stud.id}/edit"
 
         fill_in "Name", with: ""
@@ -117,19 +98,35 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
         expect(page).to have_content("Inventory must be greater than 0")
       end
     end
-  end
 
-  # describe "when I submit the form" do
-  # # When I submit the form
-  #   it "I am at the items index page, I see a flash message and see the updated information" do
-  #     # I am taken back to my items page
-  #     # I see a flash message indicating my item is updated
-  #     # I see the item's new information on the page, and it maintains its previous enabled/disabled state
-  #   end
+    describe "it can update things if it gets real information" do
+      it "and it will give a flash message for success and redirect to /merchant/items" do
+        visit "/merchant/items/#{@stud.id}/edit"
+
+        fill_in "Name", with: "Canti Boss"
+
+        click_button("Update Item")
+
+        expect(current_path).to eq("/merchant/items")
+        expect(page).to have_content("Item information has been updated!")
+
+        within "#item-#{@stud.id}" do
+          expect(page).to_not have_content("Canti Studs")
+          expect(page).to have_content("Canti Boss")
+          expect(page).to have_content("#{@stud.description}")
+          expect(page).to have_content("#{@stud.price}")
+          expect(page).to have_css("img[src*='#{@stud.image}']")
+          expect(page).to have_content("#{@stud.inventory}")
+          expect(page).to have_content("Status: inactive")
+        end
+      end
+
+  end
   #
   #   it "if I don't supply an image, a default thumbnail is in its place" do
   #     # If I left the image field blank, I see a placeholder image for the thumbnail
   #
   #   end
   # end
+end
 end
