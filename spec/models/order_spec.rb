@@ -124,6 +124,12 @@ describe Order, type: :model do
       expect(@order_1.merchant_item_subtotal(@meg.id)).to eq(204)
       expect(@order_1.merchant_item_subtotal(@brian.id)).to eq(30)
     end
+
+    it 'merchant_items' do
+      @headlights = @meg.items.create(name: "Pull Toy", description: "Great pull toy!", price: 4, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      @order_1.item_orders.create!(item: @headlights, price: @headlights.price, quantity: 1)
+      expect(@order_1.merchant_items(@meg.id)).to eq([@tire, @headlights])
+    end
   end
 
 end

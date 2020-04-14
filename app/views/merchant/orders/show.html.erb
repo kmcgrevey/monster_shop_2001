@@ -1,0 +1,16 @@
+<h1><span>Order #<%= @order.id %></span></h1>
+
+<h2>Buyer Information:</h2>
+<%= @order.name %></br>
+<%= @order.address %></br>
+<%= @order.city %>, <%= @order.state %></br>
+<%= @order.zip %></br>
+
+<%@order.merchant_items(@merchant.id).each do |item| %>
+   <section id="item-<%=item.id%>">
+     <%=link_to "Item Number: #{item.id}", "/merchant/items/#{item.id}" %><br>
+     <%= image_tag(item.image, size: '50') %></br>
+     Price: $<%= item.price %>
+     Quantity: <%= item.order_qty_purchased(@order.id) %>
+    </section>
+<% end %>
