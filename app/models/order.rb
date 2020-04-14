@@ -44,4 +44,8 @@ class Order <ApplicationRecord
     subtotal = items.where(merchant_id: merchant_id).group(:id).sum('items.price * quantity')
     subtotal.values.sum
   end
+
+  def merchant_items(merchant_id)
+    items.where(merchant_id: merchant_id)
+  end
 end
