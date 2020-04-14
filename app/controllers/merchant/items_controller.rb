@@ -9,7 +9,20 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def update
-require "pry"; binding.pry
+    item = Item.find(params[:id])
+    if item.update(item_params)
+      flash[:success] = "Item information has been updated!"
+      redirect_to "/merchant/items"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      redirect_back(fallback_location: "/")
+    end
+  end
+
+  private
+
+  def item_params
+    params[:item].permit(:name, :description, :price, :image, :status, :inventory)
   end
 
 end
