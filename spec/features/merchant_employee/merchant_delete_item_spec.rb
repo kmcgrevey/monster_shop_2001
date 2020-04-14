@@ -42,7 +42,7 @@ RSpec.describe "As a merchant employee when I visit my items page", type: :featu
   end
 
   it "I see delete button next to each item that has never been ordered" do
-    visit "merchant/items"
+    visit "/merchant/items"
     
     within "#item-#{@pump.id}" do
       expect(@pump.no_orders?).to eq(true)
@@ -61,7 +61,24 @@ RSpec.describe "As a merchant employee when I visit my items page", type: :featu
   end
 
   describe "Clicking item delete button returns me to my items page" do
-    it "where I see flash message and that item no longer on the page"do
+    it "where I see message that item is deleted and no longer appears on page"do
+      visit "/merchant/items"
+
+      expect(page).to have_content(@pump.name)
+      expect(page).to have_content(@tire.name)
+      expect(page).to have_content(@seat.name)
+
+      within "#item-#{@pump.id}" do
+        click_button "Delete Item"
+      end
+
+      expect(current_path).to eq("/merchant/items")
+      
+      expect(page).to have_content("Item has been deleted!")
+      expect(page).not_to have_content("Pump")
+      expect(page).to have_content(@tire.name)
+      expect(page).to have_content(@seat.name)
+
     end
   end
 
