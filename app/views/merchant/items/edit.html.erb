@@ -1,16 +1,16 @@
 <h2>Edit Item</h2>
-<%= form_for @item do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name %><br>
-<%= f.label :description %>
-<%= f.text_field :description %><br>
-<%= f.label :price %>
-<%= f.text_field :price %><br>
-<%= f.label :image %>
-<%= f.text_field :image %><br>
-<%= f.label :status %>
-<%= f.text_field :status %><br>
-<%= f.label :inventory %>
-<%= f.text_field :inventory %><br>
-<%= f.submit %>
+<%= form_tag "/merchant/:id", method: :put do %>
+<%= label_tag :name %>
+<%= text_field_tag :name, @item.id %><br>
+<%= label_tag :description %>
+<%= text_field_tag :description, @item.description %><br>
+<%= label_tag :price %>
+<%= text_field_tag :price, @item.price %><br>
+<%= label_tag :image %>
+<%= text_field_tag :image, @item.image %><br>
+<%= label_tag :status %>
+<%= text_field_tag :status, @item.status %><br>
+<%= label_tag :inventory %>
+<%= text_field_tag :inventory, @item.inventory %><br>
+<%= submit_tag "Edit Item" %>
 <% end %>
