@@ -53,26 +53,69 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
       expect(page).to have_button("Update Item")
     end
 
-    it "I can change the information but all the rules for new items still apply" do
+    describe "I can change the information but all the rules for new items still apply" do
       # I can change any information, but all of the rules for adding a new item still apply:
       # name and description cannot be blank
       # price cannot be less than $0.00
       # inventory must be 0 or greater
+      it "can successfully update an item" do
+        visit "/merchant/items/#{@stud.id}/edit"
 
-      visit "/merchant/items/#{@stud.id}/edit"
+        fill_in "Name", with: "Canti Boss"
 
-      fill_in "Name", with: "Canti Boss"
+        click_button("Update Item")
 
-      click_button("Update Item")
+        expect(current_path).to eq("/merchant/items")
+        expect(page).to have_content("Item information has been updated!")
 
-      expect(current_path).to eq("/merchant/items")
-      expect(page).to have_content("Item information has been updated!")
-
-      within "#item-#{@stud.id}" do
-        expect(page).to have_content("Canti Boss")
-        expect(page).to_not have_content("Canti Studs")
+        within "#item-#{@stud.id}" do
+          expect(page).to have_content("Canti Boss")
+          expect(page).to_not have_content("Canti Studs")
+        end
       end
 
+        it "has to have a name" do
+        visit "/merchant/items/#{@stud.id}/edit"
+
+        fill_in "Name", with: ""
+
+        click_button("Update Item")
+
+        expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
+        expect(page).to have_content("Name can't be blank")
+      end
+
+      it "has to have a description" do
+        visit "/merchant/items/#{@stud.id}/edit"
+
+        fill_in "Description", with: ""
+
+        click_button("Update Item")
+
+        expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
+        expect(page).to have_content("Description can't be blank")
+      end
+
+      it "can't have a negative price " do
+        visit "/merchant/items/#{@stud.id}/edit"
+
+        fill_in "Price", with: "-5"
+
+        click_button("Update Item")
+
+        expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
+        expect(page).to have_content("Price must be greater than 0")
+      end
+
+      it "can't have a negative inventory" do
+        visit "/merchant/items/#{@stud.id}/edit"
+        fill_in "Inventory", with: "-5"
+
+        click_button("Update Item")
+
+        expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
+        expect(page).to have_content("Inventory must be greater than 0")
+      end
     end
   end
 
