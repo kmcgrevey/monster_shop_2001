@@ -77,7 +77,6 @@ RSpec.describe "As a merchant employee", type: :feature do
       expect(page).to_not have_content(@pull_toy.id)
     end
 
-
     it 'has a fulfill item button for each unfulfilled item' do
 
       visit "/merchants/#{@bike_shop.id}/items"
@@ -92,6 +91,7 @@ RSpec.describe "As a merchant employee", type: :feature do
 
       within "#item-#{@pedals.id}" do
         expect(page).to_not have_link "Fulfill Item", href: "/merchant/orders/#{@order2.id}/#{@pedals.id}"
+        expect(page).to have_content("There is not enough inventory to fulfill this item") 
       end
 
       within "#item-#{@tire.id}" do
@@ -117,7 +117,6 @@ RSpec.describe "As a merchant employee", type: :feature do
       within "#item-#{@tire.id}" do
         expect(page).to have_content("Inventory: 7")
       end
-
     end
   end
 end

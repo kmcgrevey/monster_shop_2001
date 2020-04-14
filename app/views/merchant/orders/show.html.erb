@@ -16,7 +16,9 @@
      <% if item.order_status(@order.id) == "Fulfilled" %>
       <p>This item has been fulfilled already</p>
      <%elsif item.inventory >= item.order_qty_purchased(@order.id) %>
-      <%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}/#{item.id}", method: :patch %>     
+      <%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}/#{item.id}", method: :patch %>
+     <%elsif item.inventory <= item.order_qty_purchased(@order.id) %>
+        <p>There is not enough inventory to fulfill this item</p>
      <%end %>
     </section>
 <% end %>
