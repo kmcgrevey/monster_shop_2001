@@ -14,7 +14,7 @@ class Merchant::ItemsController < Merchant::BaseController
       flash[:success] = "Item information has been updated!"
       redirect_to "/merchant/items"
     else
-      flash[:error] = @item.errors.full_messages.to_sentence
+      flash[:error] = item.errors.full_messages.to_sentence
       redirect_back(fallback_location: "/")
     end
   end
