@@ -34,7 +34,6 @@ class Order <ApplicationRecord
     item.update(inventory: item.inventory)
   end
 
-
   def fulfill_item(item)
     item_orders.where(item_id: item.id)
              .update(status: :Fulfilled)
