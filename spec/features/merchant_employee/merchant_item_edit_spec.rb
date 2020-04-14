@@ -49,7 +49,6 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
       expect(find_field("Description").value).to eq("#{@stud.description}")
       expect(find_field("Price").value).to eq("#{@stud.price}")
       expect(find_field("Image").value).to eq("#{@stud.image}")
-      expect(find_field("Status").value).to eq("#{@stud.status}")
       expect(find_field("Inventory").value).to eq("#{@stud.inventory}")
       expect(page).to have_button("Update Item")
     end
@@ -59,6 +58,20 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
       # name and description cannot be blank
       # price cannot be less than $0.00
       # inventory must be 0 or greater
+
+      visit "/merchant/items/#{@stud.id}/edit"
+
+      fill_in "Name", with: "Canti Boss"
+
+      click_button("Update Item")
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("Item information has been updated!")
+
+      within "#item-#{@stud.id}" do
+        expect(page).to have_content("Canti Boss")
+        expect(page).to_not have_content("Canti Studs")
+      end
 
     end
   end
