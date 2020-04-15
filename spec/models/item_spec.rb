@@ -5,10 +5,7 @@ describe Item, type: :model do
     it { should validate_presence_of :name }
     it { should validate_presence_of :description }
     it { should validate_presence_of :price }
-    # it { should validate_presence_of :image } #US45 - image optional
     it { should validate_presence_of :inventory }
-
-    # it { should validate_inclusion_of(:active?).in_array([true,false]) }
   end
 
   describe "relationships" do
@@ -59,13 +56,12 @@ describe Item, type: :model do
       expect(@chain.no_orders?).to eq(false)
     end
 
-
     it 'qty_purchased' do
-    order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
-    ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
+      order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
 
-    expect(@chain.qty_purchased).to eq(4)
-  end
+      expect(@chain.qty_purchased).to eq(4)
+    end
 
     it 'order_qty_purchased' do
       @order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
@@ -87,6 +83,7 @@ describe Item, type: :model do
       order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
       ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
         expect(@chain.order_status(order.id)).to eq("Unfulfilled")
+    end     
 
     it 'status' do
       expect(@chain.status).to eq("active")
