@@ -1,8 +1,8 @@
 class Merchant::ItemsController < Merchant::BaseController
 
   def new
-    @merchant = Merchant.find(current_user.merchant_id)
-    @item = @merchant.items.new
+    merchant = Merchant.find(current_user.merchant_id)
+    @item = merchant.items.new
   end
     
   def create

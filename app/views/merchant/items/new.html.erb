@@ -1,7 +1,7 @@
-<h1>Create New Item For <%=link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+<h1>Create New Item For <%=link_to @item.merchant.name, "/merchants/#{@item.merchant.id}" %></h1>
 
 <center>
-  <%= form_for @item, url: "/merchant/#{@merchant.id}/items", method: :post do |f| %>
+  <%= form_for @item, url: "/merchant/#{@item.merchant.id}/items", method: :post do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %><br>
     <%= f.label :description %>
