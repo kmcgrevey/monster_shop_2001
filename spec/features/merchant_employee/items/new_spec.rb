@@ -87,5 +87,28 @@ RSpec.describe "As a Merchant Employee" do
       expect(page).to have_content("Name can't be blank and Inventory can't be blank")
       expect(page).to have_button("Create Item")
     end
+    
+    it 'I do not get an error for not including optional image' do
+      visit "/merchant/items"
+      
+      name = "Chamois Buttr"
+      price = 18
+      description = "No more chaffin'!"
+      image_url = ""
+      inventory = 25
+    
+      click_on "Add New Item"
+
+      fill_in :name, with: name
+      fill_in :price, with: price
+      fill_in :description, with: description
+      fill_in :image, with: image_url
+      fill_in :inventory, with: inventory
+
+      click_button "Create Item"
+      
+      expect(page).to have_content(name)
+      expect(page).not_to have_content("Image can't be blank")
+    end
   end
 end
