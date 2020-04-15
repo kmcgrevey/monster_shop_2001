@@ -111,5 +111,28 @@ RSpec.describe "As a Merchant Employee" do
       expect(page).to have_content(name)
       expect(page).not_to have_content("Image can't be blank")
     end
+
+    it 'I see a confirmation message upon sucessfully creating an item' do
+      visit "/merchant/items"
+      
+      name = "Chamois Buttr"
+      price = 18
+      description = "No more chaffin'!"
+      image_url = "https://images-na.ssl-images-amazon.com/images/I/51HMpDXItgL._SX569_.jpg"
+      inventory = 25
+
+      click_on "Add New Item"
+
+      fill_in "Name", with: name
+      fill_in "Price", with: price
+      fill_in "Description", with: description
+      fill_in "Image", with: image_url
+      fill_in "Inventory", with: inventory
+
+      click_button "Create Item"
+
+      expect(page).to have_content("Chamois Buttr has been added to your inventory.")
+    end
+ 
   end
 end

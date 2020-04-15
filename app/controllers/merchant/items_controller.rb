@@ -12,6 +12,7 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(params[:merchant_id])
     @item = @merchant.items.create(item_params)
     if @item.save
+      flash[:success] = "#{@item.name} has been added to your inventory."
       redirect_to "/merchant/items"
     else
       # flash[:error] = @item.errors.full_messages.to_sentence
