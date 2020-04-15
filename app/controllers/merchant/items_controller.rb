@@ -8,11 +8,9 @@ class Merchant::ItemsController < Merchant::BaseController
     merchant = Merchant.find(params[:merchant_id])
     item = merchant.items.create(item_params)
     if item.save
-      # redirect_to "/merchants/#{@merchant.id}/items"
       redirect_to "/merchant/items"
     else
       flash[:error] = item.errors.full_messages.to_sentence
-      # render :new
       redirect_to "/merchant/items/new"
     end
   end
