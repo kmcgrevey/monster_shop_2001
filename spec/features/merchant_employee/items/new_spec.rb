@@ -38,11 +38,12 @@ RSpec.describe "As a Merchant Employee" do
       expect(page).to have_link(@brian.name)
       # expect(current_path).to eq("/merchants/#{@brian.id}/items/new")
       expect(current_path).to eq("/merchant/items/new")
-      fill_in :name, with: name
-      fill_in :price, with: price
-      fill_in :description, with: description
-      fill_in :image, with: image_url
-      fill_in :inventory, with: inventory
+    
+      fill_in "Name", with: name
+      fill_in "Price", with: price
+      fill_in "Description", with: description
+      fill_in "Image", with: image_url
+      fill_in "Inventory", with: inventory
 
       click_button "Create Item"
 
@@ -76,11 +77,11 @@ RSpec.describe "As a Merchant Employee" do
 
       click_on "Add New Item"
 
-      fill_in :name, with: name
-      fill_in :price, with: price
-      fill_in :description, with: description
-      fill_in :image, with: image_url
-      fill_in :inventory, with: inventory
+      fill_in "Name", with: name
+      fill_in "Price", with: price
+      fill_in "Description", with: description
+      fill_in "Image", with: image_url
+      fill_in "Inventory", with: inventory
 
       click_button "Create Item"
 
@@ -99,11 +100,11 @@ RSpec.describe "As a Merchant Employee" do
     
       click_on "Add New Item"
 
-      fill_in :name, with: name
-      fill_in :price, with: price
-      fill_in :description, with: description
-      fill_in :image, with: image_url
-      fill_in :inventory, with: inventory
+      fill_in "Name", with: name
+      fill_in "Price", with: price
+      fill_in "Description", with: description
+      fill_in "Image", with: image_url
+      fill_in "Inventory", with: inventory
 
       click_button "Create Item"
       

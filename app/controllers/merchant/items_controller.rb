@@ -2,16 +2,22 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def new
     @merchant = Merchant.find(current_user.merchant_id)
+    # @item = @merchant.items.new(item_params)
+    @item = @merchant.items.new
+    # @item = Item.new
+    # binding.pry
   end
     
   def create
-    merchant = Merchant.find(params[:merchant_id])
-    item = merchant.items.create(item_params)
-    if item.save
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.create(item_params)
+    if @item.save
       redirect_to "/merchant/items"
     else
-      flash[:error] = item.errors.full_messages.to_sentence
-      redirect_to "/merchant/items/new"
+      # flash[:error] = @item.errors.full_messages.to_sentence
+      flash.now[:error] = @item.errors.full_messages.to_sentence
+      # redirect_to "/merchant/items/new"
+      render "/merchant/items/new"
     end
   end
   
@@ -41,8 +47,12 @@ class Merchant::ItemsController < Merchant::BaseController
 
   private
 
+  # def item_params
+  #   params.permit(:name,:description,:price,:inventory,:image)
+  # end
+
   def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
+    params.require(:item).permit(:name,:description,:price,:inventory,:image)
   end
 
 end
