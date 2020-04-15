@@ -6,7 +6,11 @@
       <h2> <%= item.name %> </h2>
       <p><%= item.description %></p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
+      <% if item.image == "" || nil %>
+      <%= image_tag("https://cdn.clipart.email/d0575e07a8ad46898c9337f4189a4903_royalty-free-penny-farthing-clip-art-vector-images-_453-612.jpeg") %>
+      <% else %>
       <%= image_tag("#{item.image}") %>
+      <% end %>
       <p>Status: <%= item.status %></p>
       <p>Inventory: <%= item.inventory %> </p>
       <%= link_to "Deactivate Item", "/merchant/items/#{item.id}", method: :patch if item.active? %>
