@@ -13,6 +13,7 @@ RSpec.describe "As a merchant employee", type: :feature do
       @pull_toy = @dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
       @josh = @bike_shop.users.create!(name: "Josh Tukman",
+
                             address: "756 Main St",
                             city: "Denver",
                             state: "Colorado",
@@ -23,8 +24,6 @@ RSpec.describe "As a merchant employee", type: :feature do
                             role: 1)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@josh)
-
-
     end
 
     it "can show the name and full address of the merchant that I work for" do

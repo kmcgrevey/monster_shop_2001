@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   resources :merchants
 
   resources :merchants do
-    resources :items, only: [:index, :new, :create, :destroy]
+    resources :items, only: [:index]
   end
-
+  
   resources :items, only: [:index, :show, :edit, :update]
 
   resources :items do
@@ -17,12 +17,7 @@ Rails.application.routes.draw do
 
   resources :reviews, only: [:edit, :update, :destroy]
 
-  resources :orders, only: [:new, :create, :index]
-
-
-  get "/", to: "welcome#index"
-  delete "/logout", to: "sessions#destroy"
-
+  #login/logout
   delete "/logout", to: "sessions#destroy"
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
@@ -36,10 +31,7 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
   #orders
-
   resources :orders
-
-  resources :orders, only: [:new, :create, :show, :destroy]
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
@@ -54,11 +46,15 @@ Rails.application.routes.draw do
     get "/merchants/:id", to: "merchants#show"
   end
 
+  #merchant-employee
   namespace :merchant do
     get "/", to: "dashboard#show"
     get "/items", to: "items#index"
+    get "/items/new", to: "items#new"
+    post "/:merchant_id/items", to: "items#create"
     patch "/items/:id", to: "items#update"
     get "/orders/:order_id", to: "orders#show"
+    delete "/items/:id", to: "items#destroy"
   end
 
   namespace :profile do
