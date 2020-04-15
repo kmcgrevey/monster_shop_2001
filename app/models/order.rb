@@ -7,10 +7,6 @@ class Order <ApplicationRecord
 
   enum status:{pending: 0, packaged: 1, shipped: 2, cancelled: 3}
 
-  def self.order_by_status
-    order(:status)
-  end
-
   def grandtotal
     item_orders.sum('price * quantity')
   end
