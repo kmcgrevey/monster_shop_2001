@@ -122,11 +122,23 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
       end
 
   end
-  #
-  #   it "if I don't supply an image, a default thumbnail is in its place" do
-  #     # If I left the image field blank, I see a placeholder image for the thumbnail
-  #
-  #   end
-  # end
-end
+
+    it "if I don't supply an image, a default thumbnail is in its place" do
+      # If I left the image field blank, I see a placeholder image for the thumbnail
+      visit "/merchant/items/#{@stud.id}/edit"
+
+      fill_in "Name", with: "Canti Stud"
+      fill_in "Description", with: "Disc brakes are for nerds"
+      fill_in "Image", with: ""
+
+      click_button("Update Item")
+
+      expect(current_path).to eq("/merchant/items")
+      within "#item-#{@stud.id}" do
+        expect(page).to_not have_css("img[src*='https://www.jensonusa.com/globalassets/product-images---all-assets/problem-solvers/br309z00.jpg']")
+        expect(page).to have_css("img[src*='https://cdn.clipart.email/d0575e07a8ad46898c9337f4189a4903_royalty-free-penny-farthing-clip-art-vector-images-_453-612.jpeg']")
+      end
+
+    end
+  end
 end
