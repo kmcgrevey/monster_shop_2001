@@ -13,7 +13,7 @@ RSpec.describe "As a Merchant Employee" do
                        password: 'password_merchant',
                        password_confirmation: 'password_merchant',
                        role: 1)
-      
+
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(employee)
     end
 
@@ -24,7 +24,7 @@ RSpec.describe "As a Merchant Employee" do
 
     it 'I can add a new item by filling out a form' do
       visit "/merchant/items"
-      
+
       name = "Chamois Buttr"
       price = 18
       description = "No more chaffin'!"
@@ -35,7 +35,7 @@ RSpec.describe "As a Merchant Employee" do
 
       expect(page).to have_link(@brian.name)
       expect(current_path).to eq("/merchant/items/new")
-    
+
       fill_in "Name", with: name
       fill_in "Price", with: price
       fill_in "Description", with: description
@@ -45,7 +45,7 @@ RSpec.describe "As a Merchant Employee" do
       click_button "Create Item"
 
       new_item = Item.last
-      
+
       expect(current_path).to eq("/merchant/items")
       expect(new_item.name).to eq(name)
       expect(new_item.price).to eq(price)
@@ -81,19 +81,19 @@ RSpec.describe "As a Merchant Employee" do
 
       click_button "Create Item"
 
-      expect(page).to have_content("Name can't be blank and Inventory can't be blank")
+      expect(page).to have_content("Name can't be blank, Inventory can't be blank, and Inventory is not a number")
       expect(page).to have_button("Create Item")
     end
-    
+
     it 'I do not get an error for not including optional image' do
       visit "/merchant/items"
-      
+
       name = "Chamois Buttr"
       price = 18
       description = "No more chaffin'!"
       image_url = ""
       inventory = 25
-    
+
       click_on "Add New Item"
 
       fill_in "Name", with: name
@@ -103,14 +103,14 @@ RSpec.describe "As a Merchant Employee" do
       fill_in "Inventory", with: inventory
 
       click_button "Create Item"
-      
+
       expect(page).to have_content(name)
       expect(page).not_to have_content("Image can't be blank")
     end
 
     it 'I see a confirmation message upon sucessfully creating an item' do
       visit "/merchant/items"
-      
+
       name = "Chamois Buttr"
       price = 18
       description = "No more chaffin'!"
@@ -132,13 +132,13 @@ RSpec.describe "As a Merchant Employee" do
 
     it 'I see all fields re-populated with my previous data after failed item creation' do
       visit "/merchant/items/new"
-      
+
       expect(find_field("Name").value).to eq(nil)
       expect(find_field("Price").value).to eq(nil)
       expect(find_field("Description").value).to eq(nil)
       expect(find_field("Image").value).to eq(nil)
       expect(find_field("Inventory").value).to eq(nil)
-      
+
       name = ""
       price = 18
       description = "No more chaffin'!"
@@ -158,8 +158,8 @@ RSpec.describe "As a Merchant Employee" do
       expect(find_field("Description").value).to eq("No more chaffin'!")
       expect(find_field("Image").value).to eq("")
       expect(find_field("Inventory").value).to eq("")
-    
+
     end
- 
+
   end
 end

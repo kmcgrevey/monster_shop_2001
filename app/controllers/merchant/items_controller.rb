@@ -4,7 +4,7 @@ class Merchant::ItemsController < Merchant::BaseController
     merchant = Merchant.find(current_user.merchant_id)
     @item = merchant.items.new
   end
-    
+
   def create
     @merchant = Merchant.find(params[:merchant_id])
     @item = @merchant.items.create(item_params)
@@ -16,7 +16,7 @@ class Merchant::ItemsController < Merchant::BaseController
       render "/merchant/items/new"
     end
   end
-  
+
   def index
     @merchant = Merchant.find(current_user.merchant_id)
   end
@@ -36,12 +36,6 @@ class Merchant::ItemsController < Merchant::BaseController
     end
   end
 
-  private
-
-  def item_params
-    params[:item].permit(:name, :description, :price, :image, :status, :inventory)
-  end
-
   def destroy
     item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
@@ -54,9 +48,15 @@ class Merchant::ItemsController < Merchant::BaseController
   private
 
   def item_params
+    params[:item].permit(:name, :description, :price, :image, :status, :inventory)
+  end
+
+
+
+  private
+
+  def item_params
     params.require(:item).permit(:name,:description,:price,:inventory,:image)
   end
 
 end
-
-
