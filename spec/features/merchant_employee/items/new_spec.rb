@@ -133,6 +133,37 @@ RSpec.describe "As a Merchant Employee" do
 
       expect(page).to have_content("Chamois Buttr has been added to your inventory.")
     end
+
+    it 'I see all fields re-populated with my previous data after failed item creation' do
+      visit "/merchant/items/new"
+      
+      expect(find_field("Name").value).to eq(nil)
+      expect(find_field("Price").value).to eq(nil)
+      expect(find_field("Description").value).to eq(nil)
+      expect(find_field("Image").value).to eq(nil)
+      expect(find_field("Inventory").value).to eq(nil)
+      
+      name = ""
+      price = 18
+      description = "No more chaffin'!"
+      image_url = ""
+      inventory = ""
+
+      fill_in "Name", with: name
+      fill_in "Price", with: price
+      fill_in "Description", with: description
+      fill_in "Image", with: image_url
+      fill_in "Inventory", with: inventory
+
+      click_button "Create Item"
+
+      expect(find_field("Name").value).to eq("")
+      expect(find_field("Price").value).to eq("18")
+      expect(find_field("Description").value).to eq("No more chaffin'!")
+      expect(find_field("Image").value).to eq("")
+      expect(find_field("Inventory").value).to eq("")
+    
+    end
  
   end
 end
