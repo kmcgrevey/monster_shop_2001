@@ -52,11 +52,4 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
 
-
-  private
-
-  def item_params
-    params.require(:item).permit(:name,:description,:price,:inventory,:image)
-  end
-
 end
