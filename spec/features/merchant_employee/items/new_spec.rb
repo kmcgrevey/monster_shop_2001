@@ -65,8 +65,8 @@ RSpec.describe "As a Merchant Employee" do
       expect(page).to have_content("Inventory: #{new_item.inventory}")
     end
 
-    xit 'I get an alert if I dont fully fill out the form' do
-      visit "/merchants/#{@brian.id}/items"
+    it 'I get an alert if I dont fully fill out the form' do
+      visit "/merchant/items"
 
       name = ""
       price = 18
