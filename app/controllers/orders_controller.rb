@@ -30,7 +30,7 @@ class OrdersController <ApplicationController
   def update
     order = Order.find(params[:id])
     order.update(status: 2)
-    redirect_to "/admin/dashboard"
+    redirect_to "/admin"
   end
 
   def destroy

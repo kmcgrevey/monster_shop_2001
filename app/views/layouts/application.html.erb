@@ -12,7 +12,7 @@
     <nav class = "topnav">
       <%= link_to "Home Page", "/" %>
       <%= link_to "All Items", "/items"%>
-      
+
       <% if current_user == nil || !current_user.admin? %>
         <%= link_to "All Merchants", "/merchants"%>
       <% end %>
@@ -27,7 +27,7 @@
         <%= link_to "Logout", "/logout", method: :delete %>
         <%= link_to "All Merchants", "/admin/merchants"%>
         <%= link_to "All Users", "/admin/users" %>
-        <%= link_to "Admin Dashboard", "/admin/dashboard" %>
+        <%= link_to "Admin Dashboard", "/admin" %>
       <% end %>
 
       <% if current_user && current_user.default? %>

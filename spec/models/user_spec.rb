@@ -143,14 +143,6 @@ RSpec.describe User do
                                email: "josh.t@gmail.com",})
     end
 
-    it "users that are admins can see all orders" do
-
-      expect(@josh.admin?).to eq(true)
-      expect(@josh.all_orders).to eq([@order_1, @order_2, @order_3, @order_4])
-      expect(@mike.admin?).to eq(false)
-      expect(@mike.all_orders).to eq(nil)
-    end
-
     it "users that ar admins can see orders of each status" do
 
       expect(@josh.admin?).to eq(true)
@@ -160,7 +152,7 @@ RSpec.describe User do
       expect(@josh.cancelled_orders.first).to eq(@order_1)
 
       expect(@mike.admin?).to eq(false)
-      expect(@mike.all_orders).to eq(nil)
+      expect(@mike.pending_orders).to eq(nil)
     end
   end
 end
