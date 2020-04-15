@@ -43,13 +43,17 @@ class Item <ApplicationRecord
   def order_qty_purchased(order)
   item_orders.where(order_id: order)
                .sum(:quantity)
-
   end
 
   def subtotal(order)
     price * order_qty_purchased(order)
   end
 
+
+  def order_status(order)  
+    item_orders.where(order_id: order).first.status
+  end
+    
   def status
     return "active" if active?
       "inactive"

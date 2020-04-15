@@ -52,12 +52,12 @@ Rails.application.routes.draw do
     get "/items", to: "items#index"
     patch "/items/:id", to: "item_status#update"
     put "/items/:id", to: "items#update"
-    # patch "/items/:id", to: "items#update"
     delete "/items/:id", to: "items#destroy"
     get "/items/:id/edit", to: "items#edit"
     get "/items/new", to: "items#new"
     post "/:merchant_id/items", to: "items#create"
     get "/orders/:order_id", to: "orders#show"
+    patch "/orders/:order_id/:item_id", to: "orders#update"
   end
 
   namespace :profile do

@@ -20,15 +20,26 @@ class Order <ApplicationRecord
   end
 
   def cancel_order
-    update(status: 3)
+    items_to_cancel = Item.joins(:item_orders).where("item_orders.status = 'Fulfilled'")
+    items_to_cancel.map do |item|
+      refill_merchant(item)
+    end
     item_orders.update(status: :Unfulfilled)
-  #Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
+    update(status: 3)
+  end
+
+  def refill_merchant(item)
+    item.inventory = item.inventory + item_orders.where(item_id: item.id)
+                                                 .sum('quantity')
+    item.update(inventory: item.inventory)
   end
 
   def fulfill_item(item)
     item_orders.where(item_id: item.id)
              .update(status: :Fulfilled)
-
+    item.inventory = item.inventory - item_orders.where(item_id: item.id)
+                                                 .sum('quantity')
+    item.update(inventory: item.inventory)
     if item_orders.count == item_orders.where(status: :Fulfilled).count
       self.status = 1
     else
@@ -43,5 +54,9 @@ class Order <ApplicationRecord
   def merchant_item_subtotal(merchant_id)
     subtotal = items.where(merchant_id: merchant_id).group(:id).sum('items.price * quantity')
     subtotal.values.sum
+  end
+
+  def merchant_items(merchant_id)
+    items.where(merchant_id: merchant_id)
   end
 end

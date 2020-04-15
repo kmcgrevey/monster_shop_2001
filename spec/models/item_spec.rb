@@ -7,6 +7,7 @@ describe Item, type: :model do
     it { should validate_presence_of :price }
     # it { should validate_presence_of :image } #US45 - image optional
     it { should validate_presence_of :inventory }
+
     # it { should validate_inclusion_of(:active?).in_array([true,false]) }
   end
 
@@ -82,6 +83,11 @@ describe Item, type: :model do
       expect(@chain.subtotal(@order.id)).to eq(200)
     end
 
+    it 'order_status' do
+      order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
+      ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
+        expect(@chain.order_status(order.id)).to eq("Unfulfilled")
+
     it 'status' do
       expect(@chain.status).to eq("active")
       expect(@rusty_chain.status).to eq("inactive")
@@ -141,6 +147,5 @@ describe Item, type: :model do
     it '.least_popular_5' do
        expect(Item.least_popular_5).to eq([@brush, @collar, @dog_food, @bed, @carrier])
     end
-
   end
 end
