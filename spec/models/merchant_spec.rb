@@ -59,9 +59,9 @@ describe Merchant, type: :model do
       order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2)
       order_3.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
 
-      expect(@meg.distinct_cities).to eq(["Denver","Hershey"] || ["Hershey", "Denver"])
+      expect(@meg.distinct_cities).to eq(["Denver","Hershey"])
     end
-    
+
     it 'pending_orders' do
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
       dog_shop = Merchant.create(name: "Meg's Dog Shop", address: '123 Dog Rd.', city: 'Hershey', state: 'PA', zip: 80203)
