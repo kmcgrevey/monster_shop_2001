@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/:increment_decrement", to: "cart#increment_decrement"
 
   #orders
-  resources :orders, only: [:new, :create, :show, :destroy, :update]
+  resources :orders
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
@@ -47,11 +47,12 @@ Rails.application.routes.draw do
   end
 
   #merchant-employee
-  namespace :merchant do  
+  namespace :merchant do
     get "/", to: "dashboard#show"
     get "/items", to: "items#index"
     get "/items/new", to: "items#new"
     post "/:merchant_id/items", to: "items#create"
+    patch "/items/:id", to: "items#update"
     get "/orders/:order_id", to: "orders#show"
     delete "/items/:id", to: "items#destroy"
   end

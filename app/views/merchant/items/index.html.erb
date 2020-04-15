@@ -1,4 +1,5 @@
 <h1><%= @merchant.name %><span> Items</span></h1>
+
 <p align="center"><%= link_to "Add New Item", "/merchant/items/new" %></p>
 <section class="grid-container">
   <% @merchant.items.each do |item| %>
