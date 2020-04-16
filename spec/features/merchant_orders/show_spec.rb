@@ -64,14 +64,14 @@ RSpec.describe "As a merchant employee", type: :feature do
         expect(page).to have_link "#{@pump.id}", href: "/items/#{@pump.id}"
         expect(page).to have_css("img[src*='#{@pump.image}']")
         expect(page).to have_content(@pump.price)
-        expect(page).to have_content("Quantity: 1")
+        expect(page).to have_content("1")
       end
 
       within "#item-#{@tire.id}" do
         expect(page).to have_link "#{@tire.id}", href: "/items/#{@tire.id}"
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content(@tire.price)
-        expect(page).to have_content("Quantity: 5")
+        expect(page).to have_content("5")
       end
 
       expect(page).to_not have_content(@pull_toy.id)
@@ -105,7 +105,7 @@ RSpec.describe "As a merchant employee", type: :feature do
       end
 
       within "#item-#{@tire.id}" do
-        expect(page).to have_content("Status: Fulfilled")
+        expect(page).to have_content("Fulfilled")
         expect(page).to have_content("This item has been fulfilled already")
       end
 

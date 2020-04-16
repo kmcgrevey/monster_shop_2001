@@ -67,22 +67,24 @@ RSpec.describe "As a registered user", type: :feature do
         expect(page).to have_content(@order1.updated_at.to_date)
         expect(page).to have_content(@order1.status)
 
-
+        within "#list-item-#{@tire.id}" do
           expect(page).to have_content("Gatorskins")
-          expect(page).to have_content("Description: They'll never pop!")
+          expect(page).to have_content("They'll never pop!")
           expect(page).to have_css("img[src*='#{@tire.image}']")
-          expect(page).to have_content("Quantity Ordered: 2")
-          expect(page).to have_content("Price (each): $100")
-          expect(page).to have_content("Subtotal: $200")
-
-
+          expect(page).to have_content("2")
+          expect(page).to have_content("$100")
+          expect(page).to have_content("$200")
+        end
+        
+        within "#list-item-#{@pull_toy.id}" do
           expect(page).to have_content("Pull Toy")
-          expect(page).to have_content("Description: Great pull toy!")
-          expect(page).to have_css("img[src*='#{@tire.image}']")
-          expect(page).to have_content("Quantity Ordered: 3")
-          expect(page).to have_content("Price (each): $10")
-          expect(page).to have_content("Subtotal: $30")
-
+          expect(page).to have_content("Great pull toy!")
+          expect(page).to have_css("img[src*='#{@pull_toy.image}']")
+          expect(page).to have_content("3")
+          expect(page).to have_content("$10")
+          expect(page).to have_content("$30")
+        end
+        
         expect(page).to have_content("Total Count of Items: 5")
         expect(page).to have_content("Grandtotal: $230")
 

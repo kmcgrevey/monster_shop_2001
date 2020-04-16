@@ -53,7 +53,6 @@ RSpec.describe "As an Admin user", type: :feature do
         expect(page).to have_content("#{@user.zip}")
         expect(page).to have_content("#{@user.email}")
         expect(page).to_not have_content("#{@user.password}")
-        expect(page).to have_link("My Orders")
       end
     end
 
