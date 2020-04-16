@@ -118,10 +118,10 @@ brush = dog_shop.items.create(name: "Dog Brush", description: "Detangle those cu
 
 
 #kitchen_shop items
-knife = kitchen_shop.items.create(name: "Knife", description: "You call that a knife? This is a knife!", price: 75, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dwc69b71c7/images/large/13603_s2.jpg")
-pot = kitchen_shop.items.create(name: "Cooking Pot", description: "Legality varies by state", price: 120, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw3ea530cd/images/large/5113030_01i_0219_s.jpg")
-espresso = kitchen_shop.items.create(name: "Breville Bambino Plus", description: "Impress your friends!", price: 500, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw92544ea3/images/large/4910287_1118_vs.jpg")
-corn_holder = kitchen_shop.items.create(name: "OXO Corn Holders", description: "Good for corny jokes", price: 500, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw66439aea/images/large/1473222_01i_0414_s.jpg")
+knife = kitchen_shop.items.create(name: "Knife", description: "You call that a knife? This is a knife!", price: 75, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dwc69b71c7/images/large/13603_s2.jpg", inventory: 20)
+pot = kitchen_shop.items.create(name: "Cooking Pot", description: "Legality varies by state", price: 120, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw3ea530cd/images/large/5113030_01i_0219_s.jpg", inventory: 20)
+espresso = kitchen_shop.items.create(name: "Breville Bambino Plus", description: "Impress your friends!", price: 500, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw92544ea3/images/large/4910287_1118_vs.jpg", inventory: 10)
+corn_holder = kitchen_shop.items.create(name: "OXO Corn Holders", description: "Good for corny jokes", price: 500, image: "https://www.surlatable.com/dw/image/v2/BCJL_PRD/on/demandware.static/-/Sites-shop-slt-master-catalog/default/dw66439aea/images/large/1473222_01i_0414_s.jpg", inventory: 50)
 
 #orders
 order1 = josh.orders.create!(name: 'Josh Tukman', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345, status: 1)

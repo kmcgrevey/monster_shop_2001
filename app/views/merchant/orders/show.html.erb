@@ -1,0 +1,38 @@
+<h1><span>Order #<%= @order.id %></span></h1>
+
+<h2>Buyer Information:</h2>
+<center>
+   <%= @order.name %></br>
+   <%= @order.address %></br>
+   <%= @order.city %>, <%= @order.state %></br>
+   <%= @order.zip %></br>
+</center></br>
+
+<table>
+   <tr>
+   <th>Item No.</th>
+   <th>Item Name</th>
+   <th>Item Pic</th>
+   <th>Price</th>
+   <th>Quantity</th>
+   <th>Status</th>
+   <th>Fulfill</th>
+   </tr>
+   <%@order.merchant_items(@merchant.id).each do |item| %>
+      <tr id="item-<%=item.id%>">
+         <td><%=link_to "Item Number: #{item.id}", "/items/#{item.id}" %></td>
+         <td><%= item.name %></td>
+         <td><%= image_tag(item.image, :style => "width: 75px") %></td>
+         <td>$<%= item.price %></td>
+         <td><%= item.order_qty_purchased(@order.id) %></td>
+         <td><%=item.order_status(@order.id) %></td>
+         <% if item.order_status(@order.id) == "Fulfilled" %>
+            <td>This item has been fulfilled already</td>
+         <%elsif item.inventory >= item.order_qty_purchased(@order.id) %>
+            <td><%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}/#{item.id}", method: :patch %></td>
+         <%elsif item.inventory <= item.order_qty_purchased(@order.id) %>
+            <td>There is not enough inventory to fulfill this item</td>
+         <%end %>
+      </tr>
+   <% end %>
+</table>

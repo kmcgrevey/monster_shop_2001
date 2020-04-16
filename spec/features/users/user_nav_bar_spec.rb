@@ -100,7 +100,7 @@ RSpec.describe "as a user in the nav bar" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
-    visit "/admin/dashboard"
+    visit "/admin"
 
     expect(page).to have_content("The page you were looking for doesn't exist.")
     end
@@ -119,7 +119,7 @@ RSpec.describe "as a user in the nav bar" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(josh)
 
-     visit "/admin/dashboard"
+     visit "/admin"
      expect(page).to_not have_link("Admin Dashboard")
      expect(page).to have_content("The page you were looking for doesn't exist.")
   end

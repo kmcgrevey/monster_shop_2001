@@ -60,12 +60,12 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     ItemOrder.create!(order_id: @order_2.id, item_id: @paper.id, price: @paper.price, quantity: 1)
     ItemOrder.create!(order_id: @order_2.id, item_id: @pencil.id, price: @pencil.price, quantity: 5)
 
-    visit "/admin/dashboard"
+    visit "/admin"
 
   end
 
   it "I see all orders in the system" do
-    expect(page).to have_content("Welcome to the Dashboard #{@josh.name}")
+    expect(page).to have_content("Welcome to the #{@josh.name} Dashboard")
 
     within(".order-#{@order_1.id}") do
       expect(page).to have_content(@order_1.id)
@@ -140,7 +140,7 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
 
   it "packaged orders have a ship button and when I click the 'ship' button the order status is updated to shipped" do
 
-    visit("/admin/dashboard")
+    visit("/admin")
 
     within ".pending-orders" do
       expect(page).to_not have_button("Ship")
@@ -157,7 +157,7 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
     within(".order-#{@order_4.id}") do
       click_button("Ship")
     end
-    expect(current_path).to eq("/admin/dashboard")
+    expect(current_path).to eq("/admin")
 
     within ".packaged-orders" do
       expect(page).to_not have_content("#{@order_4.id}")
