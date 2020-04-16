@@ -65,7 +65,7 @@ RSpec.describe "When I visit the admin dashboard", type: :feature do
   end
 
   it "I see all orders in the system" do
-    expect(page).to have_content("Welcome to the Dashboard #{@josh.name}")
+    expect(page).to have_content("Welcome to the #{@josh.name} Dashboard")
 
     within(".order-#{@order_1.id}") do
       expect(page).to have_content(@order_1.id)
