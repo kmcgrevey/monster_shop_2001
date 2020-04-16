@@ -91,7 +91,7 @@ RSpec.describe "As a merchant employee", type: :feature do
 
       within "#item-#{@pedals.id}" do
         expect(page).to_not have_link "Fulfill Item", href: "/merchant/orders/#{@order2.id}/#{@pedals.id}"
-        expect(page).to have_content("There is not enough inventory to fulfill this item") 
+        expect(page).to have_content("There is not enough inventory to fulfill this item")
       end
 
       within "#item-#{@tire.id}" do
@@ -120,11 +120,3 @@ RSpec.describe "As a merchant employee", type: :feature do
     end
   end
 end
-
-
-
-
-# I see the item is now fulfilled
-# I also see a flash message indicating that I have fulfilled that item
-# the item's inventory quantity is permanently reduced by the user's desired quantity
-# If I have already fulfilled this item, I see text indicating such.

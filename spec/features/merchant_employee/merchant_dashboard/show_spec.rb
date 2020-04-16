@@ -98,7 +98,7 @@ RSpec.describe "As a merchant employee", type: :feature do
 
     end
 
-    it "I can click a link to view my own items" do #Story 36
+    it "I can click a link to view my own items" do
       visit "/merchant"
 
       click_link "My Items"
