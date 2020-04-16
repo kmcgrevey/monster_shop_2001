@@ -13,17 +13,12 @@
       <%= image_tag("#{item.image}") %>
 
       <% end %>
-      <p>Status: <%= item.status %></p>
+      <p>Status: <b><%= item.status %></b></p>
       <p>Inventory: <%= item.inventory %> </p>
-      <%= link_to "Deactivate Item", "/merchant/items/#{item.id}", method: :patch if item.active? %>
-      <%= link_to "Activate Item", "/merchant/items/#{item.id}", method: :patch if !item.active? %>
-      <%= link_to "Edit Item", "/merchant/items/#{item.id}/edit" %>
-      <%= button_to "Delete Item", "/merchant/items/#{item.id}", method: :delete if item.no_orders? %>
-      <% if item.active? %>
-        <p>Status: Active</p>
-      <% else %>
-        <p>Status: Inactive</p>
-      <% end %>
+      <%= link_to "Deactivate Item", "/merchant/items/#{item.id}", method: :patch if item.active? %></br>
+      <%= link_to "Activate Item", "/merchant/items/#{item.id}", method: :patch if !item.active? %></br>
+      <%= link_to "Edit Item", "/merchant/items/#{item.id}/edit" %></br>
+      <%= button_to "Delete Item", "/merchant/items/#{item.id}", method: :delete if item.no_orders? %></br>
     </section>
     <% end %>
 </section>
