@@ -1,6 +1,7 @@
 <h1><%= @merchant.name %><span> Items</span></h1>
 
 <p align="center"><%= link_to "Add New Item", "/merchant/items/new" %></p>
+
 <section class="grid-container">
   <% @merchant.items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
@@ -8,10 +9,9 @@
       <p><%= item.description %></p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <% if item.image == "" || nil %>
-      <%= image_tag("https://cdn.clipart.email/d0575e07a8ad46898c9337f4189a4903_royalty-free-penny-farthing-clip-art-vector-images-_453-612.jpeg") %>
+        <%= image_tag("https://cdn.clipart.email/d0575e07a8ad46898c9337f4189a4903_royalty-free-penny-farthing-clip-art-vector-images-_453-612.jpeg") %>
       <% else %>
-      <%= image_tag("#{item.image}") %>
-
+        <%= image_tag("#{item.image}") %>
       <% end %>
       <p>Status: <b><%= item.status %></b></p>
       <p>Inventory: <%= item.inventory %> </p>
@@ -20,5 +20,5 @@
       <%= link_to "Edit Item", "/merchant/items/#{item.id}/edit" %></br>
       <%= button_to "Delete Item", "/merchant/items/#{item.id}", method: :delete if item.no_orders? %></br>
     </section>
-    <% end %>
+  <% end %>
 </section>
