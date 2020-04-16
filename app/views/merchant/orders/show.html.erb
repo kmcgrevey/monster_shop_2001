@@ -8,7 +8,8 @@
 
 <%@order.merchant_items(@merchant.id).each do |item| %>
    <section id="item-<%=item.id%>">
-     <%=link_to "Item Number: #{item.id}", "/merchant/items/#{item.id}" %><br>
+    <p><%= item.name %></p>
+    <%=link_to "Item Number: #{item.id}", "/items/#{item.id}" %><br>
      <%= image_tag(item.image, size: '50') %></br>
      Price: $<%= item.price %>
      Quantity: <%= item.order_qty_purchased(@order.id) %>
