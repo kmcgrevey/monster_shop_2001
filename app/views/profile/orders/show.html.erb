@@ -3,21 +3,34 @@
 Created On: <%= @order.created_at.to_date %></br>
 Last Updated: <%= @order.updated_at.to_date %></br>
 Current Status: <%= @order.status %></br>
-<b>Items in Order: </b></br>
-<% @order.items.each do |item| %>
-    <b><%= item.name %></b></br>
-    <%= image_tag(item.image, size: '50') %></br>
-    Description: <%= item.description %></br>
-    Quantity Ordered: <%= item.order_qty_purchased(@order.id)%></br>
-    Price (each): $<%= item.price %></br>
-    Subtotal: $<%= item.subtotal(@order.id) %></br>
-<% end %></br>
-
+<h2>Items in Order: </h2></br>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Snapshot</th>
+    <th>Description</th>
+    <th>Quantity Ordered</th>
+    <th>Price (each)</th>
+    <th>Subtotal</th>
+  </tr>
+  <% @order.items.each do |item| %>
+    <tr id='list-item-<%= item.id%>'>
+      <td><%= item.name %></td>
+      <td><%= image_tag(item.image, :style => "width: 75px") %></td>
+      <td><%= item.description %></td>
+      <td><%= item.order_qty_purchased(@order.id)%></td>
+      <td>$<%= item.price %></td>
+      <td>$<%= item.subtotal(@order.id) %></td>
+    </tr>
+  <% end %>
+</table></br>
 Total Count of Items: <%= @order.total_count %></br>
-Grandtotal: $<%= @order.grandtotal %>0
+<b>Grandtotal: $<%= @order.grandtotal %>0</b></br></br>
 
 <% if @order.status == "shipped" %>
   <p>Your order has been shipped!</p>
 <% else %>
   <%= link_to "Cancel This Order", "/orders/#{@order.id}", method: :delete %>
 <% end %>
+
+
