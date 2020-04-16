@@ -3,7 +3,8 @@
   <% @merchants.each do |merchant| %>
     <div class="merchant-<%= merchant.id %>">
       <ul>
-        <li>Merchant Name: <%= merchant.name %></li>
+        <li> <%=link_to "Merchant Name: #{merchant.name}", "/admin/merchants/#{merchant.id}" %><br>
+        <li> <%= merchant.city %>, <%= merchant.state %>  
         <li>Status: <%= merchant.status %></li>
         <% if merchant.status == "enabled" %>
           <%= button_to "Disable", "/admin/merchants/#{merchant.id}", method: :patch %>

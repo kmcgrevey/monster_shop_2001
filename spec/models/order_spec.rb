@@ -84,10 +84,8 @@ describe Order, type: :model do
         @order_3.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
 
       @order_4 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 3)
-        @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 4)
         @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Unfulfilled")
         @order_4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: "Unfulfilled")
-
     end
 
     it 'total_count' do
@@ -99,19 +97,27 @@ describe Order, type: :model do
     end
 
     it 'cancel_order' do
+    expect(@tire.inventory).to eq(12)
+    @order_4.fulfill_item(@tire)
+    expect(@tire.inventory).to eq(10)
     @order_4.cancel_order
+    @tire.reload  
+    expect(@tire.inventory).to eq(12)
 
     expect(@order_4.item_orders.first.status).to eq("Unfulfilled")
     expect(@order_4.item_orders.last.status).to eq("Unfulfilled")
     expect(@order_4.status).to eq("cancelled")
+
     end
 
     it 'fulfill_item' do
+      expect(@tire.inventory).to eq(12)
       @order_1.fulfill_item(@tire)
       expect(@order_1.status).to eq("pending")
-
+      expect(@tire.inventory).to eq(10)
       @order_1.fulfill_item(@pull_toy)
       expect(@order_1.status).to eq("packaged")
+
     end
     it 'merchant_item_quantity' do
       expect(@order_1.merchant_item_quantity(@meg.id)).to eq(2)
@@ -123,6 +129,12 @@ describe Order, type: :model do
       @order_1.item_orders.create!(item: @headlights, price: @headlights.price, quantity: 1)
       expect(@order_1.merchant_item_subtotal(@meg.id)).to eq(204)
       expect(@order_1.merchant_item_subtotal(@brian.id)).to eq(30)
+    end
+
+    it 'merchant_items' do
+      @headlights = @meg.items.create(name: "Pull Toy", description: "Great pull toy!", price: 4, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      @order_1.item_orders.create!(item: @headlights, price: @headlights.price, quantity: 1)
+      expect(@order_1.merchant_items(@meg.id)).to eq([@tire, @headlights])
     end
   end
 

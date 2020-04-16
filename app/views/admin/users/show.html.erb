@@ -1,7 +1,15 @@
+<h1>Profile for <%= @user.name %></h1>
+
 <h2>User ID: <%= @user.id %></h2>
 <h2>Role: <%= @user.role %></h2>
-<ul>
-  <% @user.info.each do |label, info| %>
-    <li><%= label.capitalize %>: <%= info %> </li>
-  <% end %>
-</ul>
+
+<section class="user-info">
+  <ul>
+    <% @user.info.each do |category, info| %>
+      <li><%= category.capitalize %>: <%= info %></li>
+    <% end %>
+  </ul>
+</section>
+
+
+

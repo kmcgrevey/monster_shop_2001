@@ -1,12 +1,6 @@
-# As a visitor
-# When I visit a merchant's show page
-# I see statistics for that merchant, including:
-# - count of items for that merchant
-# - average price of that merchant's items
-# - Distinct cities where my items have been ordered
 require 'rails_helper'
 
-RSpec.describe 'merchant show page', type: :feature do
+RSpec.describe 'as a visitor when I visit a merchant show page', type: :feature do
   describe 'As a user' do
     before :each do
       @user = User.create!(name: "Josh Tukman",
@@ -50,8 +44,6 @@ RSpec.describe 'merchant show page', type: :feature do
           expect(page).to have_content("Denver")
         end
       end
-
-
     end
   end
 end

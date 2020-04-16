@@ -1,25 +1,24 @@
 <h1><%= @merchant.name %><span> Items</span></h1>
 
-
-
+<p align="center"><%= link_to "Add New Item", "/merchant/items/new" %></p>
 
 <section class="grid-container">
   <% @merchant.items.each do |item| %>
- 
     <section class = "grid-item" id= 'item-<%=item.id%>'>
-      <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
-     
-      <%= link_to image_tag("#{item.image}"), "/items/#{item.id}"%>
-      <p> <%= item.description unless @merchant%> </p>
+      <h2> <%= item.name %> </h2>
+      <p><%= item.description %></p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
-      <p>Inventory: <%= item.inventory %> </p>
-      <% if !@merchant %>
-      <% end %>
-      <% if item.active? %>
-        <p>Active</p>
+      <% if item.image == "" || nil %>
+        <%= image_tag("https://cdn.clipart.email/d0575e07a8ad46898c9337f4189a4903_royalty-free-penny-farthing-clip-art-vector-images-_453-612.jpeg") %>
       <% else %>
-        <p>Inactive</p>
+        <%= image_tag("#{item.image}") %>
       <% end %>
+      <p>Status: <b><%= item.status %></b></p>
+      <p>Inventory: <%= item.inventory %> </p>
+      <%= link_to "Deactivate Item", "/merchant/items/#{item.id}", method: :patch if item.active? %></br>
+      <%= link_to "Activate Item", "/merchant/items/#{item.id}", method: :patch if !item.active? %></br>
+      <%= link_to "Edit Item", "/merchant/items/#{item.id}/edit" %></br>
+      <%= button_to "Delete Item", "/merchant/items/#{item.id}", method: :delete if item.no_orders? %></br>
     </section>
-    <% end %>
+  <% end %>
 </section>

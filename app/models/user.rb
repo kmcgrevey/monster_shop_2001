@@ -11,12 +11,6 @@ class User < ApplicationRecord
     {name: name, address: address, city: city, state: state, zip: zip, email: email}
   end
 
-  def all_orders
-    if admin?
-      Order.all
-    end
-  end
-
   def pending_orders
     if admin?
       Order.where(status: 0)

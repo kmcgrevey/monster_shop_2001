@@ -30,7 +30,7 @@ RSpec.describe "As an Admin", type: :feature do
         click_link "All Merchants"
       end
 
-      expect(current_path).to eq("/merchants")
+      expect(current_path).to eq("/admin/merchants")
 
       within ".topnav" do
         click_link "All Items"
@@ -49,7 +49,7 @@ RSpec.describe "As an Admin", type: :feature do
         click_link "Admin Dashboard"
       end
 
-      expect(current_path).to eq("/admin/dashboard")
+      expect(current_path).to eq("/admin")
 
       within ".topnav" do
         click_link "All Users"
