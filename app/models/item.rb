@@ -10,7 +10,7 @@ class Item <ApplicationRecord
                         # :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
-  validates_numericality_of :price, :inventory, greater_than: 0
+  validates_numericality_of :price, :inventory, greater_than_or_equal_to: 0
 
   def average_review
     reviews.average(:rating)
@@ -50,10 +50,10 @@ class Item <ApplicationRecord
   end
 
 
-  def order_status(order)  
+  def order_status(order)
     item_orders.where(order_id: order).first.status
   end
-    
+
   def status
     return "active" if active?
       "inactive"
