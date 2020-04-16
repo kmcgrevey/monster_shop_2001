@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       end
       if current_user.admin?
         flash[:success] = "You are already logged in!"
-        redirect_to "/admin/dashboard"
+        redirect_to "/admin"
       end
     end
 
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
       elsif user.merchant?
         redirect_to "/merchant"
       elsif user.admin?
-        redirect_to "/admin/dashboard"
+        redirect_to "/admin"
       end
     else
       flash[:error] = "The credentials you entered are incorrect"

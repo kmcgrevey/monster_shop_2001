@@ -62,7 +62,7 @@ RSpec.describe "As a visitor" do
       fill_in :email, with: "josh.t@gmail.com"
       fill_in :password, with: "secret_password"
       click_button "Submit"
-      expect(current_path).to eq("/admin/dashboard")
+      expect(current_path).to eq("/admin")
       within ".success-flash" do
         expect(page).to have_content("You are logged in!")
       end
@@ -158,7 +158,7 @@ RSpec.describe "As a visitor" do
       fill_in :password, with: "secret_password"
       click_button "Submit"
       visit '/login'
-      expect(current_path).to eq("/admin/dashboard")
+      expect(current_path).to eq("/admin")
       within ".success-flash" do
         expect(page).to have_content("You are already logged in!")
       end
