@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe "As a merchant employee" do
     before(:each) do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -27,35 +25,21 @@ RSpec.describe "As a merchant employee" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@employee)
     end
 
-  it "I can visit the discounts index page from my merchant dashboard" do
+    it "discount descriptions are links and clicking one takes me to a show page where I can see the details of the discount" do
+      visit "/merchant/items/discounts"
 
-    visit "/merchant"
-    click_link "View Discounts for My Items"
-    expect(current_path).to eq("/merchant/items/discounts")
+      within "#item-#{@stud.id}" do
+        click_link "50% off 10 or More"
+      end
 
-  end
+      expect(current_path).to eq("/merchant/items/discounts/#{@discount_3.id}")
 
-  it "I visit the discounts index page and see available discounts for each of my items" do
-
-    visit "/merchant/items/discounts"
-
-    within "#item-#{@tire.id}" do
-      expect(page).to have_content(@discount_1.description)
-      expect(page).to have_content(@discount_4.description)
-    end
-
-    within "#item-#{@seat.id}" do
-      expect(page).to have_content("No Available Discounts")
-    end
-
-    within "#item-#{@pedals.id}" do
-      expect(page).to have_content(@discount_2.description)
-    end
-
-    within "#item-#{@stud.id}" do
       expect(page).to have_content(@discount_3.description)
+      expect(page).to have_content(@stud.name)
+      expect(page).to have_content(@stud.price)
+      expect(page).to have_content(@discount_3.discount_amount)
+      expect(page).to have_content(@discount_3.minimum_quantity)
+      expect(page).to have_link("Update Discount")
+      expect(page).to have_link("Delete Discount")
     end
-
-    expect(page).to have_link("Add New Discount")
-  end
-end
+  end 
