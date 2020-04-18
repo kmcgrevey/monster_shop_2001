@@ -90,6 +90,7 @@ describe Item, type: :model do
       expect(@chain.status).to eq("active")
       expect(@rusty_chain.status).to eq("inactive")
     end
+
   end
 
   describe "class methods" do

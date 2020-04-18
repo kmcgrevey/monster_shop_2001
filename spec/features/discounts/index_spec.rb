@@ -9,10 +9,10 @@ RSpec.describe "As a merchant employee" do
       @pedals = @meg.items.create!(name: "Pedals", description: "Clipless bliss!", price: 210, image: "https://www.rei.com/media/product/130015", inventory: 20)
       @stud = @meg.items.create(name: "Canti Studs", description: "You don't need 'em till you do.'", price: 5, image: "https://www.jensonusa.com/globalassets/product-images---all-assets/problem-solvers/br309z00.jpg", active?:false, inventory: 4)
 
-      @discount_1 = @tire.discounts.create(description: "25% off 4 or More", discount_amount: .25, minimum_quantity: 4)
-      @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: .10, minimum_quantity: 2)
-      @discount_3 = @stud.discounts.create(description: "50% off 10 or More", discount_amount: .50, minimum_quantity: 10)
-      @discount_4 = @tire.discounts.create(description: "50% off 8 or More", discount_amount: .50, minimum_quantity: 8)
+      @discount_1 = @tire.discounts.create(description: "25% off 4 or More", discount_amount: 0.25, minimum_quantity: 4)
+      @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+      @discount_3 = @stud.discounts.create(description: "50% off 10 or More", discount_amount: 0.50, minimum_quantity: 10)
+      @discount_4 = @tire.discounts.create(description: "50% off 8 or More", discount_amount: 0.50, minimum_quantity: 8)
 
       @employee = @meg.users.create!(name: 'Merchant Employee',
                        address: '456 Main St',
@@ -55,5 +55,25 @@ RSpec.describe "As a merchant employee" do
     within "#item-#{@stud.id}" do
       expect(page).to have_content(@discount_3.description)
     end
+
+    expect(page).to have_link("Add New Discount")
   end
-end 
+
+  it "discount descriptions are links and clicking one takes me to a show page where I can see the details of the discount" do
+    visit "/merchant/items/discounts"
+
+    within "#item-#{@stud.id}" do
+      click_link "50% off 10 or More"
+    end
+
+    expect(current_path).to eq("/merchant/items/discounts/#{@discount_3.id}")
+
+    expect(page).to have_content(@discount_3.description)
+    expect(page).to have_content(@stud.name)
+    expect(page).to have_content(@stud.price)
+    expect(page).to have_content(@discount_3.discount_amount)
+    expect(page).to have_content(@discount_3.minimum_quantity)
+    expect(page).to have_link("Update Discount")
+    expect(page).to have_link("Delete Discount")
+  end
+end
