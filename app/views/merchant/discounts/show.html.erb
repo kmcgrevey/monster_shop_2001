@@ -6,5 +6,5 @@
 <p>Price Per Item with Discount: $<%= @discount.adjusted_item_price.round(0) %></p>
 <p>Minimum Quantity Required for Discount: <%= @discount.minimum_quantity %></p>
 
-<%= link_to "Update Discount", "/merchant/items/discounts/update" %><br>
+<%= link_to "Update Discount", "/merchant/items/discounts/#{@discount.id}/edit" %><br>
 <%= link_to "Delete Discount", "/merchant/items/discounts/delete" %>

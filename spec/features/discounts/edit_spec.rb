@@ -27,21 +27,12 @@ RSpec.describe "As a merchant employee" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@employee)
     end
 
-    it "discount descriptions are links and clicking one takes me to a show page where I can see the details of the discount" do
-      visit "/merchant/items/discounts"
+    it "I can update my discounts" do
 
-      within "#item-#{@stud.id}" do
-        click_link "50% off 10 or More"
-      end
+    visit "/merchant/items/discounts/#{@discount_1.id}"
 
-      expect(current_path).to eq("/merchant/items/discounts/#{@discount_3.id}")
+    click_link "Update Discount"
 
-      expect(page).to have_content(@discount_3.description)
-      expect(page).to have_content(@stud.name)
-      expect(page).to have_content(@stud.price)
-      expect(page).to have_content(@discount_3.discount_amount)
-      expect(page).to have_content(@discount_3.minimum_quantity)
-      expect(page).to have_link("Update Discount")
-      expect(page).to have_link("Delete Discount")
-    end
+    expect(current_path).to eq("/merchant/items/discounts/#{@discount_1.id}/edit")
   end
+end 
