@@ -29,7 +29,6 @@ class Merchant::DiscountsController < Merchant::BaseController
     @discount = Discount.find(params[:discount_id])
   end
 
-
   def update
     discount = Discount.find(params[:discount_id])
     if discount.update(discount_params)
@@ -39,6 +38,14 @@ class Merchant::DiscountsController < Merchant::BaseController
       flash[:error] = discount.errors.full_messages.to_sentence
       redirect_back(fallback_location: "/")
     end
+  end
+
+  def destroy
+    discount = Discount.find(params[:discount_id])
+    discount.destroy
+    flash[:success] = "Discount successfully deleted"
+
+    redirect_to "/merchant/items/discounts"
   end
 
 private
