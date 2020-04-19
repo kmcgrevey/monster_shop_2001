@@ -31,7 +31,7 @@ RSpec.describe "As a merchant employee" do
       click_link "Add New Discount"
     end
 
-    expect(current_path).to eq("/merchant/items/discounts/new")
+    expect(current_path).to eq("/merchant/items/discounts/#{@seat.id}/new")
 
     fill_in "Description", with: "50% off 2 or More"
     fill_in "Discount amount", with: "0.50"
@@ -41,6 +41,7 @@ RSpec.describe "As a merchant employee" do
     discount = Discount.last
 
     expect(current_path).to eq("/merchant/items/discounts/#{discount.id}")
+    expect(page).to have_content("New discount added successfully")
 
     expect(page).to have_content("50% off 2 or More")
     expect(page).to have_content("Discount Amount 0.5")
@@ -55,15 +56,14 @@ RSpec.describe "As a merchant employee" do
       click_link "Add New Discount"
     end
 
-    expect(current_path).to eq("/merchant/items/discounts/new")
+    expect(current_path).to eq("/merchant/items/discounts/#{@tire.id}/new")
 
     fill_in "Description", with: "50% off 4 or More"
     fill_in "Minimum quantity", with: "2"
     click_button "Create Discount"
 
-
-    expect(current_path).to eq("/merchant/items/discounts/new")
-    expect(page).to have_content("Discount amount is required")
+    expect(current_path).to eq("/merchant/items/discounts/#{@tire.id}/new")
+    expect(page).to have_content("Discount amount can't be blank")
 
   end
 end
