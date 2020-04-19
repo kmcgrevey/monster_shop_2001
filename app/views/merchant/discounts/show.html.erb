@@ -7,4 +7,4 @@
 <p>Minimum Quantity Required for Discount: <%= @discount.minimum_quantity %></p>
 
 <%= link_to "Update Discount", "/merchant/items/discounts/#{@discount.id}/edit" %><br>
-<%= link_to "Delete Discount", "/merchant/items/discounts/delete" %>
+<%= link_to "Delete Discount", "merchant/items/discounts/#{@discount.id}" %>
