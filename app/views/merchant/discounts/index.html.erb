@@ -3,14 +3,13 @@
 
   <% @merchant.items.each do |item| %>
     <section id="item-<%=item.id%>">
-      <b><%= item.name %>:</b></br>
+      <b><h3><%= item.name %>:</b></br></h3>
       <% if item.discounts.count == 0 %>
         <p> No Available Discounts </p>
       <% else item.discounts.each do |discount| %>
           <p><%= link_to "#{discount.description}", "/merchant/items/discounts/#{discount.id}" %></p>
-      <% end %></br>
       <% end %>
+      <% end %>
+      <b><%= link_to "Add New Discount", "/merchant/items/discounts/#{item.id}/new" %></b>
       </section>
   <% end %>
-
-  <%= link_to "Add New Discount", "/merchant/items/discounts/new" %>
