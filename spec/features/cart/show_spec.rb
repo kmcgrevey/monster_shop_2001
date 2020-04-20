@@ -127,6 +127,8 @@ RSpec.describe 'Cart show' do
       it "When the quantity of a specific item meets the discount threshold, a discount is automatically applied to that item" do
         @discount_1 = @tire.discounts.create(description: "25% off 4 or More", discount_amount: 0.25, minimum_quantity: 4)
         @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+        visit '/cart'
+
 
         within "#cart-item-#{@tire.id}" do
           3.times do
@@ -136,12 +138,12 @@ RSpec.describe 'Cart show' do
           expect(page).to have_content "$75"
         end
 
-        within "#cart-item-#{@tire.id}" do
+        within "#cart-item-#{@pedals.id}" do
           click_button "Add Qty"
           expect(page).to have_content "10% off 2 or More discount added"
           expect(page).to have_content "$189"
         end
-        
+
       end
     end
   end

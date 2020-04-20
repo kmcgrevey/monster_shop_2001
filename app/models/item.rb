@@ -60,4 +60,9 @@ class Item <ApplicationRecord
       "inactive"
   end
 
+  def best_discount(cart)
+    all_discounts = self.discounts.where("minimum_quantity <= ?", cart.contents[self.id.to_s])
+    all_discounts.order('discount_amount DESC').first
+  end
+
 end
