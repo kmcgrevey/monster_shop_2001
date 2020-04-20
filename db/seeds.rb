@@ -144,7 +144,7 @@ ItemOrder.create!(order_id: order1.id, item_id: dog_food.id, price: dog_food.pri
 ItemOrder.create!(order_id: order1.id, item_id: collar.id, price: collar.price, quantity: 2)
 ItemOrder.create!(order_id: order1.id, item_id: brush.id, price: brush.price, quantity: 1)
 
-discount_1 = tire.discounts.create(description: "25% off 4 or More", discount_amount: 0.25, minimum_quantity: 4)
+discount_1 = tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
 discount_2 = pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
-discount_3 = stud.discounts.create(description: "50% off 10 or More", discount_amount: 0.50, minimum_quantity: 10)
-discount_4 = tire.discounts.create(description: "50% off 8 or More", discount_amount: 0.50, minimum_quantity: 8)
+discount_3 = tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
+discount_4 = pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)

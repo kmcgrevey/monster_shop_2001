@@ -10,4 +10,8 @@ class Discount <ApplicationRecord
     discount = item.price * discount_amount
     item.price - discount
   end
+
+  def discounted_subtotal(cart)
+    adjusted_item_price * cart.contents[item.id.to_s]
+  end
 end

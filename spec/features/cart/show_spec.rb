@@ -144,10 +144,60 @@ RSpec.describe 'Cart show' do
           expect(page).to have_content "10% off 2 or More discount added"
           expect(page).to have_content "$189.00"
         end
+      end
 
+      it "The best discount available is automatically applied" do
+        @discount_1 = @tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
+        @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+        @discount_3 = @tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
+        @discount_4 = @pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)
+
+        visit '/cart'
+
+        within "#cart-item-#{@tire.id}" do
+          3.times do
+            click_button "Add Qty"
+          end
+
+          expect(page).to have_content "50% off 4 or More discount added"
+          expect(page).to have_content "$50.00"
+          expect(page).to_not have_content "40% off 4 or More discount added"
+        end
+
+        within "#cart-item-#{@pedals.id}" do
+          click_button "Add Qty"
+          expect(page).to have_content "60% off 2 or More discount added"
+          expect(page).to have_content "$84.00"
+          expect(page).to_not have_content "10% off 2 or More discount added"
+        end
+      end
+
+      it "The subtotal and total are adjusted to reflect any applied discounts" do
+      @discount_1 = @tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
+      @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+      @discount_3 = @tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
+      @discount_4 = @pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)
+
+      visit '/cart'
+
+      within "#cart-item-#{@tire.id}" do
+        3.times do
+          click_button "Add Qty"
+        end
+        expect(page).to have_content "$200.00"
+      end
+
+
+      within "#cart-item-#{@pedals.id}" do
+        click_button "Add Qty"
+        expect(page).to have_content "$168.00"
+      end
+
+      expect(page).to have_content "Total: $390.00"
       end
     end
   end
+
 
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do

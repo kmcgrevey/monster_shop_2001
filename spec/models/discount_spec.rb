@@ -28,5 +28,12 @@ describe Discount, type: :model do
       expect(@discount_1.adjusted_item_price).to eq(75)
       expect(@discount_2.adjusted_item_price).to eq(189)
     end
+
+    it 'discounted_subtotal' do
+      @cart = Cart.new({@tire => 4, @pedals => 2})
+
+      expect(@discount_1.discounted_subtotal(@cart)).to eq(300)
+      expect(@discount_2.discounted_subtotal(@cart)).to eq(378)
+    end
   end
 end
