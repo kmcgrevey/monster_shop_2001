@@ -101,7 +101,7 @@ describe Item, type: :model do
       @discount_3 = @tire.discounts.create(description: "50% off 6 or More", discount_amount: 0.5, minimum_quantity: 6)
       @discount_4 = @pedals.discounts.create(description: "25% off 2 or More", discount_amount: 0.25, minimum_quantity: 2)
 
-      @cart = Cart.new({@tire => 4, @pedals => 2})
+      @cart = Cart.new({@tire.id.to_s => 4, @pedals.id.to_s => 2})
 
       expect(@tire.best_discount(@cart)).to eq(@discount_1)
       expect(@pedals.best_discount(@cart)).to eq(@discount_4)

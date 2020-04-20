@@ -30,7 +30,7 @@ describe Discount, type: :model do
     end
 
     it 'discounted_subtotal' do
-      @cart = Cart.new({@tire => 4, @pedals => 2})
+      @cart = Cart.new({@tire.id.to_s => 4, @pedals.id.to_s => 2})
 
       expect(@discount_1.discounted_subtotal(@cart)).to eq(300)
       expect(@discount_2.discounted_subtotal(@cart)).to eq(378)
