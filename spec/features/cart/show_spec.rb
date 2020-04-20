@@ -44,7 +44,8 @@ RSpec.describe 'Cart show' do
             expect(page).to have_content("$#{item.price}")
           end
         end
-        expect(page).to have_content("Total: $122")
+
+        expect(page).to have_content("Total: $332")
 
         visit "/items/#{@pencil.id}"
         click_on "Add To Cart"
@@ -56,7 +57,7 @@ RSpec.describe 'Cart show' do
           expect(page).to have_content("$4")
         end
 
-        expect(page).to have_content("Total: $124")
+        expect(page).to have_content("Total: $334")
       end
 
       it "I see a button next to each item to add and subtract the quantity of each item" do
@@ -135,13 +136,13 @@ RSpec.describe 'Cart show' do
             click_button "Add Qty"
           end
           expect(page).to have_content "25% off 4 or More discount added"
-          expect(page).to have_content "$75"
+          expect(page).to have_content "$75.00"
         end
 
         within "#cart-item-#{@pedals.id}" do
           click_button "Add Qty"
           expect(page).to have_content "10% off 2 or More discount added"
-          expect(page).to have_content "$189"
+          expect(page).to have_content "$189.00"
         end
 
       end
