@@ -146,5 +146,5 @@ ItemOrder.create!(order_id: order1.id, item_id: brush.id, price: brush.price, qu
 
 discount_1 = tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
 discount_2 = pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
-discount_3 = tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
+discount_3 = tire.discounts.create(description: "80% off 6 or More", discount_amount: 0.80, minimum_quantity: 6)
 discount_4 = pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)
