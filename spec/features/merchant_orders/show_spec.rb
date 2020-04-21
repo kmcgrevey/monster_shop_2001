@@ -61,14 +61,14 @@ RSpec.describe "As a merchant employee", type: :feature do
       expect(page).to have_content(@order2.zip)
 
       within "#item-#{@pump.id}" do
-        expect(page).to have_link "#{@pump.name}", href: "/items/#{@pump.id}"
+        expect(page).to have_link "#{@pump.id}", href: "/items/#{@pump.id}"
         expect(page).to have_css("img[src*='#{@pump.image}']")
         expect(page).to have_content(@pump.price)
         expect(page).to have_content("1")
       end
 
       within "#item-#{@tire.id}" do
-        expect(page).to have_link "#{@tire.name}", href: "/items/#{@tire.id}"
+        expect(page).to have_link "#{@tire.id}", href: "/items/#{@tire.id}"
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content(@tire.price)
         expect(page).to have_content("5")

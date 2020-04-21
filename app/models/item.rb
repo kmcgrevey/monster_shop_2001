@@ -3,7 +3,6 @@ class Item <ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :item_orders
   has_many :orders, through: :item_orders
-  has_many :discounts
 
   validates_presence_of :name,
                         :description,
@@ -11,7 +10,7 @@ class Item <ApplicationRecord
                         # :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
-  validates_numericality_of :price, :inventory, greater_than_or_equal_to: 0
+  validates_numericality_of :price, :inventory, greater_than: 0
 
   def average_review
     reviews.average(:rating)
@@ -51,18 +50,13 @@ class Item <ApplicationRecord
   end
 
 
-  def order_status(order)
+  def order_status(order)  
     item_orders.where(order_id: order).first.status
   end
-
+    
   def status
     return "active" if active?
       "inactive"
-  end
-
-  def best_discount(cart)
-    all_discounts = self.discounts.where("minimum_quantity <= ?", cart.contents[self.id.to_s])
-    all_discounts.order('discount_amount DESC').first
   end
 
 end

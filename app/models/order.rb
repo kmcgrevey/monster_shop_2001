@@ -37,7 +37,9 @@ class Order <ApplicationRecord
                                                  .sum('quantity')
     item.update(inventory: item.inventory)
     if item_orders.count == item_orders.where(status: :Fulfilled).count
-      self.update(status: 1)
+      self.status = 1
+    else
+      self.status = 0
     end
   end
 

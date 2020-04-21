@@ -51,9 +51,6 @@ Use the instructions below in combination with your terminal in order to learn m
   - Use `save_and_open_page` to view the HTML generated when visiting a path in a feature test
   - Utilize the Rails console as a tool to get more information about the current state of a development database
   - Use `rails routes` to get additional information about the routes that exist in a Rails application
-  
-### Visual Representation of the Schema
-![schema visual](https://raw.githubusercontent.com/kmcgrevey/monster_shop_2001/master/app/assets/images/Screen%20Shot%202020-04-16%20at%2010.45.07%20AM.png)
 
 ## Link to Application in Production
 * https://jkkm-monster-shop.herokuapp.com/

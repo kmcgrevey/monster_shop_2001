@@ -1,4 +1,0 @@
-<h1>Create New Discount For <%=link_to @discount.item.name, "/items/#{@discount.item.id}" %></h1>
-
-<%= render partial: 'form', locals: {url: "/merchant/items/discounts/#{@discount.item.id}",
-                                     method: :post} %>
