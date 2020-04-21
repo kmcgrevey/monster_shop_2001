@@ -172,11 +172,36 @@ RSpec.describe 'Cart show' do
         end
       end
 
-      it "The subtotal and total are adjusted to reflect any applied discounts" do
-      @discount_1 = @tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
-      @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
-      @discount_3 = @tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
-      @discount_4 = @pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)
+      it "No discount is applied if there is no discount available for an item" do
+
+        @discount_1 = @tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
+        @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+        @discount_3 = @tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
+        @discount_4 = @pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)
+
+      visit '/cart'
+
+
+        within "#cart-item-#{@pencil.id}" do
+          expect(page).to_not have_content "50% off 4 or More"
+          expect(page).to_not have_content "10% off 2 or More"
+          expect(page).to_not have_content "40% off 4 or More"
+          expect(page).to_not have_content "60% off 2 or More"
+        end
+
+        within "#cart-item-#{@paper.id}" do
+          expect(page).to_not have_content "50% off 4 or More"
+          expect(page).to_not have_content "10% off 2 or More"
+          expect(page).to_not have_content "40% off 4 or More"
+          expect(page).to_not have_content "60% off 2 or More"
+        end
+      end
+
+      it "The subtotal and total are adjusted to reflect any applied discounts and no discount is applied if there is not one available for that item" do
+        @discount_1 = @tire.discounts.create(description: "50% off 4 or More", discount_amount: 0.50, minimum_quantity: 4)
+        @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+        @discount_3 = @tire.discounts.create(description: "40% off 4 or More", discount_amount: 0.40, minimum_quantity: 4)
+        @discount_4 = @pedals.discounts.create(description: "60% off 2 or More", discount_amount: 0.60, minimum_quantity: 2)
 
       visit '/cart'
 
@@ -187,11 +212,19 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content "$200.00"
       end
 
-
       within "#cart-item-#{@pedals.id}" do
         click_button "Add Qty"
         expect(page).to have_content "$168.00"
       end
+
+      within "#cart-item-#{@pencil.id}" do
+        expect(page).to have_content "$2.00"
+      end
+
+      within "#cart-item-#{@paper.id}" do
+          expect(page).to have_content "$20.00"
+      end
+
 
       expect(page).to have_content "Total: $390.00"
       end
