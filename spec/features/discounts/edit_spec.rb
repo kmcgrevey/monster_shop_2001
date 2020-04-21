@@ -29,22 +29,22 @@ RSpec.describe "As a merchant employee" do
 
     it "I can update my discounts" do
 
-    visit "/merchant/items/discounts/#{@discount_1.id}"
+      visit "/merchant/items/discounts/#{@discount_1.id}"
 
-    click_link "Update Discount"
+      click_link "Update Discount"
 
-    expect(current_path).to eq("/merchant/items/discounts/#{@discount_1.id}/edit")
+      expect(current_path).to eq("/merchant/items/discounts/#{@discount_1.id}/edit")
 
-    fill_in "Description", with: "75% off 6 or More"
-    fill_in "Discount amount", with: "0.75"
-    fill_in "Minimum quantity", with: "6"
-    click_button "Update Discount"
+      fill_in "Description", with: "75% off 6 or More"
+      fill_in "Discount amount", with: "0.75"
+      fill_in "Minimum quantity", with: "6"
+      click_button "Update Discount"
 
-    expect(current_path).to eq("/merchant/items/discounts/#{@discount_1.id}")
+      expect(current_path).to eq("/merchant/items/discounts/#{@discount_1.id}")
 
-    expect(page).to have_content("75% off 6 or More")
-    expect(page).to have_content("Discount Amount 0.75")
-    expect(page).to have_content("Minimum Quantity Required for Discount: 6")
+      expect(page).to have_content("75% off 6 or More")
+      expect(page).to have_content("Discount Amount 0.75")
+      expect(page).to have_content("Minimum Quantity Required for Discount: 6")
 
-  end
+    end
 end
