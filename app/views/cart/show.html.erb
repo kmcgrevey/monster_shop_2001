@@ -13,6 +13,7 @@
     <th>Quantity</th>
     <th>Subtotal</th>
   </tr>
+  <% @running_total = 0 %>
   <% @items.each do |item,quantity| %>
     <tr id= "cart-item-<%=item.id%>">
       <td>
@@ -20,17 +21,26 @@
           <span>
             <img align = "center" id="cart-image" src= <%= item.image %>>
             <%=link_to item.name, "/items/#{item.id}" %>
+            <% if item.discounts != nil %>
+              <% if item.best_discount(cart) != nil %>
+                <p><%= item.best_discount(cart).description %> discount added </p><br>
+              <% end %>
+            <% end %>
           </span>
         </p>
       </td>
-    
+
       <td>
         <p align = "center">
           <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}"%>
         </p>
       </td>
       <td>
-        <p><%=number_to_currency(item.price)%></p>
+        <% if item.discounts == nil || item.best_discount(cart) == nil %>
+          <p><%=number_to_currency(item.price)%></p>
+        <% else %>
+          <p><%=number_to_currency(item.best_discount(cart).adjusted_item_price) %></p>
+        <% end %>
       </td>
       <td>
         <center>
@@ -41,12 +51,21 @@
         </center>
         </td>
       <td>
-        <p><%=number_to_currency(cart.subtotal(item))%></p>
+        <% if item.discounts == nil || item.best_discount(cart) == nil %>
+          <p><%=number_to_currency(cart.subtotal(item))%></p>
+          <% @running_total += cart.subtotal(item) %>
+        <% else %>
+          <p><%= number_to_currency(item.best_discount(cart).discounted_subtotal(cart)) %></p>
+          <% @running_total += item.best_discount(cart).discounted_subtotal(cart) %>
+        <% end %>
+        <% @running_total %>
     </td>
     </tr>
+
   <% end %>
+
 </table>
-  <p>Total: <%= number_to_currency(cart.total) %></p>
+  <p>Total: <%= number_to_currency(@running_total) %></p>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
   <% if current_user %>
     <p><%= link_to "Checkout", "/orders/new", method: :get %></p>

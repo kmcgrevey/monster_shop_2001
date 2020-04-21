@@ -11,6 +11,7 @@ describe Item, type: :model do
   describe "relationships" do
     it {should belong_to :merchant}
     it {should have_many :reviews}
+    it {should have_many :discounts}
     it {should have_many :item_orders}
     it {should have_many(:orders).through(:item_orders)}
   end
@@ -35,6 +36,8 @@ describe Item, type: :model do
                             password: "secret_password",
                             password_confirmation: "secret_password",
                             role: 0)
+
+
     end
 
     it "calculate average review" do
@@ -83,12 +86,27 @@ describe Item, type: :model do
       order = @user.orders.create!(name: 'Josh', address: '123 Josh Ave', city: 'Broomfield', state: 'CO', zip: 82345)
       ItemOrder.create!(order_id: order.id, item_id: @chain.id, price: @chain.price, quantity: 4)
         expect(@chain.order_status(order.id)).to eq("Unfulfilled")
-    end     
+    end
 
     it 'status' do
       expect(@chain.status).to eq("active")
       expect(@rusty_chain.status).to eq("inactive")
     end
+
+    it 'best_discount' do
+      @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @pedals = @bike_shop.items.create!(name: "Pedals", description: "Clipless bliss!", price: 210, image: "https://www.rei.com/media/product/130015", inventory: 20)
+      @discount_1 = @tire.discounts.create(description: "25% off 4 or More", discount_amount: 0.25, minimum_quantity: 4)
+      @discount_2 = @pedals.discounts.create(description: "10% off 2 or More", discount_amount: 0.10, minimum_quantity: 2)
+      @discount_3 = @tire.discounts.create(description: "50% off 6 or More", discount_amount: 0.5, minimum_quantity: 6)
+      @discount_4 = @pedals.discounts.create(description: "25% off 2 or More", discount_amount: 0.25, minimum_quantity: 2)
+
+      @cart = Cart.new({@tire.id.to_s => 4, @pedals.id.to_s => 2})
+
+      expect(@tire.best_discount(@cart)).to eq(@discount_1)
+      expect(@pedals.best_discount(@cart)).to eq(@discount_4)
+    end
+
   end
 
   describe "class methods" do

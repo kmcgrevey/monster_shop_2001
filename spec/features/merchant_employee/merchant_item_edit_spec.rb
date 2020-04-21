@@ -77,7 +77,7 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
         click_button("Update Item")
 
         expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
-        expect(page).to have_content("Price must be greater than 0")
+        expect(page).to have_content("Price must be greater than or equal to 0")
       end
 
       it "can't have a negative inventory" do
@@ -87,7 +87,7 @@ RSpec.describe "as a merchant employee when I visit my items page", type: :featu
         click_button("Update Item")
 
         expect(current_path).to eq("/merchant/items/#{@stud.id}/edit")
-        expect(page).to have_content("Inventory must be greater than 0")
+        expect(page).to have_content("Inventory must be greater than or equal to 0")
       end
     end
 

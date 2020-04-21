@@ -1,0 +1,15 @@
+<h1> Available Discounts for My Items </h1>
+
+
+  <% @merchant.items.each do |item| %>
+    <section id="item-<%=item.id%>">
+      <b><h3><%= item.name %>:</b></br></h3>
+      <% if item.discounts.count == 0 %>
+        <p> No Available Discounts </p>
+      <% else item.discounts.each do |discount| %>
+          <p><%= link_to "#{discount.description}", "/merchant/items/discounts/#{discount.id}" %></p>
+      <% end %>
+      <% end %>
+      <b><%= link_to "Add New Discount", "/merchant/items/discounts/#{item.id}/new" %></b>
+      </section>
+  <% end %>
