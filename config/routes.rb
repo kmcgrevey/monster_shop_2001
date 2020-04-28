@@ -3,11 +3,17 @@ Rails.application.routes.draw do
 
   get "/", to: "welcome#index"
 
-  resources :merchants
+  # resources :merchants
+  get "/merchants", to: "merchants#index"
+  get "/merchants/new", to: "merchants#new"
+  post "/merchants", to: "merchants#create"
+  get "/merchants/:id", to: "merchants#show"
+  delete "/merchants/:id", to: "merchants#destroy"
 
-  resources :merchants do
-    resources :items, only: [:index]
-  end
+  # resources :merchants do
+  #   resources :items, only: [:index]
+  # end
+  get "/merchants/:merchant_id/items", to: "items#index"
 
   resources :items, only: [:index, :show, :edit, :update]
 
