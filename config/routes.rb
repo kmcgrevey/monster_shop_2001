@@ -15,13 +15,18 @@ Rails.application.routes.draw do
   # end
   get "/merchants/:merchant_id/items", to: "items#index"
 
-  resources :items, only: [:index, :show, :edit, :update]
-
-  resources :items do
-    resources :reviews, only: [:new, :create]
-  end
-
-  resources :reviews, only: [:edit, :update, :destroy]
+  # resources :items, only: [:index, :show] do
+  #   resources :reviews, only: [:new, :create]
+  # end
+  get "/items", to: "items#index"
+  get "/items/:id", to: "items#show"
+  
+  get "/items/:item_id/reviews/new", to: "reviews#new"
+  post "/items/:item_id/reviews", to: "reviews#create"
+  # resources :reviews, only: [:edit, :update, :destroy]
+  get "/reviews/:id/edit", to: "reviews#edit"
+  patch "/reviews/:id", to: "reviews#update"
+  delete "/reviews/:id", to: "reviews#destroy"
 
   #login/logout
   delete "/logout", to: "sessions#destroy"
