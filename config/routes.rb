@@ -11,12 +11,12 @@ Rails.application.routes.draw do
   get "/merchants/:id", to: "merchants#show"
   delete "/merchants/:id", to: "merchants#destroy"
 
-  # resources :merchants do # <-- ORIGINAL
+  # resources :merchants do # <-- ORIGINAL 14-16
   #   resources :items, only: [:index]
   # end
   get "/merchants/:merchant_id/items", to: "items#index"
 
-  # resources :items, only: [:index, :show] do # <-- ORIGINAL
+  # resources :items, only: [:index, :show] do # <-- ORIGINAL 19-21
   #   resources :reviews, only: [:new, :create]
   # end
   get "/items", to: "items#index"
@@ -54,11 +54,13 @@ Rails.application.routes.draw do
   #admin
   namespace :admin do
     get '/', to: "dashboard#index"
-    get '/users', to: "users#index"
-    get '/users/:id', to: "users#show"
-    get '/merchants', to: "merchants#index"
-    patch '/merchants/:id', to: "merchants#update"
-    get "/merchants/:id", to: "merchants#show"
+    resources :users, only: [:index, :show]
+    resources :merchants, only: [:index, :update, :show]
+    # get '/users', to: "users#index"
+    # get '/users/:id', to: "users#show"
+    # get '/merchants', to: "merchants#index"
+    # patch '/merchants/:id', to: "merchants#update"
+    # get "/merchants/:id", to: "merchants#show"
   end
 
   #merchant-employee
